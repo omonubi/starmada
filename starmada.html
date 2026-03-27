@@ -1,1 +1,1101 @@
-Test
+<div class='sheet-content'>
+    <input type='hidden' class='darkmodetoggle' name='attr_dark_mode' />
+    <input type='hidden' class='tabstoggle' name='attr_sheetTab' value='section-ssd'/>
+    <div class='sheet-tabs'>
+        <button type='action' class='btn-tab-ssd' name='act_section-ssd' >SSD</button>
+        <button type='action' class='btn-tab-design' name='act_section-design' >Design</button>
+        <button type='action' class='btn-tab-settings' name='act_section-settings' >Settings</button>
+    </div>
+    <section class='section-ssd'>
+        <div class='sheet-header'>
+            <div class='sheet-header-left'>
+                <input type='text' name='attr_class' placeholder='Class name...' class="sheet-inline-input"/>
+                <span class='sheet-label'>-class</span>
+                <select name='attr_type' class="sheet-inline-select" required>
+                    <option value="" disabled selected hidden>Select type...</option>
+                    <option value='BB'>Battleship</option>
+                    <option value='BC'>Battlecruiser</option>
+                    <option value='CA'>Heavy Cruiser</option>
+                    <option value='CL'>Light Cruiser</option>
+                    <option value='CV'>Carrier</option>
+                    <option value='DD'>Destroyer</option>
+                    <option value='DN'>Dreadnought</option>
+                    <option value='FF'>Frigate</option>
+                    <option value='VF'>Fighter Flight</option>
+                </select>
+                <span class='sheet-dot'>•</span>
+                <input type='number' name='attr_combat_rating' placeholder='CR' class="sheet-inline-number"/>
+            </div>
+            <div class='sheet-header-right'>
+                <span class='span-seeker-stats'>(±0 | 0 | 0)</span>
+            </div>
+        </div>
+
+        <div class='sheet-main'>
+            <div class='sheet-side sheet-side-left'>
+                <div class='screen-indicator-group'>
+                    <input type='hidden' name='attr_screen_fwd_boxes' />
+                    <div class='design-screen-indicator screen-indicator-1'>
+                        <input type='hidden' name='attr_mark_screen_fwd_1' />
+                        <span class='screen-indicator-value'>3+</span>
+                        <button type='action' name='act_mark-screen-fwd-1' class='mark-overlay'></button>
+                    </div>
+                    <div class='design-screen-indicator screen-indicator-2'>
+                        <input type='hidden' name='attr_mark_screen_fwd_2' />
+                        <span class='screen-indicator-value'>4+</span>
+                        <button type='action' name='act_mark-screen-fwd-2' class='mark-overlay'></button>
+                    </div>
+                    <div class='design-screen-indicator screen-indicator-3'>
+                        <input type='hidden' name='attr_mark_screen_fwd_3' />
+                        <span class='screen-indicator-value'>5+</span>
+                        <button type='action' name='act_mark-screen-fwd-3' class='mark-overlay'></button>
+                    </div>
+                </div>
+                <div class='screen-indicator-group screen-indicator-group-port'>
+                    <input type='hidden' name='attr_screen_port_boxes' />
+                    <div class='design-screen-indicator screen-port-indicator-1'>
+                        <input type='hidden' name='attr_mark_screen_port_1' />
+                        <span class='screen-indicator-value'>3+</span>
+                        <button type='action' name='act_mark-screen-port-1' class='mark-overlay'></button>
+                    </div>
+                    <div class='design-screen-indicator screen-port-indicator-2'>
+                        <input type='hidden' name='attr_mark_screen_port_2' />
+                        <span class='screen-indicator-value'>4+</span>
+                        <button type='action' name='act_mark-screen-port-2' class='mark-overlay'></button>
+                    </div>
+                    <div class='design-screen-indicator screen-port-indicator-3'>
+                        <input type='hidden' name='attr_mark_screen_port_3' />
+                        <span class='screen-indicator-value'>5+</span>
+                        <button type='action' name='act_mark-screen-port-3' class='mark-overlay'></button>
+                    </div>
+                </div>
+                <div class='screen-indicator-group screen-indicator-group-stbd'>
+                    <input type='hidden' name='attr_screen_stbd_boxes' />
+                    <div class='design-screen-indicator screen-stbd-indicator-1'>
+                        <input type='hidden' name='attr_mark_screen_stbd_1' />
+                        <span class='screen-indicator-value'>3+</span>
+                        <button type='action' name='act_mark-screen-stbd-1' class='mark-overlay'></button>
+                    </div>
+                    <div class='design-screen-indicator screen-stbd-indicator-2'>
+                        <input type='hidden' name='attr_mark_screen_stbd_2' />
+                        <span class='screen-indicator-value'>4+</span>
+                        <button type='action' name='act_mark-screen-stbd-2' class='mark-overlay'></button>
+                    </div>
+                    <div class='design-screen-indicator screen-stbd-indicator-3'>
+                        <input type='hidden' name='attr_mark_screen_stbd_3' />
+                        <span class='screen-indicator-value'>5+</span>
+                        <button type='action' name='act_mark-screen-stbd-3' class='mark-overlay'></button>
+                    </div>
+                </div>
+                <div class='screen-indicator-group screen-indicator-group-aft'>
+                    <input type='hidden' name='attr_screen_aft_boxes' />
+                    <div class='design-screen-indicator screen-aft-indicator-1'>
+                        <input type='hidden' name='attr_mark_screen_aft_1' />
+                        <span class='screen-indicator-value'>3+</span>
+                        <button type='action' name='act_mark-screen-aft-1' class='mark-overlay'></button>
+                    </div>
+                    <div class='design-screen-indicator screen-aft-indicator-2'>
+                        <input type='hidden' name='attr_mark_screen_aft_2' />
+                        <span class='screen-indicator-value'>4+</span>
+                        <button type='action' name='act_mark-screen-aft-2' class='mark-overlay'></button>
+                    </div>
+                    <div class='design-screen-indicator screen-aft-indicator-3'>
+                        <input type='hidden' name='attr_mark_screen_aft_3' />
+                        <span class='screen-indicator-value'>5+</span>
+                        <button type='action' name='act_mark-screen-aft-3' class='mark-overlay'></button>
+                    </div>
+                </div>
+                <div class='diagonal-lines'>
+                    <span class='diag diag-1'></span>
+                    <span class='diag diag-2'></span>
+                    <span class='diag diag-3'></span>
+                    <span class='diag diag-4'></span>
+                    <div class='center-image-control'>
+                        <input type='hidden' name='attr_has_center_image' />
+                        <span class='center-image-hit' tabindex='0'></span>
+                        <div class='center-image-popup'>
+                            <input type='text' name='attr_center_image_url' class='center-image-input' placeholder='https://...' />
+                        </div>
+                        <div class='center-image-empty'>Click to add image...</div>
+                        <img class='center-image-preview' name='attr_center_image' />
+                    </div>
+                </div>
+            </div>
+            <div class='sheet-side sheet-side-right'>
+                <div class='field-row'>
+                    <input type='text' name='attr_id' placeholder='ID:' class='sheet-inline-input' />
+                </div>
+                <div class='stat-section'>
+                    <div class='stat-label-row'>
+                        <div class='stat-title'>1, 3, 5</div>
+                        <div class='stat-name'>HULL</div>
+                    </div>
+                    <div class='stat-boxes'>
+                        <input type='hidden' name='attr_hull_size' />
+                        <div class='stat-box'><input type='hidden' name='attr_mark_hull_1' /><input type='text' name='attr_hull_box_1' readonly tabindex='-1' /><button type='action' name='act_mark-hull-1' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_hull_2' /><input type='text' name='attr_hull_box_2' readonly tabindex='-1' /><button type='action' name='act_mark-hull-2' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_hull_3' /><input type='text' name='attr_hull_box_3' readonly tabindex='-1' /><button type='action' name='act_mark-hull-3' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_hull_4' /><input type='text' name='attr_hull_box_4' readonly tabindex='-1' /><button type='action' name='act_mark-hull-4' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_hull_5' /><input type='text' name='attr_hull_box_5' readonly tabindex='-1' /><button type='action' name='act_mark-hull-5' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_hull_6' /><input type='text' name='attr_hull_box_6' readonly tabindex='-1' /><button type='action' name='act_mark-hull-6' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_hull_7' /><input type='text' name='attr_hull_box_7' readonly tabindex='-1' /><button type='action' name='act_mark-hull-7' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_hull_8' /><input type='text' name='attr_hull_box_8' readonly tabindex='-1' /><button type='action' name='act_mark-hull-8' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_hull_9' /><input type='text' name='attr_hull_box_9' readonly tabindex='-1' /><button type='action' name='act_mark-hull-9' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_hull_10' /><input type='text' name='attr_hull_box_10' readonly tabindex='-1' /><button type='action' name='act_mark-hull-10' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_hull_11' /><input type='text' name='attr_hull_box_11' readonly tabindex='-1' /><button type='action' name='act_mark-hull-11' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_hull_12' /><input type='text' name='attr_hull_box_12' readonly tabindex='-1' /><button type='action' name='act_mark-hull-12' class='mark-overlay'></button></div>
+                        <div class='stat-box'><input type='hidden' name='attr_mark_hull_13' /><input type='text' name='attr_hull_box_13' readonly tabindex='-1' /><button type='action' name='act_mark-hull-13' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_hull_14' /><input type='text' name='attr_hull_box_14' readonly tabindex='-1' /><button type='action' name='act_mark-hull-14' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_hull_15' /><input type='text' name='attr_hull_box_15' readonly tabindex='-1' /><button type='action' name='act_mark-hull-15' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_hull_16' /><input type='text' name='attr_hull_box_16' readonly tabindex='-1' /><button type='action' name='act_mark-hull-16' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_hull_17' /><input type='text' name='attr_hull_box_17' readonly tabindex='-1' /><button type='action' name='act_mark-hull-17' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_hull_18' /><input type='text' name='attr_hull_box_18' readonly tabindex='-1' /><button type='action' name='act_mark-hull-18' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_hull_19' /><input type='text' name='attr_hull_box_19' readonly tabindex='-1' /><button type='action' name='act_mark-hull-19' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_hull_20' /><input type='text' name='attr_hull_box_20' readonly tabindex='-1' /><button type='action' name='act_mark-hull-20' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_hull_21' /><input type='text' name='attr_hull_box_21' readonly tabindex='-1' /><button type='action' name='act_mark-hull-21' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_hull_22' /><input type='text' name='attr_hull_box_22' readonly tabindex='-1' /><button type='action' name='act_mark-hull-22' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_hull_23' /><input type='text' name='attr_hull_box_23' readonly tabindex='-1' /><button type='action' name='act_mark-hull-23' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_hull_24' /><input type='text' name='attr_hull_box_24' readonly tabindex='-1' /><button type='action' name='act_mark-hull-24' class='mark-overlay'></button></div>
+                    </div>
+                </div>
+                <div class='stat-section'>
+                    <div class='stat-label-row'>
+                        <div class='stat-title'>1-2</div>
+                        <div class='stat-name'>ENGINE</div>
+                    </div>
+                    <div class='stat-boxes'>
+                        <input type='hidden' name='attr_hull_size' />
+                        <div class='stat-box'><input type='hidden' name='attr_mark_engine_1' /><input type='text' name='attr_engine_box_1' readonly tabindex='-1' /><button type='action' name='act_mark-engine-1' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_engine_2' /><input type='text' name='attr_engine_box_2' readonly tabindex='-1' /><button type='action' name='act_mark-engine-2' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_engine_3' /><input type='text' name='attr_engine_box_3' readonly tabindex='-1' /><button type='action' name='act_mark-engine-3' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_engine_4' /><input type='text' name='attr_engine_box_4' readonly tabindex='-1' /><button type='action' name='act_mark-engine-4' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_engine_5' /><input type='text' name='attr_engine_box_5' readonly tabindex='-1' /><button type='action' name='act_mark-engine-5' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_engine_6' /><input type='text' name='attr_engine_box_6' readonly tabindex='-1' /><button type='action' name='act_mark-engine-6' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_engine_7' /><input type='text' name='attr_engine_box_7' readonly tabindex='-1' /><button type='action' name='act_mark-engine-7' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_engine_8' /><input type='text' name='attr_engine_box_8' readonly tabindex='-1' /><button type='action' name='act_mark-engine-8' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_engine_9' /><input type='text' name='attr_engine_box_9' readonly tabindex='-1' /><button type='action' name='act_mark-engine-9' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_engine_10' /><input type='text' name='attr_engine_box_10' readonly tabindex='-1' /><button type='action' name='act_mark-engine-10' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_engine_11' /><input type='text' name='attr_engine_box_11' readonly tabindex='-1' /><button type='action' name='act_mark-engine-11' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_engine_12' /><input type='text' name='attr_engine_box_12' readonly tabindex='-1' /><button type='action' name='act_mark-engine-12' class='mark-overlay'></button></div>
+                        <div class='stat-box'><input type='hidden' name='attr_mark_engine_13' /><input type='text' name='attr_engine_box_13' readonly tabindex='-1' /><button type='action' name='act_mark-engine-13' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_engine_14' /><input type='text' name='attr_engine_box_14' readonly tabindex='-1' /><button type='action' name='act_mark-engine-14' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_engine_15' /><input type='text' name='attr_engine_box_15' readonly tabindex='-1' /><button type='action' name='act_mark-engine-15' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_engine_16' /><input type='text' name='attr_engine_box_16' readonly tabindex='-1' /><button type='action' name='act_mark-engine-16' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_engine_17' /><input type='text' name='attr_engine_box_17' readonly tabindex='-1' /><button type='action' name='act_mark-engine-17' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_engine_18' /><input type='text' name='attr_engine_box_18' readonly tabindex='-1' /><button type='action' name='act_mark-engine-18' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_engine_19' /><input type='text' name='attr_engine_box_19' readonly tabindex='-1' /><button type='action' name='act_mark-engine-19' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_engine_20' /><input type='text' name='attr_engine_box_20' readonly tabindex='-1' /><button type='action' name='act_mark-engine-20' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_engine_21' /><input type='text' name='attr_engine_box_21' readonly tabindex='-1' /><button type='action' name='act_mark-engine-21' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_engine_22' /><input type='text' name='attr_engine_box_22' readonly tabindex='-1' /><button type='action' name='act_mark-engine-22' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_engine_23' /><input type='text' name='attr_engine_box_23' readonly tabindex='-1' /><button type='action' name='act_mark-engine-23' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_engine_24' /><input type='text' name='attr_engine_box_24' readonly tabindex='-1' /><button type='action' name='act_mark-engine-24' class='mark-overlay'></button></div>
+                    </div>
+                </div>
+                <div class='stat-section'>
+                    <div class='stat-label-row'>
+                        <div class='stat-title'>3-4</div>
+                        <div class='stat-name'>WEAPONS</div>
+                    </div>
+                    <div class='stat-boxes'>
+                        <input type='hidden' name='attr_hull_size' />
+                        <div class='stat-box'><input type='hidden' name='attr_mark_weapons_1' /><input type='text' name='attr_weapon_box_1' readonly tabindex='-1' /><button type='action' name='act_mark-weapons-1' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_weapons_2' /><input type='text' name='attr_weapon_box_2' readonly tabindex='-1' /><button type='action' name='act_mark-weapons-2' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_weapons_3' /><input type='text' name='attr_weapon_box_3' readonly tabindex='-1' /><button type='action' name='act_mark-weapons-3' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_weapons_4' /><input type='text' name='attr_weapon_box_4' readonly tabindex='-1' /><button type='action' name='act_mark-weapons-4' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_weapons_5' /><input type='text' name='attr_weapon_box_5' readonly tabindex='-1' /><button type='action' name='act_mark-weapons-5' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_weapons_6' /><input type='text' name='attr_weapon_box_6' readonly tabindex='-1' /><button type='action' name='act_mark-weapons-6' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_weapons_7' /><input type='text' name='attr_weapon_box_7' readonly tabindex='-1' /><button type='action' name='act_mark-weapons-7' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_weapons_8' /><input type='text' name='attr_weapon_box_8' readonly tabindex='-1' /><button type='action' name='act_mark-weapons-8' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_weapons_9' /><input type='text' name='attr_weapon_box_9' readonly tabindex='-1' /><button type='action' name='act_mark-weapons-9' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_weapons_10' /><input type='text' name='attr_weapon_box_10' readonly tabindex='-1' /><button type='action' name='act_mark-weapons-10' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_weapons_11' /><input type='text' name='attr_weapon_box_11' readonly tabindex='-1' /><button type='action' name='act_mark-weapons-11' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_weapons_12' /><input type='text' name='attr_weapon_box_12' readonly tabindex='-1' /><button type='action' name='act_mark-weapons-12' class='mark-overlay'></button></div>
+                        <div class='stat-box'><input type='hidden' name='attr_mark_weapons_13' /><input type='text' name='attr_weapon_box_13' readonly tabindex='-1' /><button type='action' name='act_mark-weapons-13' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_weapons_14' /><input type='text' name='attr_weapon_box_14' readonly tabindex='-1' /><button type='action' name='act_mark-weapons-14' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_weapons_15' /><input type='text' name='attr_weapon_box_15' readonly tabindex='-1' /><button type='action' name='act_mark-weapons-15' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_weapons_16' /><input type='text' name='attr_weapon_box_16' readonly tabindex='-1' /><button type='action' name='act_mark-weapons-16' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_weapons_17' /><input type='text' name='attr_weapon_box_17' readonly tabindex='-1' /><button type='action' name='act_mark-weapons-17' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_weapons_18' /><input type='text' name='attr_weapon_box_18' readonly tabindex='-1' /><button type='action' name='act_mark-weapons-18' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_weapons_19' /><input type='text' name='attr_weapon_box_19' readonly tabindex='-1' /><button type='action' name='act_mark-weapons-19' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_weapons_20' /><input type='text' name='attr_weapon_box_20' readonly tabindex='-1' /><button type='action' name='act_mark-weapons-20' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_weapons_21' /><input type='text' name='attr_weapon_box_21' readonly tabindex='-1' /><button type='action' name='act_mark-weapons-21' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_weapons_22' /><input type='text' name='attr_weapon_box_22' readonly tabindex='-1' /><button type='action' name='act_mark-weapons-22' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_weapons_23' /><input type='text' name='attr_weapon_box_23' readonly tabindex='-1' /><button type='action' name='act_mark-weapons-23' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_weapons_24' /><input type='text' name='attr_weapon_box_24' readonly tabindex='-1' /><button type='action' name='act_mark-weapons-24' class='mark-overlay'></button></div>
+                    </div>
+                </div>
+                <div class='stat-section'>
+                    <div class='stat-label-row'>
+                        <div class='stat-title'>5-6</div>
+                        <div class='stat-name'>SYSTEMS</div>
+                    </div>
+                    <div class='stat-boxes'>
+                        <input type='hidden' name='attr_hull_size' />
+                        <div class='stat-box'><input type='hidden' name='attr_mark_systems_1' /><input type='text' name='attr_system_box_1' readonly tabindex='-1' /><button type='action' name='act_mark-systems-1' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_systems_2' /><input type='text' name='attr_system_box_2' readonly tabindex='-1' /><button type='action' name='act_mark-systems-2' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_systems_3' /><input type='text' name='attr_system_box_3' readonly tabindex='-1' /><button type='action' name='act_mark-systems-3' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_systems_4' /><input type='text' name='attr_system_box_4' readonly tabindex='-1' /><button type='action' name='act_mark-systems-4' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_systems_5' /><input type='text' name='attr_system_box_5' readonly tabindex='-1' /><button type='action' name='act_mark-systems-5' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_systems_6' /><input type='text' name='attr_system_box_6' readonly tabindex='-1' /><button type='action' name='act_mark-systems-6' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_systems_7' /><input type='text' name='attr_system_box_7' readonly tabindex='-1' /><button type='action' name='act_mark-systems-7' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_systems_8' /><input type='text' name='attr_system_box_8' readonly tabindex='-1' /><button type='action' name='act_mark-systems-8' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_systems_9' /><input type='text' name='attr_system_box_9' readonly tabindex='-1' /><button type='action' name='act_mark-systems-9' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_systems_10' /><input type='text' name='attr_system_box_10' readonly tabindex='-1' /><button type='action' name='act_mark-systems-10' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_systems_11' /><input type='text' name='attr_system_box_11' readonly tabindex='-1' /><button type='action' name='act_mark-systems-11' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_systems_12' /><input type='text' name='attr_system_box_12' readonly tabindex='-1' /><button type='action' name='act_mark-systems-12' class='mark-overlay'></button></div>
+                        <div class='stat-box'><input type='hidden' name='attr_mark_systems_13' /><input type='text' name='attr_system_box_13' readonly tabindex='-1' /><button type='action' name='act_mark-systems-13' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_systems_14' /><input type='text' name='attr_system_box_14' readonly tabindex='-1' /><button type='action' name='act_mark-systems-14' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_systems_15' /><input type='text' name='attr_system_box_15' readonly tabindex='-1' /><button type='action' name='act_mark-systems-15' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_systems_16' /><input type='text' name='attr_system_box_16' readonly tabindex='-1' /><button type='action' name='act_mark-systems-16' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_systems_17' /><input type='text' name='attr_system_box_17' readonly tabindex='-1' /><button type='action' name='act_mark-systems-17' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_systems_18' /><input type='text' name='attr_system_box_18' readonly tabindex='-1' /><button type='action' name='act_mark-systems-18' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_systems_19' /><input type='text' name='attr_system_box_19' readonly tabindex='-1' /><button type='action' name='act_mark-systems-19' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_systems_20' /><input type='text' name='attr_system_box_20' readonly tabindex='-1' /><button type='action' name='act_mark-systems-20' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_systems_21' /><input type='text' name='attr_system_box_21' readonly tabindex='-1' /><button type='action' name='act_mark-systems-21' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_systems_22' /><input type='text' name='attr_system_box_22' readonly tabindex='-1' /><button type='action' name='act_mark-systems-22' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_systems_23' /><input type='text' name='attr_system_box_23' readonly tabindex='-1' /><button type='action' name='act_mark-systems-23' class='mark-overlay'></button></div><div class='stat-box'><input type='hidden' name='attr_mark_systems_24' /><input type='text' name='attr_system_box_24' readonly tabindex='-1' /><button type='action' name='act_mark-systems-24' class='mark-overlay'></button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='movement-orders'>
+            <div class='movement-box'><span class='movement-number'>1</span><input type='text' name='attr_move_1' /></div>
+            <div class='movement-box'><span class='movement-number'>2</span><input type='text' name='attr_move_2' /></div>
+            <div class='movement-box'><span class='movement-number'>3</span><input type='text' name='attr_move_3' /></div>
+            <div class='movement-box'><span class='movement-number'>4</span><input type='text' name='attr_move_4' /></div>
+            <div class='movement-box'><span class='movement-number'>5</span><input type='text' name='attr_move_5' /></div>
+            <div class='movement-box'><span class='movement-number'>6</span><input type='text' name='attr_move_6' /></div>
+            <div class='movement-box'><span class='movement-number'>7</span><input type='text' name='attr_move_7' /></div>
+            <div class='movement-box'><span class='movement-number'>8</span><input type='text' name='attr_move_8' /></div>
+        </div>
+        <fieldset class='repeating_weapons'>
+            <div class='weapon-row'>
+                <div class='weapon-left'>
+                    <div class='weapon-title-bar'>
+                        <span class='weapon-title-left'><input type='text' name='attr_weapon_abbr' readonly tabindex='-1' class='weapon-abbr' /><span class='weapon-hyphen'>-</span><input type='text' name='attr_weapon_variant' class='weapon-variant' maxlength='2' /><select name='attr_weapon_type' class='weapon-select weapon-type'>
+                            <option value='' disabled selected hidden></option>
+                            <option value='AM'>Anti-Matter Beam</option>
+                            <option value='CM'>Cluster Missile</option>
+                            <option value='DS'>Disruptor</option>
+                            <option value='EL'>Energy Lance</option>
+                            <option value='FT'>Fusion Torpedo</option>
+                            <option value='IO'>Ion Cannon</option>
+                            <option value='LC'>Laser Cannon</option>
+                            <option value='MD'>Mass Driver</option>
+                            <option value='NB'>Needlebeam</option>
+                            <option value='PC'>Phase Cannon</option>
+                            <option value='PL'>Pulse Laser</option>
+                            <option value='SC'>Shock Cannon</option>
+                        </select><span class='weapon-triangle'> &ensp;&#9650;&ensp; </span> <span class='weapon-loss-paren'>(</span><input type='text' name='attr_weapon_loss' value='0' readonly tabindex='-1' class='weapon-loss' /><span class='weapon-loss-paren'>)</span></span><span class='weapon-title-right'><span class='weapon-stat-label'>ROF: </span><input type='number' name='attr_weapon_rof' class='weapon-rof' min='1' max='4' value='1' /><span class='weapon-stat-label'> | Dmg: </span><input type='number' name='attr_weapon_dmg' class='weapon-dmg' min='1' max='4' value='1' /></span>
+                    </div>
+                    <div class='weapon-content'>
+                        <div class='weapon-hex-area'>
+                            <input type='checkbox' name='attr_weapon_hex_1' value='1' class='weapon-hex-cb wh-cb-1' />
+                            <input type='checkbox' name='attr_weapon_hex_2' value='1' class='weapon-hex-cb wh-cb-2' />
+                            <input type='checkbox' name='attr_weapon_hex_3' value='1' class='weapon-hex-cb wh-cb-3' />
+                            <input type='checkbox' name='attr_weapon_hex_4' value='1' class='weapon-hex-cb wh-cb-4' />
+                            <input type='checkbox' name='attr_weapon_hex_5' value='1' class='weapon-hex-cb wh-cb-5' />
+                            <input type='checkbox' name='attr_weapon_hex_6' value='1' class='weapon-hex-cb wh-cb-6' />
+                            <input type='checkbox' name='attr_weapon_hex_7' value='1' class='weapon-hex-cb wh-cb-7' />
+                            <input type='checkbox' name='attr_weapon_hex_8' value='1' class='weapon-hex-cb wh-cb-8' />
+                            <button type='action' name='act_weapon-remove-hex' class='weapon-hex-remove'>&#8722;</button>
+                            <div class='weapon-hex-glyph wh-g-1'><input type='hidden' name='attr_weapon_arc_a_1' class='weapon-arc-flag wa-a' /><input type='hidden' name='attr_weapon_arc_b_1' class='weapon-arc-flag wa-b' /><input type='hidden' name='attr_weapon_arc_c_1' class='weapon-arc-flag wa-c' /><input type='hidden' name='attr_weapon_arc_d_1' class='weapon-arc-flag wa-d' /><input type='hidden' name='attr_weapon_arc_e_1' class='weapon-arc-flag wa-e' /><input type='hidden' name='attr_weapon_arc_f_1' class='weapon-arc-flag wa-f' /><input type='hidden' name='attr_weapon_arc_g_1' class='weapon-arc-flag wa-g' /><input type='hidden' name='attr_weapon_arc_h_1' class='weapon-arc-flag wa-h' /><input type='hidden' name='attr_weapon_arc_i_1' class='weapon-arc-flag wa-i' /><input type='hidden' name='attr_weapon_arc_j_1' class='weapon-arc-flag wa-j' /><input type='hidden' name='attr_weapon_arc_k_1' class='weapon-arc-flag wa-k' /><input type='hidden' name='attr_weapon_arc_l_1' class='weapon-arc-flag wa-l' /><span class='weapon-hex-visual' tabindex='0'><span class='arc-mark arc-a arc-af'></span><span class='arc-mark arc-b arc-af'></span><span class='arc-mark arc-c arc-af'></span><span class='arc-mark arc-d arc-af'></span><span class='arc-mark arc-e arc-af'></span><span class='arc-mark arc-f arc-af'></span><span class='arc-mark arc-g arc-gl'></span><span class='arc-mark arc-h arc-gl'></span><span class='arc-mark arc-i arc-gl'></span><span class='arc-mark arc-j arc-gl'></span><span class='arc-mark arc-k arc-gl'></span><span class='arc-mark arc-l arc-gl'></span></span><div class='hex-popup'><input type='text' name='attr_weapon_arc_1' class='firing-arc-input' placeholder='Firing Arcs...'/></div></div>
+                            <div class='weapon-hex-glyph wh-g-2'><input type='hidden' name='attr_weapon_arc_a_2' class='weapon-arc-flag wa-a' /><input type='hidden' name='attr_weapon_arc_b_2' class='weapon-arc-flag wa-b' /><input type='hidden' name='attr_weapon_arc_c_2' class='weapon-arc-flag wa-c' /><input type='hidden' name='attr_weapon_arc_d_2' class='weapon-arc-flag wa-d' /><input type='hidden' name='attr_weapon_arc_e_2' class='weapon-arc-flag wa-e' /><input type='hidden' name='attr_weapon_arc_f_2' class='weapon-arc-flag wa-f' /><input type='hidden' name='attr_weapon_arc_g_2' class='weapon-arc-flag wa-g' /><input type='hidden' name='attr_weapon_arc_h_2' class='weapon-arc-flag wa-h' /><input type='hidden' name='attr_weapon_arc_i_2' class='weapon-arc-flag wa-i' /><input type='hidden' name='attr_weapon_arc_j_2' class='weapon-arc-flag wa-j' /><input type='hidden' name='attr_weapon_arc_k_2' class='weapon-arc-flag wa-k' /><input type='hidden' name='attr_weapon_arc_l_2' class='weapon-arc-flag wa-l' /><span class='weapon-hex-visual' tabindex='0'><span class='arc-mark arc-a arc-af'></span><span class='arc-mark arc-b arc-af'></span><span class='arc-mark arc-c arc-af'></span><span class='arc-mark arc-d arc-af'></span><span class='arc-mark arc-e arc-af'></span><span class='arc-mark arc-f arc-af'></span><span class='arc-mark arc-g arc-gl'></span><span class='arc-mark arc-h arc-gl'></span><span class='arc-mark arc-i arc-gl'></span><span class='arc-mark arc-j arc-gl'></span><span class='arc-mark arc-k arc-gl'></span><span class='arc-mark arc-l arc-gl'></span></span><div class='hex-popup'><input type='text' name='attr_weapon_arc_2' class='firing-arc-input' placeholder='Firing Arcs...'/></div></div>
+                            <div class='weapon-hex-glyph wh-g-3'><input type='hidden' name='attr_weapon_arc_a_3' class='weapon-arc-flag wa-a' /><input type='hidden' name='attr_weapon_arc_b_3' class='weapon-arc-flag wa-b' /><input type='hidden' name='attr_weapon_arc_c_3' class='weapon-arc-flag wa-c' /><input type='hidden' name='attr_weapon_arc_d_3' class='weapon-arc-flag wa-d' /><input type='hidden' name='attr_weapon_arc_e_3' class='weapon-arc-flag wa-e' /><input type='hidden' name='attr_weapon_arc_f_3' class='weapon-arc-flag wa-f' /><input type='hidden' name='attr_weapon_arc_g_3' class='weapon-arc-flag wa-g' /><input type='hidden' name='attr_weapon_arc_h_3' class='weapon-arc-flag wa-h' /><input type='hidden' name='attr_weapon_arc_i_3' class='weapon-arc-flag wa-i' /><input type='hidden' name='attr_weapon_arc_j_3' class='weapon-arc-flag wa-j' /><input type='hidden' name='attr_weapon_arc_k_3' class='weapon-arc-flag wa-k' /><input type='hidden' name='attr_weapon_arc_l_3' class='weapon-arc-flag wa-l' /><span class='weapon-hex-visual' tabindex='0'><span class='arc-mark arc-a arc-af'></span><span class='arc-mark arc-b arc-af'></span><span class='arc-mark arc-c arc-af'></span><span class='arc-mark arc-d arc-af'></span><span class='arc-mark arc-e arc-af'></span><span class='arc-mark arc-f arc-af'></span><span class='arc-mark arc-g arc-gl'></span><span class='arc-mark arc-h arc-gl'></span><span class='arc-mark arc-i arc-gl'></span><span class='arc-mark arc-j arc-gl'></span><span class='arc-mark arc-k arc-gl'></span><span class='arc-mark arc-l arc-gl'></span></span><div class='hex-popup'><input type='text' name='attr_weapon_arc_3' class='firing-arc-input' placeholder='Firing Arcs...'/></div></div>
+                            <div class='weapon-hex-glyph wh-g-4'><input type='hidden' name='attr_weapon_arc_a_4' class='weapon-arc-flag wa-a' /><input type='hidden' name='attr_weapon_arc_b_4' class='weapon-arc-flag wa-b' /><input type='hidden' name='attr_weapon_arc_c_4' class='weapon-arc-flag wa-c' /><input type='hidden' name='attr_weapon_arc_d_4' class='weapon-arc-flag wa-d' /><input type='hidden' name='attr_weapon_arc_e_4' class='weapon-arc-flag wa-e' /><input type='hidden' name='attr_weapon_arc_f_4' class='weapon-arc-flag wa-f' /><input type='hidden' name='attr_weapon_arc_g_4' class='weapon-arc-flag wa-g' /><input type='hidden' name='attr_weapon_arc_h_4' class='weapon-arc-flag wa-h' /><input type='hidden' name='attr_weapon_arc_i_4' class='weapon-arc-flag wa-i' /><input type='hidden' name='attr_weapon_arc_j_4' class='weapon-arc-flag wa-j' /><input type='hidden' name='attr_weapon_arc_k_4' class='weapon-arc-flag wa-k' /><input type='hidden' name='attr_weapon_arc_l_4' class='weapon-arc-flag wa-l' /><span class='weapon-hex-visual' tabindex='0'><span class='arc-mark arc-a arc-af'></span><span class='arc-mark arc-b arc-af'></span><span class='arc-mark arc-c arc-af'></span><span class='arc-mark arc-d arc-af'></span><span class='arc-mark arc-e arc-af'></span><span class='arc-mark arc-f arc-af'></span><span class='arc-mark arc-g arc-gl'></span><span class='arc-mark arc-h arc-gl'></span><span class='arc-mark arc-i arc-gl'></span><span class='arc-mark arc-j arc-gl'></span><span class='arc-mark arc-k arc-gl'></span><span class='arc-mark arc-l arc-gl'></span></span><div class='hex-popup'><input type='text' name='attr_weapon_arc_4' class='firing-arc-input' placeholder='Firing Arcs...'/></div></div>
+                            <div class='weapon-hex-glyph wh-g-5'><input type='hidden' name='attr_weapon_arc_a_5' class='weapon-arc-flag wa-a' /><input type='hidden' name='attr_weapon_arc_b_5' class='weapon-arc-flag wa-b' /><input type='hidden' name='attr_weapon_arc_c_5' class='weapon-arc-flag wa-c' /><input type='hidden' name='attr_weapon_arc_d_5' class='weapon-arc-flag wa-d' /><input type='hidden' name='attr_weapon_arc_e_5' class='weapon-arc-flag wa-e' /><input type='hidden' name='attr_weapon_arc_f_5' class='weapon-arc-flag wa-f' /><input type='hidden' name='attr_weapon_arc_g_5' class='weapon-arc-flag wa-g' /><input type='hidden' name='attr_weapon_arc_h_5' class='weapon-arc-flag wa-h' /><input type='hidden' name='attr_weapon_arc_i_5' class='weapon-arc-flag wa-i' /><input type='hidden' name='attr_weapon_arc_j_5' class='weapon-arc-flag wa-j' /><input type='hidden' name='attr_weapon_arc_k_5' class='weapon-arc-flag wa-k' /><input type='hidden' name='attr_weapon_arc_l_5' class='weapon-arc-flag wa-l' /><span class='weapon-hex-visual' tabindex='0'><span class='arc-mark arc-a arc-af'></span><span class='arc-mark arc-b arc-af'></span><span class='arc-mark arc-c arc-af'></span><span class='arc-mark arc-d arc-af'></span><span class='arc-mark arc-e arc-af'></span><span class='arc-mark arc-f arc-af'></span><span class='arc-mark arc-g arc-gl'></span><span class='arc-mark arc-h arc-gl'></span><span class='arc-mark arc-i arc-gl'></span><span class='arc-mark arc-j arc-gl'></span><span class='arc-mark arc-k arc-gl'></span><span class='arc-mark arc-l arc-gl'></span></span><div class='hex-popup'><input type='text' name='attr_weapon_arc_5' class='firing-arc-input' placeholder='Firing Arcs...'/></div></div>
+                            <div class='weapon-hex-glyph wh-g-6'><input type='hidden' name='attr_weapon_arc_a_6' class='weapon-arc-flag wa-a' /><input type='hidden' name='attr_weapon_arc_b_6' class='weapon-arc-flag wa-b' /><input type='hidden' name='attr_weapon_arc_c_6' class='weapon-arc-flag wa-c' /><input type='hidden' name='attr_weapon_arc_d_6' class='weapon-arc-flag wa-d' /><input type='hidden' name='attr_weapon_arc_e_6' class='weapon-arc-flag wa-e' /><input type='hidden' name='attr_weapon_arc_f_6' class='weapon-arc-flag wa-f' /><input type='hidden' name='attr_weapon_arc_g_6' class='weapon-arc-flag wa-g' /><input type='hidden' name='attr_weapon_arc_h_6' class='weapon-arc-flag wa-h' /><input type='hidden' name='attr_weapon_arc_i_6' class='weapon-arc-flag wa-i' /><input type='hidden' name='attr_weapon_arc_j_6' class='weapon-arc-flag wa-j' /><input type='hidden' name='attr_weapon_arc_k_6' class='weapon-arc-flag wa-k' /><input type='hidden' name='attr_weapon_arc_l_6' class='weapon-arc-flag wa-l' /><span class='weapon-hex-visual' tabindex='0'><span class='arc-mark arc-a arc-af'></span><span class='arc-mark arc-b arc-af'></span><span class='arc-mark arc-c arc-af'></span><span class='arc-mark arc-d arc-af'></span><span class='arc-mark arc-e arc-af'></span><span class='arc-mark arc-f arc-af'></span><span class='arc-mark arc-g arc-gl'></span><span class='arc-mark arc-h arc-gl'></span><span class='arc-mark arc-i arc-gl'></span><span class='arc-mark arc-j arc-gl'></span><span class='arc-mark arc-k arc-gl'></span><span class='arc-mark arc-l arc-gl'></span></span><div class='hex-popup'><input type='text' name='attr_weapon_arc_6' class='firing-arc-input' placeholder='Firing Arcs...'/></div></div>
+                            <div class='weapon-hex-glyph wh-g-7'><input type='hidden' name='attr_weapon_arc_a_7' class='weapon-arc-flag wa-a' /><input type='hidden' name='attr_weapon_arc_b_7' class='weapon-arc-flag wa-b' /><input type='hidden' name='attr_weapon_arc_c_7' class='weapon-arc-flag wa-c' /><input type='hidden' name='attr_weapon_arc_d_7' class='weapon-arc-flag wa-d' /><input type='hidden' name='attr_weapon_arc_e_7' class='weapon-arc-flag wa-e' /><input type='hidden' name='attr_weapon_arc_f_7' class='weapon-arc-flag wa-f' /><input type='hidden' name='attr_weapon_arc_g_7' class='weapon-arc-flag wa-g' /><input type='hidden' name='attr_weapon_arc_h_7' class='weapon-arc-flag wa-h' /><input type='hidden' name='attr_weapon_arc_i_7' class='weapon-arc-flag wa-i' /><input type='hidden' name='attr_weapon_arc_j_7' class='weapon-arc-flag wa-j' /><input type='hidden' name='attr_weapon_arc_k_7' class='weapon-arc-flag wa-k' /><input type='hidden' name='attr_weapon_arc_l_7' class='weapon-arc-flag wa-l' /><span class='weapon-hex-visual' tabindex='0'><span class='arc-mark arc-a arc-af'></span><span class='arc-mark arc-b arc-af'></span><span class='arc-mark arc-c arc-af'></span><span class='arc-mark arc-d arc-af'></span><span class='arc-mark arc-e arc-af'></span><span class='arc-mark arc-f arc-af'></span><span class='arc-mark arc-g arc-gl'></span><span class='arc-mark arc-h arc-gl'></span><span class='arc-mark arc-i arc-gl'></span><span class='arc-mark arc-j arc-gl'></span><span class='arc-mark arc-k arc-gl'></span><span class='arc-mark arc-l arc-gl'></span></span><div class='hex-popup'><input type='text' name='attr_weapon_arc_7' class='firing-arc-input' placeholder='Firing Arcs...'/></div></div>
+                            <div class='weapon-hex-glyph wh-g-8'><input type='hidden' name='attr_weapon_arc_a_8' class='weapon-arc-flag wa-a' /><input type='hidden' name='attr_weapon_arc_b_8' class='weapon-arc-flag wa-b' /><input type='hidden' name='attr_weapon_arc_c_8' class='weapon-arc-flag wa-c' /><input type='hidden' name='attr_weapon_arc_d_8' class='weapon-arc-flag wa-d' /><input type='hidden' name='attr_weapon_arc_e_8' class='weapon-arc-flag wa-e' /><input type='hidden' name='attr_weapon_arc_f_8' class='weapon-arc-flag wa-f' /><input type='hidden' name='attr_weapon_arc_g_8' class='weapon-arc-flag wa-g' /><input type='hidden' name='attr_weapon_arc_h_8' class='weapon-arc-flag wa-h' /><input type='hidden' name='attr_weapon_arc_i_8' class='weapon-arc-flag wa-i' /><input type='hidden' name='attr_weapon_arc_j_8' class='weapon-arc-flag wa-j' /><input type='hidden' name='attr_weapon_arc_k_8' class='weapon-arc-flag wa-k' /><input type='hidden' name='attr_weapon_arc_l_8' class='weapon-arc-flag wa-l' /><span class='weapon-hex-visual' tabindex='0'><span class='arc-mark arc-a arc-af'></span><span class='arc-mark arc-b arc-af'></span><span class='arc-mark arc-c arc-af'></span><span class='arc-mark arc-d arc-af'></span><span class='arc-mark arc-e arc-af'></span><span class='arc-mark arc-f arc-af'></span><span class='arc-mark arc-g arc-gl'></span><span class='arc-mark arc-h arc-gl'></span><span class='arc-mark arc-i arc-gl'></span><span class='arc-mark arc-j arc-gl'></span><span class='arc-mark arc-k arc-gl'></span><span class='arc-mark arc-l arc-gl'></span></span><div class='hex-popup'><input type='text' name='attr_weapon_arc_8' class='firing-arc-input' placeholder='Firing Arcs...'/></div></div>
+                            <button type='action' name='act_weapon-add-hex' class='weapon-hex-add'>+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class='weapon-middle'>
+                    <div class='weapon-middle-row'>
+                        <input type='text' name='attr_weapon_range_1' class='weapon-middle-range' readonly tabindex='-1' />
+                        <input type='text' name='attr_weapon_accuracy_1' class='weapon-middle-accuracy' readonly tabindex='-1' />
+                    </div>
+                    <div class='weapon-middle-row'>
+                        <input type='text' name='attr_weapon_range_2' class='weapon-middle-range' readonly tabindex='-1' />
+                        <input type='text' name='attr_weapon_accuracy_2' class='weapon-middle-accuracy' readonly tabindex='-1' />
+                    </div>
+                    <div class='weapon-middle-row'>
+                        <input type='text' name='attr_weapon_range_3' class='weapon-middle-range' readonly tabindex='-1' />
+                        <input type='text' name='attr_weapon_accuracy_3' class='weapon-middle-accuracy' readonly tabindex='-1' />
+                    </div>
+                </div>
+                <div class='weapon-right'>
+                    <div class='weapon-right-row'>
+                        <input type='text' name='attr_weapon_property_1' class='weapon-right-property' readonly tabindex='-1' />
+                    </div>
+                    <div class='weapon-right-row'>
+                        <input type='text' name='attr_weapon_property_2' class='weapon-right-property' readonly tabindex='-1' />
+                    </div>
+                    <div class='weapon-right-row'>
+                        <input type='text' name='attr_weapon_property_3' class='weapon-right-property' readonly tabindex='-1' />
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <div class='systems-boxes-container'>
+            <div class='afb-box'>
+                <input type='hidden' name='attr_has_afb' />
+                <input type='hidden' name='attr_afb_count' />
+                <input type='hidden' name='attr_afb_label_strike' />
+                <div class='afb-content'>
+                    <button type='action' name='act_toggle-afb-label' class='afb-label afb-label-toggle'>Anti-Fighter Batteries</button>
+                    <div class='afb-checks'>
+                    <input type='checkbox' name='attr_afb_checked_1' value='1' class='afb-check' />
+                    <input type='checkbox' name='attr_afb_checked_2' value='1' class='afb-check' />
+                    <input type='checkbox' name='attr_afb_checked_3' value='1' class='afb-check' />
+                    <input type='checkbox' name='attr_afb_checked_4' value='1' class='afb-check' />
+                    <input type='checkbox' name='attr_afb_checked_5' value='1' class='afb-check' />
+                    <input type='checkbox' name='attr_afb_checked_6' value='1' class='afb-check' />
+                    <input type='checkbox' name='attr_afb_checked_7' value='1' class='afb-check' />
+                    <input type='checkbox' name='attr_afb_checked_8' value='1' class='afb-check' />
+                    <input type='checkbox' name='attr_afb_checked_9' value='1' class='afb-check' />
+                    <input type='checkbox' name='attr_afb_checked_10' value='1' class='afb-check' />
+                    <input type='checkbox' name='attr_afb_checked_11' value='1' class='afb-check' />
+                    <input type='checkbox' name='attr_afb_checked_12' value='1' class='afb-check' />
+                    <input type='checkbox' name='attr_afb_checked_13' value='1' class='afb-check' />
+                    <input type='checkbox' name='attr_afb_checked_14' value='1' class='afb-check' />
+                    <input type='checkbox' name='attr_afb_checked_15' value='1' class='afb-check' />
+                    <input type='checkbox' name='attr_afb_checked_16' value='1' class='afb-check' />
+                    <input type='checkbox' name='attr_afb_checked_17' value='1' class='afb-check' />
+                    <input type='checkbox' name='attr_afb_checked_18' value='1' class='afb-check' />
+                    <input type='checkbox' name='attr_afb_checked_19' value='1' class='afb-check' />
+                    <input type='checkbox' name='attr_afb_checked_20' value='1' class='afb-check' />
+                    <input type='checkbox' name='attr_afb_checked_21' value='1' class='afb-check' />
+                    <input type='checkbox' name='attr_afb_checked_22' value='1' class='afb-check' />
+                    <input type='checkbox' name='attr_afb_checked_23' value='1' class='afb-check' />
+                    <input type='checkbox' name='attr_afb_checked_24' value='1' class='afb-check' />
+                </div>
+            </div>
+        </div>
+        <div class='hyperdrive-box'>
+            <input type='hidden' name='attr_has_hyperdrive' />
+            <input type='hidden' name='attr_hyperdrive_count' />
+            <input type='hidden' name='attr_hyperdrive_label_strike' />
+            <div class='hyperdrive-content'>
+                <button type='action' name='act_toggle-hyperdrive-label' class='hyperdrive-label hyperdrive-label-toggle'>Hyperdrive</button>
+                <div class='hyperdrive-checks'>
+                    <input type='checkbox' name='attr_hyperdrive_checked_1' value='1' class='hyperdrive-check' />
+                    <input type='checkbox' name='attr_hyperdrive_checked_2' value='1' class='hyperdrive-check' />
+                    <input type='checkbox' name='attr_hyperdrive_checked_3' value='1' class='hyperdrive-check' />
+                    <input type='checkbox' name='attr_hyperdrive_checked_4' value='1' class='hyperdrive-check' />
+                    <input type='checkbox' name='attr_hyperdrive_checked_5' value='1' class='hyperdrive-check' />
+                    <input type='checkbox' name='attr_hyperdrive_checked_6' value='1' class='hyperdrive-check' />
+                    <input type='checkbox' name='attr_hyperdrive_checked_7' value='1' class='hyperdrive-check' />
+                    <input type='checkbox' name='attr_hyperdrive_checked_8' value='1' class='hyperdrive-check' />
+                    <input type='checkbox' name='attr_hyperdrive_checked_9' value='1' class='hyperdrive-check' />
+                    <input type='checkbox' name='attr_hyperdrive_checked_10' value='1' class='hyperdrive-check' />
+                    <input type='checkbox' name='attr_hyperdrive_checked_11' value='1' class='hyperdrive-check' />
+                    <input type='checkbox' name='attr_hyperdrive_checked_12' value='1' class='hyperdrive-check' />
+                    <input type='checkbox' name='attr_hyperdrive_checked_13' value='1' class='hyperdrive-check' />
+                    <input type='checkbox' name='attr_hyperdrive_checked_14' value='1' class='hyperdrive-check' />
+                    <input type='checkbox' name='attr_hyperdrive_checked_15' value='1' class='hyperdrive-check' />
+                    <input type='checkbox' name='attr_hyperdrive_checked_16' value='1' class='hyperdrive-check' />
+                    <input type='checkbox' name='attr_hyperdrive_checked_17' value='1' class='hyperdrive-check' />
+                    <input type='checkbox' name='attr_hyperdrive_checked_18' value='1' class='hyperdrive-check' />
+                    <input type='checkbox' name='attr_hyperdrive_checked_19' value='1' class='hyperdrive-check' />
+                    <input type='checkbox' name='attr_hyperdrive_checked_20' value='1' class='hyperdrive-check' />
+                    <input type='checkbox' name='attr_hyperdrive_checked_21' value='1' class='hyperdrive-check' />
+                    <input type='checkbox' name='attr_hyperdrive_checked_22' value='1' class='hyperdrive-check' />
+                    <input type='checkbox' name='attr_hyperdrive_checked_23' value='1' class='hyperdrive-check' />
+                    <input type='checkbox' name='attr_hyperdrive_checked_24' value='1' class='hyperdrive-check' />
+                </div>
+            </div>
+        </div>
+        <div class='marines-box'>
+            <input type='hidden' name='attr_has_marines' />
+            <input type='hidden' name='attr_marines_count' />
+            <input type='hidden' name='attr_marines_label_strike' />
+            <div class='marines-content'>
+                <button type='action' name='act_toggle-marines-label' class='marines-label marines-label-toggle'>Marines</button>
+                <div class='marines-checks'>
+                    <input type='checkbox' name='attr_marines_checked_1' value='1' class='marines-check' />
+                    <input type='checkbox' name='attr_marines_checked_2' value='1' class='marines-check' />
+                    <input type='checkbox' name='attr_marines_checked_3' value='1' class='marines-check' />
+                    <input type='checkbox' name='attr_marines_checked_4' value='1' class='marines-check' />
+                    <input type='checkbox' name='attr_marines_checked_5' value='1' class='marines-check' />
+                    <input type='checkbox' name='attr_marines_checked_6' value='1' class='marines-check' />
+                    <input type='checkbox' name='attr_marines_checked_7' value='1' class='marines-check' />
+                    <input type='checkbox' name='attr_marines_checked_8' value='1' class='marines-check' />
+                    <input type='checkbox' name='attr_marines_checked_9' value='1' class='marines-check' />
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class='carrier-flights-row'>
+        <div class='carrier-summary-box'>
+            <input type='hidden' name='attr_has_carrier' />
+            <div class='carrier-summary-content'>
+                <div class='carrier-summary-title'>Carrier (<span name='attr_carrier_count'></span>)</div>
+            </div>
+        </div>
+        <div class='fighter-flights-container'>
+            <input type='hidden' name='attr_carrier_count' />
+            <div class='fighter-flights-header'>FIGHTER FLIGHTS</div>
+            <div class='fighter-flights-rows'>
+                <div class='fighter-flight-row ff-row-1'>
+                    <input type='text' name='attr_flight_1_id' class='fighter-flight-id' placeholder='ID:' tabindex='-1' />
+                    <div class='fighter-flight-slot ff-slot-6'><input type='checkbox' name='attr_flight_1_6' /><span>6</span></div>
+                    <div class='fighter-flight-slot ff-slot-5'><input type='checkbox' name='attr_flight_1_5' /><span>5</span></div>
+                    <div class='fighter-flight-slot ff-slot-4'><input type='checkbox' name='attr_flight_1_4' /><span>4</span></div>
+                    <div class='fighter-flight-slot ff-slot-3'><input type='checkbox' name='attr_flight_1_3' /><span>3</span></div>
+                    <div class='fighter-flight-slot ff-slot-2'><input type='checkbox' name='attr_flight_1_2' /><span>2</span></div>
+                    <div class='fighter-flight-slot ff-slot-1'><input type='checkbox' name='attr_flight_1_1' /><span>1</span></div>
+                </div>
+                <div class='fighter-flight-row ff-row-2'>
+                    <input type='text' name='attr_flight_2_id' class='fighter-flight-id' placeholder='ID:' tabindex='-1' />
+                    <div class='fighter-flight-slot ff-slot-6'><input type='checkbox' name='attr_flight_2_6' /><span>6</span></div>
+                    <div class='fighter-flight-slot ff-slot-5'><input type='checkbox' name='attr_flight_2_5' /><span>5</span></div>
+                    <div class='fighter-flight-slot ff-slot-4'><input type='checkbox' name='attr_flight_2_4' /><span>4</span></div>
+                    <div class='fighter-flight-slot ff-slot-3'><input type='checkbox' name='attr_flight_2_3' /><span>3</span></div>
+                    <div class='fighter-flight-slot ff-slot-2'><input type='checkbox' name='attr_flight_2_2' /><span>2</span></div>
+                    <div class='fighter-flight-slot ff-slot-1'><input type='checkbox' name='attr_flight_2_1' /><span>1</span></div>
+                </div>
+                <div class='fighter-flight-row ff-row-3'>
+                    <input type='text' name='attr_flight_3_id' class='fighter-flight-id' placeholder='ID:' tabindex='-1' />
+                    <div class='fighter-flight-slot ff-slot-6'><input type='checkbox' name='attr_flight_3_6' /><span>6</span></div>
+                    <div class='fighter-flight-slot ff-slot-5'><input type='checkbox' name='attr_flight_3_5' /><span>5</span></div>
+                    <div class='fighter-flight-slot ff-slot-4'><input type='checkbox' name='attr_flight_3_4' /><span>4</span></div>
+                    <div class='fighter-flight-slot ff-slot-3'><input type='checkbox' name='attr_flight_3_3' /><span>3</span></div>
+                    <div class='fighter-flight-slot ff-slot-2'><input type='checkbox' name='attr_flight_3_2' /><span>2</span></div>
+                    <div class='fighter-flight-slot ff-slot-1'><input type='checkbox' name='attr_flight_3_1' /><span>1</span></div>
+                </div>
+                <div class='fighter-flight-row ff-row-4'>
+                    <input type='text' name='attr_flight_4_id' class='fighter-flight-id' placeholder='ID:' tabindex='-1' />
+                    <div class='fighter-flight-slot ff-slot-6'><input type='checkbox' name='attr_flight_4_6' /><span>6</span></div>
+                    <div class='fighter-flight-slot ff-slot-5'><input type='checkbox' name='attr_flight_4_5' /><span>5</span></div>
+                    <div class='fighter-flight-slot ff-slot-4'><input type='checkbox' name='attr_flight_4_4' /><span>4</span></div>
+                    <div class='fighter-flight-slot ff-slot-3'><input type='checkbox' name='attr_flight_4_3' /><span>3</span></div>
+                    <div class='fighter-flight-slot ff-slot-2'><input type='checkbox' name='attr_flight_4_2' /><span>2</span></div>
+                    <div class='fighter-flight-slot ff-slot-1'><input type='checkbox' name='attr_flight_4_1' /><span>1</span></div>
+                </div>
+                <div class='fighter-flight-row ff-row-5'>
+                    <input type='text' name='attr_flight_5_id' class='fighter-flight-id' placeholder='ID:' tabindex='-1' />
+                    <div class='fighter-flight-slot ff-slot-6'><input type='checkbox' name='attr_flight_5_6' /><span>6</span></div>
+                    <div class='fighter-flight-slot ff-slot-5'><input type='checkbox' name='attr_flight_5_5' /><span>5</span></div>
+                    <div class='fighter-flight-slot ff-slot-4'><input type='checkbox' name='attr_flight_5_4' /><span>4</span></div>
+                    <div class='fighter-flight-slot ff-slot-3'><input type='checkbox' name='attr_flight_5_3' /><span>3</span></div>
+                    <div class='fighter-flight-slot ff-slot-2'><input type='checkbox' name='attr_flight_5_2' /><span>2</span></div>
+                    <div class='fighter-flight-slot ff-slot-1'><input type='checkbox' name='attr_flight_5_1' /><span>1</span></div>
+                </div>
+                <div class='fighter-flight-row ff-row-6'>
+                    <input type='text' name='attr_flight_6_id' class='fighter-flight-id' placeholder='ID:' tabindex='-1' />
+                    <div class='fighter-flight-slot ff-slot-6'><input type='checkbox' name='attr_flight_6_6' /><span>6</span></div>
+                    <div class='fighter-flight-slot ff-slot-5'><input type='checkbox' name='attr_flight_6_5' /><span>5</span></div>
+                    <div class='fighter-flight-slot ff-slot-4'><input type='checkbox' name='attr_flight_6_4' /><span>4</span></div>
+                    <div class='fighter-flight-slot ff-slot-3'><input type='checkbox' name='attr_flight_6_3' /><span>3</span></div>
+                    <div class='fighter-flight-slot ff-slot-2'><input type='checkbox' name='attr_flight_6_2' /><span>2</span></div>
+                    <div class='fighter-flight-slot ff-slot-1'><input type='checkbox' name='attr_flight_6_1' /><span>1</span></div>
+                </div>
+                <div class='fighter-flight-row ff-row-7'>
+                    <input type='text' name='attr_flight_7_id' class='fighter-flight-id' placeholder='ID:' tabindex='-1' />
+                    <div class='fighter-flight-slot ff-slot-6'><input type='checkbox' name='attr_flight_7_6' /><span>6</span></div>
+                    <div class='fighter-flight-slot ff-slot-5'><input type='checkbox' name='attr_flight_7_5' /><span>5</span></div>
+                    <div class='fighter-flight-slot ff-slot-4'><input type='checkbox' name='attr_flight_7_4' /><span>4</span></div>
+                    <div class='fighter-flight-slot ff-slot-3'><input type='checkbox' name='attr_flight_7_3' /><span>3</span></div>
+                    <div class='fighter-flight-slot ff-slot-2'><input type='checkbox' name='attr_flight_7_2' /><span>2</span></div>
+                    <div class='fighter-flight-slot ff-slot-1'><input type='checkbox' name='attr_flight_7_1' /><span>1</span></div>
+                </div>
+                <div class='fighter-flight-row ff-row-8'>
+                    <input type='text' name='attr_flight_8_id' class='fighter-flight-id' placeholder='ID:' tabindex='-1' />
+                    <div class='fighter-flight-slot ff-slot-6'><input type='checkbox' name='attr_flight_8_6' /><span>6</span></div>
+                    <div class='fighter-flight-slot ff-slot-5'><input type='checkbox' name='attr_flight_8_5' /><span>5</span></div>
+                    <div class='fighter-flight-slot ff-slot-4'><input type='checkbox' name='attr_flight_8_4' /><span>4</span></div>
+                    <div class='fighter-flight-slot ff-slot-3'><input type='checkbox' name='attr_flight_8_3' /><span>3</span></div>
+                    <div class='fighter-flight-slot ff-slot-2'><input type='checkbox' name='attr_flight_8_2' /><span>2</span></div>
+                    <div class='fighter-flight-slot ff-slot-1'><input type='checkbox' name='attr_flight_8_1' /><span>1</span></div>
+                </div>
+                <div class='fighter-flight-row ff-row-9'>
+                    <input type='text' name='attr_flight_9_id' class='fighter-flight-id' placeholder='ID:' tabindex='-1' />
+                    <div class='fighter-flight-slot ff-slot-6'><input type='checkbox' name='attr_flight_9_6' /><span>6</span></div>
+                    <div class='fighter-flight-slot ff-slot-5'><input type='checkbox' name='attr_flight_9_5' /><span>5</span></div>
+                    <div class='fighter-flight-slot ff-slot-4'><input type='checkbox' name='attr_flight_9_4' /><span>4</span></div>
+                    <div class='fighter-flight-slot ff-slot-3'><input type='checkbox' name='attr_flight_9_3' /><span>3</span></div>
+                    <div class='fighter-flight-slot ff-slot-2'><input type='checkbox' name='attr_flight_9_2' /><span>2</span></div>
+                    <div class='fighter-flight-slot ff-slot-1'><input type='checkbox' name='attr_flight_9_1' /><span>1</span></div>
+                </div>
+            </div>
+        </div>
+        </div><!-- /.carrier-flights-row -->
+    </section>
+
+    <section class='section-design'>
+        <div class='sheet-main'>
+            <div class='sheet-side sheet-side-left'>
+                <div class='field-row'>
+                    <label for='attr_hull_size'>Hull Size</label>
+                    <input type='number' name='attr_hull_size' min='1' max='24' />
+                </div>
+                <div class='field-row'>
+                    <label for='attr_space_units'>Space Units</label>
+                    <input type='number' name='attr_space_units' readonly />
+                </div>
+                <div class='field-row'>
+                    <label for='attr_engine_rating'>Engine Rating</label>
+                    <input type='number' name='attr_engine_rating' min='1' max='20' />
+                </div>
+            </div>
+            <div class='sheet-side sheet-side-right'>
+                <div class='design-section'>
+                    <div class='design-section-title'>Systems</div>
+                    <fieldset class='repeating_systems'>
+                        <div class='design-system-row'>
+                            <select name='attr_system_type' class='design-system-select' required>
+                                <option value='' disabled selected hidden>Select system...</option>
+                                <option value='anti_fighter_batteries'>Anti-Fighter Batteries</option>
+                                <option value='hyperdrive'>Hyperdrive</option>
+                                <option value='marines'>Marines</option>
+                                <option value='carrier'>Carrier</option>
+                                <option value='screen_fwd'>Screen (fwd)</option>
+                                <option value='screen_port'>Screen (port)</option>
+                                <option value='screen_stbd'>Screen (stbd)</option>
+                                <option value='screen_aft'>Screen (aft)</option>
+                            </select>
+                            <input type='text' name='attr_system_category' class='design-system-select' readonly tabindex='-1' />
+                            <input type='hidden' name='attr_system_is_munitions' />
+                            <input type='hidden' name='attr_system_is_carrier' />
+                            <input type='number' name='attr_system_munition_count' class='design-system-munition-count' min='0' max='9' value='0' />
+                            <input type='number' name='attr_system_carrier_count' class='design-system-carrier-count' min='1' max='9' value='1' />
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class='section-settings'>
+        <div class='sheet-main'>
+            <div class='sheet-side sheet-side-left'>
+            </div>
+            <div class='sheet-side sheet-side-right'>
+                <div class='field-row'>
+                    <label for='attr_dark_mode'>Dark Mode</label>
+                    <input type='checkbox' name='attr_dark_mode' value='1' />
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script type='text/worker'>
+// Weapon definitions: [abbreviation, name, [special properties]]
+const WEAPONS = [
+    ['AM', 'Anti-Matter Beam', ['Bursting']],
+    ['CM', 'Cluster Missile', ['Volatile']],
+    ['DS', 'Disruptor', ['Disruptive']],
+    ['EL', 'Energy Lance', []],
+    ['FT', 'Fusion Torpedo', ['Catastrophic']],
+    ['IO', 'Ion Cannon', ['Incapacitating', 'Phasing 3']],
+    ['LC', 'Laser Cannon', ['Accurate']],
+    ['MD', 'Mass Driver', ['Crushing', 'Semi-Piercing']],
+    ['NB', 'Needlebeam', ['Cutting', 'Pinpoint']],
+    ['PC', 'Phase Cannon', ['Phasing 1']],
+    ['PL', 'Pulse Laser', ['Repeating 5']],
+    ['SC', 'Shock Cannon', []],
+];
+
+// Range Class table: [rangeClass, shortRange, mediumRange, longRange]
+const RANGECLASS = [
+    [2, '1-2', '3-4', '5-6'],
+    [3, '1-3', '4-6', '7-9'],
+    [4, '1-4', '5-8', '9-12'],
+    [5, '1-5', '6-10', '11-15'],
+    [6, '1-6', '7-12', '13-18'],
+];
+
+// Accuracy code table: [code, shortRange, mediumRange, longRange]
+const ACCURACYMODE = [
+    ['a', '2+', '3+', '4+'],
+    ['b', '3+', '4+', '5+'],
+    ['c', '4+', '5+', '6+'],
+];
+
+const SYSTEMS = [
+    ['anti_fighter_batteries', 'Anti-Fighter Batteries'],
+    ['hyperdrive', 'Hyperdrive'],
+    ['screen_fwd', 'Screen (fwd)'],
+    ['screen_port', 'Screen (port)'],
+    ['screen_stbd', 'Screen (stbd)'],
+    ['screen_aft', 'Screen (aft)']
+];
+
+const FIRING_ARC_LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'];
+
+// Select/deselect buttons
+const buttonlist = ['section-ssd','section-design','section-settings'];
+buttonlist.forEach(button => {
+    on(`clicked:${button}`, function() {
+        setAttrs({
+            sheetButtons: button,
+            sheetTab: button
+        });
+    });
+});
+
+// Hex diagram add/remove handlers
+on('clicked:repeating_weapons:weapon-add-hex', async function(eventInfo) {
+    const match = (eventInfo.sourceAttribute || '').match(/repeating_weapons_(.+?)_weapon-add-hex/);
+    if (!match) return;
+    const prefix = `repeating_weapons_${match[1]}_`;
+    const hexAttrs = [1,2,3,4,5,6,7,8].map(n => `${prefix}weapon_hex_${n}`);
+    const values = await getAttrsAsync(hexAttrs);
+    const nextIdx = [1,2,3,4,5,6,7,8].find(n => { const v = values[`${prefix}weapon_hex_${n}`]; return !v || v === '0'; });
+    if (nextIdx !== undefined) {
+        await setAttrsAsync({ [`${prefix}weapon_hex_${nextIdx}`]: '1' });
+    }
+});
+
+on('clicked:repeating_weapons:weapon-remove-hex', async function(eventInfo) {
+    const match = (eventInfo.sourceAttribute || '').match(/repeating_weapons_(.+?)_weapon-remove-hex/);
+    if (!match) return;
+    const prefix = `repeating_weapons_${match[1]}_`;
+    const hexAttrs = [1,2,3,4,5,6,7,8].map(n => `${prefix}weapon_hex_${n}`);
+    const values = await getAttrsAsync(hexAttrs);
+    const lastIdx = [8,7,6,5,4,3,2,1].find(n => values[`${prefix}weapon_hex_${n}`] === '1');
+    if (lastIdx !== undefined) {
+        await setAttrsAsync({
+            [`${prefix}weapon_hex_${lastIdx}`]: '',
+            ...buildFiringArcAttrs(prefix, lastIdx, '')
+        });
+    }
+});
+
+// Update weapon-loss when hex count changes
+on('change:repeating_weapons:weapon_hex_1 change:repeating_weapons:weapon_hex_2 change:repeating_weapons:weapon_hex_3 change:repeating_weapons:weapon_hex_4 change:repeating_weapons:weapon_hex_5 change:repeating_weapons:weapon_hex_6 change:repeating_weapons:weapon_hex_7 change:repeating_weapons:weapon_hex_8', async function(eventInfo) {
+    const match = (eventInfo.sourceAttribute || '').match(/repeating_weapons_(.+?)_weapon_hex_(\d)/);
+    if (!match) return;
+    const prefix = `repeating_weapons_${match[1]}_`;
+    const changedHexIndex = parseInt(match[2], 10);
+    const hexAttrs = [1,2,3,4,5,6,7,8].map(n => `${prefix}weapon_hex_${n}`);
+    const values = await getAttrsAsync(hexAttrs);
+    const count = [1,2,3,4,5,6,7,8].filter(n => values[`${prefix}weapon_hex_${n}`] === '1').length;
+    const attrs = {
+        [`${prefix}weapon_loss`]: Math.ceil(count / 2)
+    };
+
+    if (values[`${prefix}weapon_hex_${changedHexIndex}`] !== '1') {
+        Object.assign(attrs, buildFiringArcAttrs(prefix, changedHexIndex, ''));
+    }
+
+    await setAttrsAsync(attrs);
+});
+
+function normalizeFiringArcValue(rawValue) {
+    const seen = {};
+    let normalized = '';
+    (rawValue || '').toUpperCase().split('').forEach(ch => {
+        if (!seen[ch] && FIRING_ARC_LETTERS.includes(ch)) {
+            seen[ch] = true;
+            normalized += ch;
+        }
+    });
+    return normalized;
+}
+
+function buildFiringArcAttrs(prefix, hexIndex, rawValue) {
+    const normalized = normalizeFiringArcValue(rawValue);
+    const attrs = {
+        [`${prefix}weapon_arc_${hexIndex}`]: normalized
+    };
+
+    FIRING_ARC_LETTERS.forEach(letter => {
+        const key = `${prefix}weapon_arc_${letter.toLowerCase()}_${hexIndex}`;
+        attrs[key] = normalized.includes(letter) ? '1' : '';
+    });
+
+    return attrs;
+}
+
+async function updateSystemsStatBoxes() {
+    const baseValues = await getAttrsAsync(['hull_size']);
+    const hullSize = parseInt(baseValues.hull_size, 10) || 0;
+    const rowIds = await getSectionIDsAsync('repeating_systems');
+    const systemTypeAttrs = rowIds.map(rowId => `repeating_systems_${rowId}_system_type`);
+    const values = systemTypeAttrs.length ? await getAttrsAsync(systemTypeAttrs) : {};
+    const totalSystems = rowIds.reduce((count, rowId) => {
+        const systemType = values[`repeating_systems_${rowId}_system_type`] || '';
+        return count + (systemType && systemType !== 'carrier' ? 1 : 0);
+    }, 0);
+    const attrs = {};
+    const decrement = (hullSize > 0 && totalSystems > 0) ? totalSystems / hullSize : 0;
+    for (let i = 1; i <= 24; i++) {
+        if (i <= hullSize && totalSystems > 0) {
+            attrs[`system_box_${i}`] = Math.ceil(totalSystems - (i - 1) * decrement);
+        } else {
+            attrs[`system_box_${i}`] = '';
+        }
+    }
+    await setAttrsAsync(attrs);
+}
+
+async function updateWeaponStatBoxes() {
+    const baseValues = await getAttrsAsync(['hull_size']);
+    const hullSize = parseInt(baseValues.hull_size, 10) || 0;
+    const rowIds = await getSectionIDsAsync('repeating_weapons');
+    const hexAttrs = [];
+
+    rowIds.forEach(rowId => {
+        for (let i = 1; i <= 8; i++) {
+            hexAttrs.push(`repeating_weapons_${rowId}_weapon_hex_${i}`);
+        }
+    });
+
+    const hexValues = hexAttrs.length ? await getAttrsAsync(hexAttrs) : {};
+    const totalWeaponHexes = hexAttrs.reduce((count, attrName) => {
+        return count + (hexValues[attrName] === '1' ? 1 : 0);
+    }, 0);
+
+    const attrs = {};
+    const decrement = (hullSize > 0 && totalWeaponHexes > 0) ? totalWeaponHexes / hullSize : 0;
+
+    for (let i = 1; i <= 24; i++) {
+        if (i <= hullSize && totalWeaponHexes > 0) {
+            attrs[`weapon_box_${i}`] = Math.ceil(totalWeaponHexes - (i - 1) * decrement);
+        } else {
+            attrs[`weapon_box_${i}`] = '';
+        }
+    }
+
+    await setAttrsAsync(attrs);
+}
+
+async function updateSystemIndicators() {
+    const rowIds = await getSectionIDsAsync('repeating_systems');
+    const systemAttrs = rowIds.map(rowId => `repeating_systems_${rowId}_system_type`);
+    const munitionCountAttrs = rowIds.map(rowId => `repeating_systems_${rowId}_system_munition_count`);
+    const carrierCountAttrs = rowIds.map(rowId => `repeating_systems_${rowId}_system_carrier_count`);
+    const values = (systemAttrs.length || munitionCountAttrs.length)
+        ? await getAttrsAsync([...systemAttrs, ...munitionCountAttrs, ...carrierCountAttrs])
+        : {};
+
+    const getSystemType = rowId => values[`repeating_systems_${rowId}_system_type`] || '';
+    const getMunitionCount = rowId => {
+        const raw = parseInt(values[`repeating_systems_${rowId}_system_munition_count`], 10);
+        if (Number.isNaN(raw)) return 0;
+        return Math.max(0, Math.min(9, raw));
+    };
+
+    const getCarrierCount = rowId => {
+        const raw = parseInt(values[`repeating_systems_${rowId}_system_carrier_count`], 10);
+        if (Number.isNaN(raw)) return 1;
+        return Math.max(1, Math.min(9, raw));
+    };
+
+    const afbCount = rowIds.reduce((count, rowId) => count + (getSystemType(rowId) === 'anti_fighter_batteries' ? 1 : 0), 0);
+    const hyperdriveCount = rowIds.reduce((count, rowId) => count + (getSystemType(rowId) === 'hyperdrive' ? 1 : 0), 0);
+    const marinesRowCount = rowIds.reduce((count, rowId) => count + (getSystemType(rowId) === 'marines' ? 1 : 0), 0);
+    const marinesCheckboxCount = rowIds.reduce((count, rowId) => count + (getSystemType(rowId) === 'marines' ? getMunitionCount(rowId) : 0), 0);
+    const carrierRowCount = rowIds.reduce((count, rowId) => count + (getSystemType(rowId) === 'carrier' ? 1 : 0), 0);
+    const carrierCount = rowIds.reduce((count, rowId) => count + (getSystemType(rowId) === 'carrier' ? getCarrierCount(rowId) : 0), 0);
+    const hasAfb = afbCount > 0;
+    const hasHyperdrive = hyperdriveCount > 0;
+    const hasMarines = marinesRowCount > 0;
+    const hasCarrier = carrierRowCount > 0;
+    const visibleAfbCount = Math.min(24, afbCount);
+    const visibleHyperdriveCount = Math.min(24, hyperdriveCount);
+    const visibleMarinesCount = Math.min(24, marinesCheckboxCount);
+    const forwardScreenCount = Math.min(3, rowIds.reduce((count, rowId) => count + (getSystemType(rowId) === 'screen_fwd' ? 1 : 0), 0));
+    const portScreenCount = Math.min(3, rowIds.reduce((count, rowId) => count + (getSystemType(rowId) === 'screen_port' ? 1 : 0), 0));
+    const stbdScreenCount = Math.min(3, rowIds.reduce((count, rowId) => count + (getSystemType(rowId) === 'screen_stbd' ? 1 : 0), 0));
+    const aftScreenCount = Math.min(3, rowIds.reduce((count, rowId) => count + (getSystemType(rowId) === 'screen_aft' ? 1 : 0), 0));
+
+    const attrs = {
+        has_afb: hasAfb ? '1' : '',
+        afb_count: visibleAfbCount ? String(visibleAfbCount) : '',
+        has_hyperdrive: hasHyperdrive ? '1' : '',
+        hyperdrive_count: visibleHyperdriveCount ? String(visibleHyperdriveCount) : '',
+        has_marines: hasMarines ? '1' : '',
+        marines_count: visibleMarinesCount ? String(visibleMarinesCount) : '',
+        has_carrier: hasCarrier ? '1' : '',
+        carrier_count: hasCarrier ? String(carrierCount) : '',
+        screen_fwd_boxes: forwardScreenCount ? String(forwardScreenCount) : '',
+        screen_port_boxes: portScreenCount ? String(portScreenCount) : '',
+        screen_stbd_boxes: stbdScreenCount ? String(stbdScreenCount) : '',
+        screen_aft_boxes: aftScreenCount ? String(aftScreenCount) : ''
+    };
+
+    rowIds.forEach(rowId => {
+        const systemType = getSystemType(rowId);
+        const categoryAttr = `repeating_systems_${rowId}_system_category`;
+        const isMunitionsAttr = `repeating_systems_${rowId}_system_is_munitions`;
+        const isCarrierAttr = `repeating_systems_${rowId}_system_is_carrier`;
+        const munitionAttr = `repeating_systems_${rowId}_system_munition_count`;
+        const carrierAttr = `repeating_systems_${rowId}_system_carrier_count`;
+
+        if (!systemType) {
+            attrs[categoryAttr] = '';
+            attrs[isMunitionsAttr] = '';
+            attrs[isCarrierAttr] = '';
+            attrs[munitionAttr] = '';
+            attrs[carrierAttr] = '';
+            return;
+        }
+
+        if (systemType === 'marines') {
+            attrs[categoryAttr] = 'Munitions';
+            attrs[isMunitionsAttr] = '1';
+            attrs[isCarrierAttr] = '';
+            attrs[munitionAttr] = String(getMunitionCount(rowId));
+            attrs[carrierAttr] = '';
+            return;
+        }
+
+        if (systemType === 'carrier') {
+            attrs[categoryAttr] = 'Trait';
+            attrs[isMunitionsAttr] = '';
+            attrs[isCarrierAttr] = '1';
+            attrs[munitionAttr] = '';
+            attrs[carrierAttr] = String(getCarrierCount(rowId));
+            return;
+        }
+
+        attrs[categoryAttr] = 'Equipment';
+        attrs[isMunitionsAttr] = '';
+        attrs[isCarrierAttr] = '';
+        attrs[munitionAttr] = '';
+        attrs[carrierAttr] = '';
+    });
+
+    // Hidden AFB boxes should not keep stale checked state.
+    for (let index = visibleAfbCount + 1; index <= 24; index++) {
+        attrs[`afb_checked_${index}`] = '';
+    }
+
+    // Hidden Hyperdrive boxes should not keep stale checked state.
+    for (let index = visibleHyperdriveCount + 1; index <= 24; index++) {
+        attrs[`hyperdrive_checked_${index}`] = '';
+    }
+
+    // Hidden Marines boxes should not keep stale checked state.
+    for (let index = visibleMarinesCount + 1; index <= 24; index++) {
+        attrs[`marines_checked_${index}`] = '';
+    }
+
+    // Clear unused fighter flight slots.
+    for (let flight = carrierCount + 1; flight <= 9; flight++) {
+        for (let slot = 1; slot <= 6; slot++) {
+            attrs[`flight_${flight}_${slot}`] = '';
+        }
+    }
+
+    await setAttrsAsync(attrs);
+}
+
+on('change:repeating_weapons:weapon_arc_1 change:repeating_weapons:weapon_arc_2 change:repeating_weapons:weapon_arc_3 change:repeating_weapons:weapon_arc_4 change:repeating_weapons:weapon_arc_5 change:repeating_weapons:weapon_arc_6 change:repeating_weapons:weapon_arc_7 change:repeating_weapons:weapon_arc_8', async function(eventInfo) {
+    const match = (eventInfo.sourceAttribute || '').match(/repeating_weapons_(.+?)_weapon_arc_(\d)/);
+    if (!match) return;
+
+    const prefix = `repeating_weapons_${match[1]}_`;
+    const hexIndex = parseInt(match[2], 10);
+    const arcAttr = `${prefix}weapon_arc_${hexIndex}`;
+    const values = await getAttrsAsync([arcAttr]);
+    await setAttrsAsync(buildFiringArcAttrs(prefix, hexIndex, values[arcAttr]));
+});
+
+on('sheet:opened change:center_image_url', async function() {
+    const values = await getAttrsAsync(['center_image_url']);
+    const centerImageUrl = (values.center_image_url || '').trim();
+    await setAttrsAsync({
+        center_image: centerImageUrl,
+        has_center_image: centerImageUrl ? '1' : ''
+    });
+});
+
+on('clicked:toggle-afb-label', async function() {
+    const values = await getAttrsAsync(['afb_label_strike']);
+    const isStruck = values.afb_label_strike === '1';
+    await setAttrsAsync({ afb_label_strike: isStruck ? '' : '1' });
+});
+
+on('clicked:toggle-hyperdrive-label', async function() {
+    const values = await getAttrsAsync(['hyperdrive_label_strike']);
+    const isStruck = values.hyperdrive_label_strike === '1';
+    await setAttrsAsync({ hyperdrive_label_strike: isStruck ? '' : '1' });
+});
+
+on('clicked:toggle-marines-label', async function() {
+    const values = await getAttrsAsync(['marines_label_strike']);
+    const isStruck = values.marines_label_strike === '1';
+    await setAttrsAsync({ marines_label_strike: isStruck ? '' : '1' });
+});
+
+on('sheet:opened change:repeating_systems:system_type change:repeating_systems:system_munition_count change:repeating_systems:system_carrier_count remove:repeating_systems', async function() {
+    await updateSystemIndicators();
+    await updateSystemsStatBoxes();
+});
+
+// Update weapon abbreviation when weapon type changes
+on('change:repeating_weapons:weapon_type', function(eventInfo) {
+    const match = eventInfo.sourceAttribute.match(/repeating_weapons_(.+?)_weapon_type/);
+    if (!match) return;
+    const rowId = match[1];
+    const prefix = `repeating_weapons_${rowId}_`;
+    getAttrs([`${prefix}weapon_type`], function(values) {
+        const weaponType = values[`${prefix}weapon_type`] || '';
+        const attrs = buildWeaponTypeAttrs(prefix, weaponType);
+        setAttrs(attrs);
+    });
+});
+
+function buildWeaponTypeAttrs(prefix, weaponTypeValue) {
+    const attrs = {
+        [`${prefix}weapon_abbr`]: weaponTypeValue || '',
+        [`${prefix}weapon_property_1`]: '',
+        [`${prefix}weapon_property_2`]: '',
+        [`${prefix}weapon_property_3`]: ''
+    };
+
+    const weaponRow = WEAPONS.find(row => row[0] === weaponTypeValue);
+    if (!weaponRow) return attrs;
+
+    const properties = weaponRow[2] || [];
+    for (let index = 0; index < 3; index++) {
+        attrs[`${prefix}weapon_property_${index + 1}`] = properties[index] || '';
+    }
+
+    return attrs;
+}
+
+function parseVariantCode(rawVariant) {
+    const match = (rawVariant || '').trim().match(/^(\d+)\s*([A-Za-z])$/);
+    if (!match) return null;
+    return {
+        rangeClass: parseInt(match[1], 10),
+        accuracyCode: match[2].toLowerCase()
+    };
+}
+
+function buildRangeAccuracyAttrs(prefix, weaponTypeValue, variantValue, rofValue, dmgValue) {
+    const attrs = {
+        [`${prefix}weapon_range_1`]: '',
+        [`${prefix}weapon_range_2`]: '',
+        [`${prefix}weapon_range_3`]: '',
+        [`${prefix}weapon_accuracy_1`]: '',
+        [`${prefix}weapon_accuracy_2`]: '',
+        [`${prefix}weapon_accuracy_3`]: ''
+    };
+
+    const parsed = parseVariantCode(variantValue);
+    if (!parsed) return attrs;
+
+    const rangeRow = RANGECLASS.find(row => row[0] === parsed.rangeClass);
+    const accuracyRow = ACCURACYMODE.find(row => row[0] === parsed.accuracyCode);
+    if (!rangeRow || !accuracyRow) return attrs;
+
+    const rof = Math.min(4, Math.max(1, parseInt(rofValue, 10) || 1));
+    const dmg = Math.min(4, Math.max(1, parseInt(dmgValue, 10) || 1));
+
+    attrs[`${prefix}weapon_range_1`] = rangeRow[1];
+    attrs[`${prefix}weapon_range_2`] = rangeRow[2];
+    attrs[`${prefix}weapon_range_3`] = rangeRow[3];
+
+    if (weaponTypeValue === 'SC') {
+        const fixedAccuracy = accuracyRow[2];
+        attrs[`${prefix}weapon_accuracy_1`] = `${rof}x${fixedAccuracy}/3`;
+        attrs[`${prefix}weapon_accuracy_2`] = `${rof}x${fixedAccuracy}/2`;
+        attrs[`${prefix}weapon_accuracy_3`] = `${rof}x${fixedAccuracy}/1`;
+        return attrs;
+    }
+
+    if (weaponTypeValue === 'EL') {
+        attrs[`${prefix}weapon_accuracy_1`] = `${rof}x${accuracyRow[3]}/${dmg}`;
+        attrs[`${prefix}weapon_accuracy_2`] = `${rof}x${accuracyRow[2]}/${dmg}`;
+        attrs[`${prefix}weapon_accuracy_3`] = `${rof}x${accuracyRow[1]}/${dmg}`;
+        return attrs;
+    }
+
+    attrs[`${prefix}weapon_accuracy_1`] = `${rof}x${accuracyRow[1]}/${dmg}`;
+    attrs[`${prefix}weapon_accuracy_2`] = `${rof}x${accuracyRow[2]}/${dmg}`;
+    attrs[`${prefix}weapon_accuracy_3`] = `${rof}x${accuracyRow[3]}/${dmg}`;
+    return attrs;
+}
+
+on('change:repeating_weapons:weapon_type change:repeating_weapons:weapon_variant change:repeating_weapons:weapon_rof change:repeating_weapons:weapon_dmg', function(eventInfo) {
+    const match = eventInfo.sourceAttribute.match(/repeating_weapons_(.+?)_(weapon_type|weapon_variant|weapon_rof|weapon_dmg)/);
+    if (!match) return;
+
+    const rowId = match[1];
+    const prefix = `repeating_weapons_${rowId}_`;
+    const weaponTypeAttr = `${prefix}weapon_type`;
+    const variantAttr = `${prefix}weapon_variant`;
+    const rofAttr = `${prefix}weapon_rof`;
+    const dmgAttr = `${prefix}weapon_dmg`;
+
+    getAttrs([weaponTypeAttr, variantAttr, rofAttr, dmgAttr], function(values) {
+        const attrs = buildRangeAccuracyAttrs(prefix, values[weaponTypeAttr], values[variantAttr], values[rofAttr], values[dmgAttr]);
+        setAttrs(attrs);
+    });
+});
+
+on('sheet:opened change:hull_size change:repeating_weapons:weapon_hex_1 change:repeating_weapons:weapon_hex_2 change:repeating_weapons:weapon_hex_3 change:repeating_weapons:weapon_hex_4 change:repeating_weapons:weapon_hex_5 change:repeating_weapons:weapon_hex_6 change:repeating_weapons:weapon_hex_7 change:repeating_weapons:weapon_hex_8 remove:repeating_weapons', async function() {
+    await updateWeaponStatBoxes();
+});
+
+// Screen indicator mark toggles (click to cycle: empty <-> X)
+for (let i = 1; i <= 3; i++) {
+    on(`clicked:mark-screen-fwd-${i}`, async function() {
+        const attrName = `mark_screen_fwd_${i}`;
+        const values = await getAttrsAsync([attrName]);
+        const next = values[attrName] === 'X' ? '' : 'X';
+        await setAttrsAsync({ [attrName]: next });
+    });
+
+    on(`clicked:mark-screen-port-${i}`, async function() {
+        const attrName = `mark_screen_port_${i}`;
+        const values = await getAttrsAsync([attrName]);
+        const next = values[attrName] === 'X' ? '' : 'X';
+        await setAttrsAsync({ [attrName]: next });
+    });
+
+    on(`clicked:mark-screen-stbd-${i}`, async function() {
+        const attrName = `mark_screen_stbd_${i}`;
+        const values = await getAttrsAsync([attrName]);
+        const next = values[attrName] === 'X' ? '' : 'X';
+        await setAttrsAsync({ [attrName]: next });
+    });
+
+    on(`clicked:mark-screen-aft-${i}`, async function() {
+        const attrName = `mark_screen_aft_${i}`;
+        const values = await getAttrsAsync([attrName]);
+        const next = values[attrName] === 'X' ? '' : 'X';
+        await setAttrsAsync({ [attrName]: next });
+    });
+}
+
+// Stat box mark cycling (click to cycle: empty → / → X → empty)
+const markSections = ['hull', 'engine', 'weapons', 'systems'];
+markSections.forEach(section => {
+    for (let i = 1; i <= 24; i++) {
+        on(`clicked:mark-${section}-${i}`, async function() {
+            const attrName = `mark_${section}_${i}`;
+            const values = await getAttrsAsync([attrName]);
+            const current = values[attrName] || '';
+            let next = '';
+            if (current === '') next = '/';
+            else if (current === '/') next = 'X';
+            else next = '';
+            await setAttrsAsync({ [attrName]: next });
+        });
+    }
+});
+
+// Update Space Units and Hull Box values when Hull Size changes
+on('change:hull_size change:engine_rating', async function() {
+    const values = await getAttrsAsync(['hull_size', 'engine_rating']);
+    const hullSize = parseInt(values.hull_size) || 0;
+    const engineRating = parseInt(values.engine_rating) || 0;
+    const attrs = { space_units: hullSize * 100 };
+    for (let i = 1; i <= 24; i++) {
+        attrs['hull_box_' + i] = (i <= hullSize) ? (hullSize - i + 1) : '';
+    }
+    // Calculate engine box values: start at engine_rating, decrement by engine_rating/hull_size each box
+    const decrement = (hullSize > 0 && engineRating > 0) ? engineRating / hullSize : 0;
+    for (let i = 1; i <= 24; i++) {
+        if (i <= hullSize && engineRating > 0) {
+            attrs['engine_box_' + i] = Math.ceil(engineRating - (i - 1) * decrement);
+        } else {
+            attrs['engine_box_' + i] = '';
+        }
+    }
+    await setAttrsAsync(attrs);
+    await updateWeaponStatBoxes();
+    await updateSystemsStatBoxes();
+});
+
+/* Async Function Framework */
+function isRunningOnServer() { return self.dispatchEvent == undefined; }
+function setActiveCharacterId(charId){
+    var oldAcid=getActiveCharacterId();
+    var msg={"id":"0", "type":"setActiveCharacter", "data":charId};
+    
+    if(isRunningOnServer()==false){ //if in a browser, use "dispatchEvent" to process the message
+        var ev = new CustomEvent("message");
+        ev.data=msg; 
+        self.dispatchEvent(ev);
+    }else{ //otherwise, use the API (server) message processor, "onmessage"
+        self.onmessage({data:msg});
+    }
+    return oldAcid; //return what the value used to be, so calling code can be a little cleaner 
+} 
+var _sIn=setInterval;
+setInterval=function(callback, timeout){
+    var acid=getActiveCharacterId();
+    _sIn(
+        function(){
+            var prevAcid=setActiveCharacterId(acid);
+            callback();
+            setActiveCharacterId(prevAcid);
+        }
+    ,timeout);
+}
+var _sto=setTimeout
+setTimeout=function(callback, timeout){
+    var acid=getActiveCharacterId();
+    _sto(
+        function(){
+            var prevAcid=setActiveCharacterId(acid);
+            callback();
+            setActiveCharacterId(prevAcid);
+        }
+    ,timeout);
+}
+function getAttrsAsync(props){
+    var acid=getActiveCharacterId(); //save the current activeCharacterID in case it has changed when the promise runs 
+    var prevAcid=null;               //local variable defined here, because it needs to be shared across the promise callbacks defined below
+    return new Promise((resolve,reject)=>{
+            prevAcid=setActiveCharacterId(acid);  //in case the activeCharacterId has changed, restore it to what we were expecting and save the current value to restore later
+            try{
+                getAttrs(props,(values)=>{  resolve(values); }); 
+            }
+            catch{ reject(); }
+    }).finally(()=>{
+        setActiveCharacterId(prevAcid); //restore activeCharcterId to what it was when the promise first ran
+    });
+}
+//use the same pattern for each of the following...
+function setAttrsAsync(propObj, options){
+    var acid=getActiveCharacterId(); 
+    var prevAcid=null;               
+    return new Promise((resolve,reject)=>{
+            prevAcid=setActiveCharacterId(acid);  
+            try{
+                setAttrs(propObj,options,(values)=>{ resolve(values); });
+            }
+            catch{ reject(); }
+    }).finally(()=>{
+        setActiveCharacterId(prevAcid); 
+    });
+}
+
+function getSectionIDsAsync(sectionName){
+    var acid = getActiveCharacterId(); 
+    var prevAcid=null;               
+    return new Promise((resolve,reject)=>{
+            prevAcid = setActiveCharacterId(acid);  
+            try{
+                getSectionIDs(sectionName,(values)=>{ resolve(values); });
+            }
+            catch{ reject(); }
+    }).finally(()=>{
+        setActiveCharacterId(prevAcid); 
+    });
+}
+</script>

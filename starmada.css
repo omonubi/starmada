@@ -1,0 +1,2145 @@
+/* Import a sci-fi font available on Roll20 */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+
+.section-design input[readonly] {
+    background-color: #f0f0f0;
+    color: #888;
+    border: 1px dashed #bbb;
+}
+.section-design input:not([readonly]) {
+    background-color: #fff;
+    color: #222;
+    border: 1px solid #ccc;
+}
+/* Remove spinners from readonly number fields */
+input[type="number"][readonly]::-webkit-inner-spin-button,
+input[type="number"][readonly]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"][readonly] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+.ui-dialog .charsheet {
+    font-family: 'Orbitron', sans-serif;
+}
+
+.sheet-tabs {
+    display: flex;
+    background-color: transparent;
+    padding: 0;
+    text-transform: uppercase;
+    width: 100%;
+    box-sizing: border-box;
+    gap: 0;
+    margin-bottom: 4px;
+}
+
+.ui-dialog .charsheet .sheet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* consistent vertical alignment */
+    background-color: #000;
+    color: #fff;
+    padding: 4px 10px 2px; /* tighter vertical padding for consistency */
+    height: 20px;
+    text-transform: uppercase;
+    border-bottom: 8px solid #777; /* gray separator bar */
+}
+
+.ui-dialog .charsheet .sheet-header input,
+.ui-dialog .charsheet .sheet-header select,
+.ui-dialog .charsheet .sheet-header .sheet-label,
+.ui-dialog .charsheet .sheet-header .sheet-dot {
+    line-height: 16px;
+    vertical-align: middle;
+}
+
+/* Specific Override for the right-side stats */
+.ui-dialog .charsheet .span-seeker-stats {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    text-transform: none; /* Optional: keeps it from being forced to ALL CAPS if you prefer */
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+/* Input Styling (Inherits Orbitron from .charsheet) */
+.ui-dialog .charsheet .sheet-header input,
+.ui-dialog .charsheet .sheet-header select {
+    background: transparent;
+    border: none;
+    color: white;
+    font-family: inherit; /* Uses Orbitron */
+    font-weight: bold;
+    font-size: 16px;
+    padding: 0;
+    margin: 0;
+}
+
+/* Increase width of all number inputs by 50% */
+.ui-dialog .charsheet input[type="number"] {
+    width: 100px;
+    box-sizing: border-box;
+}
+.ui-dialog .charsheet .sheet-header select option {
+    background-color: #333; /* Dark grey so it's not pure white */
+    color: #fff;
+}
+
+.ui-dialog .charsheet .sheet-header .sheet-inline-input { width: 100px; }
+.ui-dialog .charsheet .sheet-header input[name="attr_class"] { width: 200px; }
+.ui-dialog .charsheet .sheet-header .sheet-inline-number,
+.ui-dialog .charsheet .sheet-header input[name="attr_combat_rating"] {
+    width: 60px;
+    text-align: center;
+    appearance: textfield;
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+}
+
+.ui-dialog .charsheet .sheet-header .sheet-inline-select {
+    width: auto;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: none;
+    padding-right: 0;
+}
+
+.ui-dialog .charsheet .sheet-dot {
+    margin: 0 10px;
+    font-size: 20px;
+}
+
+.sheet-main {
+    display: flex;
+    width: 100%;
+    min-height: 280px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.sheet-side {
+    width: 50%;
+    box-sizing: border-box;
+    padding: 8px;
+}
+
+.sheet-side-left {
+    background-color: #fff;
+    position: relative;
+}
+
+.diagonal-lines {
+    position: absolute;
+    inset: 8px;
+}
+
+.center-image-control {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.center-image-hit {
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+}
+
+.center-image-hit:focus {
+    outline: none;
+}
+
+.center-image-popup {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    min-width: 180px;
+    padding: 8px 10px;
+    background: #fff;
+    border: 1px solid #888;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.center-image-control:focus-within .center-image-popup {
+    display: block;
+}
+
+.center-image-input {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 4px 6px;
+    font-size: 13px;
+    outline: none;
+}
+
+.center-image-input:focus {
+    border-color: #666;
+}
+
+.center-image-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 110px;
+    height: 110px;
+    box-sizing: border-box;
+    border: 1px dashed #bcbcbc;
+    border-radius: 6px;
+    background: #f3f3f3;
+    color: #8a8a8a;
+    font-size: 14px;
+    text-align: center;
+    padding: 10px;
+    pointer-events: none;
+}
+
+.center-image-control input[name="attr_has_center_image"][value="1"] ~ .center-image-empty {
+    display: none;
+}
+
+.center-image-preview {
+    max-width: 110px;
+    max-height: 110px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.diag {
+    position: absolute;
+    width: 48px;
+    height: 4px;
+    background: #aaa;
+}
+
+.diag-1 {
+    top: 0;
+    left: 0;
+    transform-origin: 0 0;
+    transform: rotate(45deg);
+}
+
+.diag-2 {
+    top: 0;
+    right: 0;
+    transform-origin: 100% 0;
+    transform: rotate(-45deg);
+}
+
+.diag-3 {
+    bottom: 0;
+    left: 0;
+    transform-origin: 0 100%;
+    transform: rotate(-45deg);
+}
+
+.diag-4 {
+    bottom: 0;
+    right: 0;
+    transform-origin: 100% 100%;
+    transform: rotate(45deg);
+}
+
+.sheet-side-right {
+    background-color: #ddd;
+}
+
+.sheet-side-right .field-row {
+    margin-bottom: 8px;
+}
+
+.section-design .field-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    margin-bottom: 10px;
+}
+
+.screen-indicator-group {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    gap: 4px;
+}
+
+.screen-indicator-group-aft {
+    top: auto;
+    bottom: 8px;
+}
+
+.screen-indicator-group-port {
+    top: 50%;
+    left: 8px;
+    bottom: auto;
+    transform: translateY(-50%);
+    flex-direction: column-reverse;
+}
+
+.screen-indicator-group-stbd {
+    top: 50%;
+    left: auto;
+    right: 8px;
+    bottom: auto;
+    transform: translateY(-50%);
+    flex-direction: column-reverse;
+}
+
+.design-screen-indicator {
+    display: none;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    box-sizing: border-box;
+    background: #fff;
+    border: 2px solid #222;
+    border-radius: 6px;
+    color: #000;
+    font-family: 'Arial Narrow', 'Helvetica Neue', sans-serif;
+    font-size: 22px;
+    font-weight: normal;
+    line-height: 24px;
+    text-align: center;
+    position: relative;
+}
+
+.screen-indicator-value {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.design-screen-indicator .mark-overlay {
+    position: absolute;
+    inset: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+    padding: 0;
+    margin: 0;
+    font-size: 0;
+    color: transparent;
+}
+
+.design-screen-indicator input[type="hidden"][value="X"] ~ .mark-overlay::after {
+    content: "X";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Arial Narrow', 'Helvetica Neue', sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+    color: #c00;
+    pointer-events: none;
+}
+
+.screen-indicator-group input[name="attr_screen_fwd_boxes"][value="1"] ~ .screen-indicator-1,
+.screen-indicator-group input[name="attr_screen_fwd_boxes"][value="2"] ~ .screen-indicator-1,
+.screen-indicator-group input[name="attr_screen_fwd_boxes"][value="2"] ~ .screen-indicator-2,
+.screen-indicator-group input[name="attr_screen_fwd_boxes"][value="3"] ~ .screen-indicator-1,
+.screen-indicator-group input[name="attr_screen_fwd_boxes"][value="3"] ~ .screen-indicator-2,
+.screen-indicator-group input[name="attr_screen_fwd_boxes"][value="3"] ~ .screen-indicator-3 {
+    display: inline-block;
+}
+
+.screen-indicator-group input[name="attr_screen_port_boxes"][value="1"] ~ .screen-port-indicator-1,
+.screen-indicator-group input[name="attr_screen_port_boxes"][value="2"] ~ .screen-port-indicator-1,
+.screen-indicator-group input[name="attr_screen_port_boxes"][value="2"] ~ .screen-port-indicator-2,
+.screen-indicator-group input[name="attr_screen_port_boxes"][value="3"] ~ .screen-port-indicator-1,
+.screen-indicator-group input[name="attr_screen_port_boxes"][value="3"] ~ .screen-port-indicator-2,
+.screen-indicator-group input[name="attr_screen_port_boxes"][value="3"] ~ .screen-port-indicator-3 {
+    display: inline-block;
+}
+
+.screen-indicator-group input[name="attr_screen_stbd_boxes"][value="1"] ~ .screen-stbd-indicator-1,
+.screen-indicator-group input[name="attr_screen_stbd_boxes"][value="2"] ~ .screen-stbd-indicator-1,
+.screen-indicator-group input[name="attr_screen_stbd_boxes"][value="2"] ~ .screen-stbd-indicator-2,
+.screen-indicator-group input[name="attr_screen_stbd_boxes"][value="3"] ~ .screen-stbd-indicator-1,
+.screen-indicator-group input[name="attr_screen_stbd_boxes"][value="3"] ~ .screen-stbd-indicator-2,
+.screen-indicator-group input[name="attr_screen_stbd_boxes"][value="3"] ~ .screen-stbd-indicator-3 {
+    display: inline-block;
+}
+
+.screen-indicator-group input[name="attr_screen_aft_boxes"][value="1"] ~ .screen-aft-indicator-1,
+.screen-indicator-group input[name="attr_screen_aft_boxes"][value="2"] ~ .screen-aft-indicator-1,
+.screen-indicator-group input[name="attr_screen_aft_boxes"][value="2"] ~ .screen-aft-indicator-2,
+.screen-indicator-group input[name="attr_screen_aft_boxes"][value="3"] ~ .screen-aft-indicator-1,
+.screen-indicator-group input[name="attr_screen_aft_boxes"][value="3"] ~ .screen-aft-indicator-2,
+.screen-indicator-group input[name="attr_screen_aft_boxes"][value="3"] ~ .screen-aft-indicator-3 {
+    display: inline-block;
+}
+
+.design-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.design-section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+    text-transform: uppercase;
+}
+
+.section-design .repeating_systems {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.design-system-row {
+    margin-bottom: 4px;
+}
+
+.design-system-row .design-system-select,
+.design-system-row .design-system-munition-count,
+.design-system-row .design-system-carrier-count {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+}
+
+.design-system-select {
+    width: 40%;
+    box-sizing: border-box;
+    height: 22px;
+    min-height: 22px;
+    line-height: 20px;
+    padding: 0 8px;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    background: #fff;
+    color: #222;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.design-system-row input[name="attr_system_category"] {
+    width: 24%;
+}
+
+.design-system-row input[name="attr_system_munition_count"].design-system-munition-count {
+    display: none;
+    width: 28px;
+    min-width: 32px;
+    max-width: 32px;
+    height: 22px;
+    min-height: 22px;
+    line-height: 20px;
+    padding: 0 2px;
+    box-sizing: border-box;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    background: #fff;
+    color: #222;
+    font-family: inherit;
+    font-size: 14px;
+    text-align: center;
+}
+
+.design-system-row input[name="attr_system_carrier_count"].design-system-carrier-count {
+    display: none;
+    width: 28px;
+    min-width: 32px;
+    max-width: 32px;
+    height: 22px;
+    min-height: 22px;
+    line-height: 20px;
+    padding: 0 2px;
+    box-sizing: border-box;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    background: #fff;
+    color: #222;
+    font-family: inherit;
+    font-size: 14px;
+    text-align: center;
+}
+
+.design-system-row input[name="attr_system_is_munitions"][value="1"] ~ .design-system-munition-count {
+    display: inline-block;
+}
+
+.design-system-row input[name="attr_system_is_carrier"][value="1"] ~ .design-system-carrier-count {
+    display: inline-block;
+}
+
+.design-system-select:invalid {
+    color: #999;
+}
+
+.design-system-select[readonly] {
+    background-color: #f5f5f5;
+    color: #222;
+    cursor: default;
+}
+
+.design-system-select option {
+    color: #222;
+}
+
+.section-design label,
+.section-settings label {
+    margin-bottom: 0;
+}
+
+.sheet-side-right input[name="attr_id"] {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: white;
+    border-radius: 4px;
+    padding: 4px 8px;
+    border: 1px solid #ccc;
+}
+
+.sheet-side-right .stat-section {
+    margin-bottom: 5px;
+}
+
+.stat-label-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.sheet-side-right .stat-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+}
+
+.sheet-side-right .stat-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #333;
+}
+
+.stat-boxes {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 2px;
+}
+
+.stat-box {
+    width: 28px;
+    height: 28px;
+    background-color: white;
+    box-sizing: border-box;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2px;
+    position: relative;
+}
+
+.stat-box input[type="text"] {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent;
+    text-align: center;
+    font-family: 'Arial Narrow', 'Helvetica Neue', sans-serif;
+    font-size: 22px;
+    font-weight: none;
+    padding: 0;
+    margin: 0;
+    color: #000;
+    cursor: default;
+}
+
+/* Mark overlay button - covers the stat-box for click detection */
+.stat-box .mark-overlay {
+    position: absolute;
+    inset: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+    padding: 0;
+    margin: 0;
+    font-size: 0;
+    color: transparent;
+}
+
+/* Slash overlay */
+.stat-box input[type="hidden"][value="/"] ~ .mark-overlay::after {
+    content: "/";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Arial Narrow', 'Helvetica Neue', sans-serif;
+    font-size: 28px;
+    font-weight: bold;
+    color: #c00;
+    pointer-events: none;
+}
+
+/* X overlay */
+.stat-box input[type="hidden"][value="X"] ~ .mark-overlay::after {
+    content: "X";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Arial Narrow', 'Helvetica Neue', sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+    color: #c00;
+    pointer-events: none;
+}
+
+/* Dark mode mark overlay */
+.darkmodetoggle[value="1"] ~ section .stat-box input[type="hidden"][value="/"] ~ .mark-overlay::after,
+.darkmodetoggle[value="1"] ~ section .stat-box input[type="hidden"][value="X"] ~ .mark-overlay::after {
+    color: #f55;
+}
+
+.darkmodetoggle[value="1"] ~ section .design-screen-indicator input[type="hidden"][value="X"] ~ .mark-overlay::after {
+    color: #f55;
+}
+
+/*** HULL SIZE BOX VISIBILITY ***/
+/* Hide all boxes when hull_size is empty or unset */
+.stat-boxes input[name="attr_hull_size"][value=""] ~ div.stat-box,
+.stat-boxes input[name="attr_hull_size"][value="0"] ~ div.stat-box,
+.stat-boxes input[name="attr_hull_size"]:not([value]) ~ div.stat-box {
+    display: none;
+}
+/* Show only hull_size number of boxes */
+.stat-boxes input[name="attr_hull_size"][value="1"] ~ div.stat-box:nth-of-type(n+2) { display: none; }
+.stat-boxes input[name="attr_hull_size"][value="2"] ~ div.stat-box:nth-of-type(n+3) { display: none; }
+.stat-boxes input[name="attr_hull_size"][value="3"] ~ div.stat-box:nth-of-type(n+4) { display: none; }
+.stat-boxes input[name="attr_hull_size"][value="4"] ~ div.stat-box:nth-of-type(n+5) { display: none; }
+.stat-boxes input[name="attr_hull_size"][value="5"] ~ div.stat-box:nth-of-type(n+6) { display: none; }
+.stat-boxes input[name="attr_hull_size"][value="6"] ~ div.stat-box:nth-of-type(n+7) { display: none; }
+.stat-boxes input[name="attr_hull_size"][value="7"] ~ div.stat-box:nth-of-type(n+8) { display: none; }
+.stat-boxes input[name="attr_hull_size"][value="8"] ~ div.stat-box:nth-of-type(n+9) { display: none; }
+.stat-boxes input[name="attr_hull_size"][value="9"] ~ div.stat-box:nth-of-type(n+10) { display: none; }
+.stat-boxes input[name="attr_hull_size"][value="10"] ~ div.stat-box:nth-of-type(n+11) { display: none; }
+.stat-boxes input[name="attr_hull_size"][value="11"] ~ div.stat-box:nth-of-type(n+12) { display: none; }
+.stat-boxes input[name="attr_hull_size"][value="12"] ~ div.stat-box:nth-of-type(n+13) { display: none; }
+.stat-boxes input[name="attr_hull_size"][value="13"] ~ div.stat-box:nth-of-type(n+14) { display: none; }
+.stat-boxes input[name="attr_hull_size"][value="14"] ~ div.stat-box:nth-of-type(n+15) { display: none; }
+.stat-boxes input[name="attr_hull_size"][value="15"] ~ div.stat-box:nth-of-type(n+16) { display: none; }
+.stat-boxes input[name="attr_hull_size"][value="16"] ~ div.stat-box:nth-of-type(n+17) { display: none; }
+.stat-boxes input[name="attr_hull_size"][value="17"] ~ div.stat-box:nth-of-type(n+18) { display: none; }
+.stat-boxes input[name="attr_hull_size"][value="18"] ~ div.stat-box:nth-of-type(n+19) { display: none; }
+.stat-boxes input[name="attr_hull_size"][value="19"] ~ div.stat-box:nth-of-type(n+20) { display: none; }
+.stat-boxes input[name="attr_hull_size"][value="20"] ~ div.stat-box:nth-of-type(n+21) { display: none; }
+.stat-boxes input[name="attr_hull_size"][value="21"] ~ div.stat-box:nth-of-type(n+22) { display: none; }
+.stat-boxes input[name="attr_hull_size"][value="22"] ~ div.stat-box:nth-of-type(n+23) { display: none; }
+.stat-boxes input[name="attr_hull_size"][value="23"] ~ div.stat-box:nth-of-type(n+24) { display: none; }
+
+/* 1. Style the actual input placeholders to be consistent */
+.ui-dialog .charsheet .sheet-header input::placeholder {
+    color: #999;
+    opacity: 1; /* Firefox fix */
+}
+
+/* Hide number input arrows for Chromium/Edge/Safari */
+.ui-dialog .charsheet .sheet-header input[type="number"]::-webkit-outer-spin-button,
+.ui-dialog .charsheet .sheet-header input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Hide number input arrows for Firefox */
+.ui-dialog .charsheet .sheet-header input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+/* 2. Set the select color to gray when the placeholder is active */
+/* This works because the first option has value="" and the select is 'required' */
+.ui-dialog .charsheet .sheet-header select:invalid {
+    color: #999;
+}
+
+/* 3. Ensure the text turns white once a valid option is picked */
+.ui-dialog .charsheet .sheet-header select {
+    color: white;
+}
+
+/* 4. Keep the internal options white so the list is readable */
+.ui-dialog .charsheet .sheet-header select option {
+    color: white;
+    background-color: #333;
+}
+
+/**************** TAB CONTROLS ****************/
+.ui-dialog .charsheet .section-ssd,
+.ui-dialog .charsheet .section-design,
+.ui-dialog .charsheet .section-settings {
+    display: none;
+}
+.ui-dialog .charsheet .tabstoggle[value='section-ssd'] ~ section.section-ssd,
+.ui-dialog .charsheet .tabstoggle[value='section-design'] ~ section.section-design,
+.ui-dialog .charsheet .tabstoggle[value='section-settings'] ~ section.section-settings {
+    display: block;
+}
+.ui-dialog .charsheet .btn-tab-ssd,
+.ui-dialog .charsheet .btn-tab-design,
+.ui-dialog .charsheet .btn-tab-settings {
+    flex: 1;
+    background-color: #d3d3d3;
+    color: #000;
+    border: none;
+    border-bottom: 4px solid transparent;
+    padding: 6px;
+    text-align: center;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 16px;
+    transition: background-color 0.3s, border-bottom 0.3s;
+}
+/* Active tab underline using attribute selector for Roll20 compatibility */
+.ui-dialog .charsheet .tabstoggle[value='section-ssd'] ~ .sheet-tabs .btn-tab-ssd,
+.ui-dialog .charsheet .tabstoggle[value='section-design'] ~ .sheet-tabs .btn-tab-design,
+.ui-dialog .charsheet .tabstoggle[value='section-settings'] ~ .sheet-tabs .btn-tab-settings {
+    border-bottom: 4px solid #222;
+}
+.ui-dialog .charsheet .btn-tab-ssd:hover,
+.ui-dialog .charsheet .btn-tab-design:hover,
+.ui-dialog .charsheet .btn-tab-settings:hover {
+    background-color: #bbb;
+}
+.ui-dialog .charsheet .btn-tab-ssd:focus,
+.ui-dialog .charsheet .btn-tab-design:focus,
+.ui-dialog .charsheet .btn-tab-settings:focus {
+    outline: none;
+    background-color: #aaa;
+}
+
+/**************** DARK MODE ****************/
+/* Header */
+.darkmodetoggle[value="1"] ~ section .sheet-header {
+    background-color: #999;
+    color: #000;
+    border-bottom-color: #555;
+}
+.darkmodetoggle[value="1"] ~ section .sheet-header input,
+.darkmodetoggle[value="1"] ~ section .sheet-header select {
+    color: #000;
+}
+.darkmodetoggle[value="1"] ~ section .sheet-header input::placeholder {
+    color: #999;
+}
+.darkmodetoggle[value="1"] ~ section .sheet-header select:invalid {
+    color: #999;
+}
+.darkmodetoggle[value="1"] ~ section .sheet-header select option {
+    color: #fff;
+    background-color: #333;
+}
+.darkmodetoggle[value="1"] ~ section .sheet-header .sheet-dot {
+    color: #000;
+}
+
+/* Sheet main area */
+.darkmodetoggle[value="1"] ~ section .sheet-main {
+    border-color: #444;
+}
+
+/* Left side */
+.darkmodetoggle[value="1"] ~ section .sheet-side-left {
+    background-color: #1a1a1a;
+}
+.darkmodetoggle[value="1"] ~ section .diag {
+    background: #555;
+}
+
+/* Right side */
+.darkmodetoggle[value="1"] ~ section .sheet-side-right {
+    background-color: #2a2a2a;
+}
+.darkmodetoggle[value="1"] ~ section .sheet-side-right input[name="attr_id"] {
+    background-color: #333;
+    color: #eee;
+    border-color: #555;
+}
+.darkmodetoggle[value="1"] ~ section .sheet-side-right .stat-title {
+    color: #000;
+}
+.darkmodetoggle[value="1"] ~ section .sheet-side-right .stat-name {
+    color: #ccc;
+}
+
+/* Stat boxes */
+.darkmodetoggle[value="1"] ~ section .stat-box {
+    background-color: #333;
+}
+.darkmodetoggle[value="1"] ~ section .stat-box input {
+    color: #fff;
+}
+
+/* Tabs */
+.darkmodetoggle[value="1"] ~ .sheet-tabs .btn-tab-ssd,
+.darkmodetoggle[value="1"] ~ .sheet-tabs .btn-tab-design,
+.darkmodetoggle[value="1"] ~ .sheet-tabs .btn-tab-settings {
+    background-color: #333;
+    color: #ddd;
+}
+.darkmodetoggle[value="1"] ~ .sheet-tabs .btn-tab-ssd:hover,
+.darkmodetoggle[value="1"] ~ .sheet-tabs .btn-tab-design:hover,
+.darkmodetoggle[value="1"] ~ .sheet-tabs .btn-tab-settings:hover {
+    background-color: #444;
+}
+/* Active tab underline in dark mode */
+.darkmodetoggle[value="1"].darkmodetoggle ~ .sheet-tabs .btn-tab-ssd,
+.darkmodetoggle[value="1"].darkmodetoggle ~ .sheet-tabs .btn-tab-design,
+.darkmodetoggle[value="1"].darkmodetoggle ~ .sheet-tabs .btn-tab-settings {
+    border-bottom-color: transparent;
+}
+.darkmodetoggle[value="1"] ~ .tabstoggle[value='section-ssd'] ~ .sheet-tabs .btn-tab-ssd,
+.darkmodetoggle[value="1"] ~ .tabstoggle[value='section-design'] ~ .sheet-tabs .btn-tab-design,
+.darkmodetoggle[value="1"] ~ .tabstoggle[value='section-settings'] ~ .sheet-tabs .btn-tab-settings {
+    background-color: #444;
+    border-bottom-color: #ddd;
+}
+
+/* Design & Settings tab inputs */
+.darkmodetoggle[value="1"] ~ section.section-design input:not([readonly]) {
+    background-color: #333;
+    color: #eee;
+    border-color: #555;
+}
+.darkmodetoggle[value="1"] ~ section.section-design input[readonly] {
+    background-color: #222;
+    color: #888;
+    border-color: #444;
+}
+.darkmodetoggle[value="1"] ~ section.section-design label,
+.darkmodetoggle[value="1"] ~ section.section-settings label {
+    color: #ddd;
+}
+
+/**************** MOVEMENT ORDERS ****************/
+.movement-orders {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto auto;
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    overflow: hidden;
+}
+
+.movement-box {
+    display: flex;
+    align-items: stretch;
+    box-sizing: border-box;
+    min-height: 36px;
+    margin: 5px;
+    border-radius: 4px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.movement-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #999;
+    padding: 0 8px;
+    background-color: #fff;
+    border-right: 1px solid #ccc;
+    min-width: 24px;
+}
+
+.movement-box input[type="text"] {
+    flex: 1;
+    border: none;
+    background-color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 18px;
+    padding: 4px 8px;
+    min-width: 0;
+    width: 0;
+}
+
+/* Dark mode - Movement Orders */
+.darkmodetoggle[value="1"] ~ section .movement-box {
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+.darkmodetoggle[value="1"] ~ section .movement-number {
+    background-color: #2a2a2a;
+    color: #ddd;
+    border-right-color: #444;
+}
+.darkmodetoggle[value="1"] ~ section .movement-box input[type="text"] {
+    background-color: #1a1a1a;
+    color: #eee;
+}
+
+.systems-boxes-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    width: 100%;
+}
+
+.carrier-flights-row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 4px;
+    margin: 6px 0 2px 6px;
+}
+
+.carrier-summary-box {
+    margin: 0;
+    width: fit-content;
+    max-width: 100%;
+}
+
+.carrier-summary-content {
+    display: none;
+    align-items: flex-start;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 6px 10px;
+    box-sizing: border-box;
+    min-height: 36px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    width: fit-content;
+}
+
+.carrier-summary-box input[name="attr_has_carrier"][value="1"] ~ .carrier-summary-content {
+    display: flex;
+}
+
+.carrier-summary-title {
+    font-family: 'Roboto Condensed', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: #000;
+    line-height: 1;
+}
+
+.carrier-summary-count {
+    width: 24px;
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    text-align: center;
+    pointer-events: none;
+}
+
+.darkmodetoggle[value="1"] ~ section .carrier-summary-content {
+    background-color: #2a2a2a;
+    border-color: #444;
+}
+
+.darkmodetoggle[value="1"] ~ section .carrier-summary-title,
+.darkmodetoggle[value="1"] ~ section .carrier-summary-count {
+    color: #eee;
+}
+
+/*** FIGHTER FLIGHTS BOX ***/
+/* Fighter Flights Container */
+.fighter-flights-container {
+    display: none;
+    margin: 0;
+    align-self: flex-start;
+    width: fit-content;
+    max-width: 100%;
+    background-color: #ddd;
+    border-radius: 0;
+    padding: 0 10px 10px;
+    border: 1px solid #ccc;
+}
+
+.fighter-flights-container:has(input[name="attr_carrier_count"][value="1"]),
+.fighter-flights-container:has(input[name="attr_carrier_count"][value="2"]),
+.fighter-flights-container:has(input[name="attr_carrier_count"][value="3"]),
+.fighter-flights-container:has(input[name="attr_carrier_count"][value="4"]),
+.fighter-flights-container:has(input[name="attr_carrier_count"][value="5"]),
+.fighter-flights-container:has(input[name="attr_carrier_count"][value="6"]),
+.fighter-flights-container:has(input[name="attr_carrier_count"][value="7"]),
+.fighter-flights-container:has(input[name="attr_carrier_count"][value="8"]),
+.fighter-flights-container:has(input[name="attr_carrier_count"][value="9"]) {
+    display: block;
+}
+
+.fighter-flights-container input[name="attr_carrier_count"] {
+    display: none;
+}
+
+.fighter-flights-header {
+    display: none;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    color: #333333;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+}
+
+.fighter-flights-container input[name="attr_carrier_count"][value="1"] ~ .fighter-flights-header,
+.fighter-flights-container input[name="attr_carrier_count"][value="2"] ~ .fighter-flights-header,
+.fighter-flights-container input[name="attr_carrier_count"][value="3"] ~ .fighter-flights-header,
+.fighter-flights-container input[name="attr_carrier_count"][value="4"] ~ .fighter-flights-header,
+.fighter-flights-container input[name="attr_carrier_count"][value="5"] ~ .fighter-flights-header,
+.fighter-flights-container input[name="attr_carrier_count"][value="6"] ~ .fighter-flights-header,
+.fighter-flights-container input[name="attr_carrier_count"][value="7"] ~ .fighter-flights-header,
+.fighter-flights-container input[name="attr_carrier_count"][value="8"] ~ .fighter-flights-header,
+.fighter-flights-container input[name="attr_carrier_count"][value="9"] ~ .fighter-flights-header {
+    display: block;
+}
+
+.fighter-flights-rows {
+    display: none;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.fighter-flights-container input[name="attr_carrier_count"][value="1"] ~ .fighter-flights-rows,
+.fighter-flights-container input[name="attr_carrier_count"][value="2"] ~ .fighter-flights-rows,
+.fighter-flights-container input[name="attr_carrier_count"][value="3"] ~ .fighter-flights-rows,
+.fighter-flights-container input[name="attr_carrier_count"][value="4"] ~ .fighter-flights-rows,
+.fighter-flights-container input[name="attr_carrier_count"][value="5"] ~ .fighter-flights-rows,
+.fighter-flights-container input[name="attr_carrier_count"][value="6"] ~ .fighter-flights-rows,
+.fighter-flights-container input[name="attr_carrier_count"][value="7"] ~ .fighter-flights-rows,
+.fighter-flights-container input[name="attr_carrier_count"][value="8"] ~ .fighter-flights-rows,
+.fighter-flights-container input[name="attr_carrier_count"][value="9"] ~ .fighter-flights-rows {
+    display: flex;
+}
+
+/* Show/hide individual rows based on carrier count */
+.fighter-flights-container input[name="attr_carrier_count"][value="1"] ~ .fighter-flights-rows .ff-row-1 { display: flex; }
+.fighter-flights-container input[name="attr_carrier_count"][value="1"] ~ .fighter-flights-rows .ff-row-2,
+.fighter-flights-container input[name="attr_carrier_count"][value="1"] ~ .fighter-flights-rows .ff-row-3,
+.fighter-flights-container input[name="attr_carrier_count"][value="1"] ~ .fighter-flights-rows .ff-row-4,
+.fighter-flights-container input[name="attr_carrier_count"][value="1"] ~ .fighter-flights-rows .ff-row-5,
+.fighter-flights-container input[name="attr_carrier_count"][value="1"] ~ .fighter-flights-rows .ff-row-6,
+.fighter-flights-container input[name="attr_carrier_count"][value="1"] ~ .fighter-flights-rows .ff-row-7,
+.fighter-flights-container input[name="attr_carrier_count"][value="1"] ~ .fighter-flights-rows .ff-row-8,
+.fighter-flights-container input[name="attr_carrier_count"][value="1"] ~ .fighter-flights-rows .ff-row-9 { display: none; }
+
+.fighter-flights-container input[name="attr_carrier_count"][value="2"] ~ .fighter-flights-rows .ff-row-1,
+.fighter-flights-container input[name="attr_carrier_count"][value="2"] ~ .fighter-flights-rows .ff-row-2 { display: flex; }
+.fighter-flights-container input[name="attr_carrier_count"][value="2"] ~ .fighter-flights-rows .ff-row-3,
+.fighter-flights-container input[name="attr_carrier_count"][value="2"] ~ .fighter-flights-rows .ff-row-4,
+.fighter-flights-container input[name="attr_carrier_count"][value="2"] ~ .fighter-flights-rows .ff-row-5,
+.fighter-flights-container input[name="attr_carrier_count"][value="2"] ~ .fighter-flights-rows .ff-row-6,
+.fighter-flights-container input[name="attr_carrier_count"][value="2"] ~ .fighter-flights-rows .ff-row-7,
+.fighter-flights-container input[name="attr_carrier_count"][value="2"] ~ .fighter-flights-rows .ff-row-8,
+.fighter-flights-container input[name="attr_carrier_count"][value="2"] ~ .fighter-flights-rows .ff-row-9 { display: none; }
+
+.fighter-flights-container input[name="attr_carrier_count"][value="3"] ~ .fighter-flights-rows .ff-row-1,
+.fighter-flights-container input[name="attr_carrier_count"][value="3"] ~ .fighter-flights-rows .ff-row-2,
+.fighter-flights-container input[name="attr_carrier_count"][value="3"] ~ .fighter-flights-rows .ff-row-3 { display: flex; }
+.fighter-flights-container input[name="attr_carrier_count"][value="3"] ~ .fighter-flights-rows .ff-row-4,
+.fighter-flights-container input[name="attr_carrier_count"][value="3"] ~ .fighter-flights-rows .ff-row-5,
+.fighter-flights-container input[name="attr_carrier_count"][value="3"] ~ .fighter-flights-rows .ff-row-6,
+.fighter-flights-container input[name="attr_carrier_count"][value="3"] ~ .fighter-flights-rows .ff-row-7,
+.fighter-flights-container input[name="attr_carrier_count"][value="3"] ~ .fighter-flights-rows .ff-row-8,
+.fighter-flights-container input[name="attr_carrier_count"][value="3"] ~ .fighter-flights-rows .ff-row-9 { display: none; }
+
+.fighter-flights-container input[name="attr_carrier_count"][value="4"] ~ .fighter-flights-rows .ff-row-1,
+.fighter-flights-container input[name="attr_carrier_count"][value="4"] ~ .fighter-flights-rows .ff-row-2,
+.fighter-flights-container input[name="attr_carrier_count"][value="4"] ~ .fighter-flights-rows .ff-row-3,
+.fighter-flights-container input[name="attr_carrier_count"][value="4"] ~ .fighter-flights-rows .ff-row-4 { display: flex; }
+.fighter-flights-container input[name="attr_carrier_count"][value="4"] ~ .fighter-flights-rows .ff-row-5,
+.fighter-flights-container input[name="attr_carrier_count"][value="4"] ~ .fighter-flights-rows .ff-row-6,
+.fighter-flights-container input[name="attr_carrier_count"][value="4"] ~ .fighter-flights-rows .ff-row-7,
+.fighter-flights-container input[name="attr_carrier_count"][value="4"] ~ .fighter-flights-rows .ff-row-8,
+.fighter-flights-container input[name="attr_carrier_count"][value="4"] ~ .fighter-flights-rows .ff-row-9 { display: none; }
+
+.fighter-flights-container input[name="attr_carrier_count"][value="5"] ~ .fighter-flights-rows .ff-row-1,
+.fighter-flights-container input[name="attr_carrier_count"][value="5"] ~ .fighter-flights-rows .ff-row-2,
+.fighter-flights-container input[name="attr_carrier_count"][value="5"] ~ .fighter-flights-rows .ff-row-3,
+.fighter-flights-container input[name="attr_carrier_count"][value="5"] ~ .fighter-flights-rows .ff-row-4,
+.fighter-flights-container input[name="attr_carrier_count"][value="5"] ~ .fighter-flights-rows .ff-row-5 { display: flex; }
+.fighter-flights-container input[name="attr_carrier_count"][value="5"] ~ .fighter-flights-rows .ff-row-6,
+.fighter-flights-container input[name="attr_carrier_count"][value="5"] ~ .fighter-flights-rows .ff-row-7,
+.fighter-flights-container input[name="attr_carrier_count"][value="5"] ~ .fighter-flights-rows .ff-row-8,
+.fighter-flights-container input[name="attr_carrier_count"][value="5"] ~ .fighter-flights-rows .ff-row-9 { display: none; }
+
+.fighter-flights-container input[name="attr_carrier_count"][value="6"] ~ .fighter-flights-rows .ff-row-1,
+.fighter-flights-container input[name="attr_carrier_count"][value="6"] ~ .fighter-flights-rows .ff-row-2,
+.fighter-flights-container input[name="attr_carrier_count"][value="6"] ~ .fighter-flights-rows .ff-row-3,
+.fighter-flights-container input[name="attr_carrier_count"][value="6"] ~ .fighter-flights-rows .ff-row-4,
+.fighter-flights-container input[name="attr_carrier_count"][value="6"] ~ .fighter-flights-rows .ff-row-5,
+.fighter-flights-container input[name="attr_carrier_count"][value="6"] ~ .fighter-flights-rows .ff-row-6 { display: flex; }
+.fighter-flights-container input[name="attr_carrier_count"][value="6"] ~ .fighter-flights-rows .ff-row-7,
+.fighter-flights-container input[name="attr_carrier_count"][value="6"] ~ .fighter-flights-rows .ff-row-8,
+.fighter-flights-container input[name="attr_carrier_count"][value="6"] ~ .fighter-flights-rows .ff-row-9 { display: none; }
+
+.fighter-flights-container input[name="attr_carrier_count"][value="7"] ~ .fighter-flights-rows .ff-row-1,
+.fighter-flights-container input[name="attr_carrier_count"][value="7"] ~ .fighter-flights-rows .ff-row-2,
+.fighter-flights-container input[name="attr_carrier_count"][value="7"] ~ .fighter-flights-rows .ff-row-3,
+.fighter-flights-container input[name="attr_carrier_count"][value="7"] ~ .fighter-flights-rows .ff-row-4,
+.fighter-flights-container input[name="attr_carrier_count"][value="7"] ~ .fighter-flights-rows .ff-row-5,
+.fighter-flights-container input[name="attr_carrier_count"][value="7"] ~ .fighter-flights-rows .ff-row-6,
+.fighter-flights-container input[name="attr_carrier_count"][value="7"] ~ .fighter-flights-rows .ff-row-7 { display: flex; }
+.fighter-flights-container input[name="attr_carrier_count"][value="7"] ~ .fighter-flights-rows .ff-row-8,
+.fighter-flights-container input[name="attr_carrier_count"][value="7"] ~ .fighter-flights-rows .ff-row-9 { display: none; }
+
+.fighter-flights-container input[name="attr_carrier_count"][value="8"] ~ .fighter-flights-rows .ff-row-1,
+.fighter-flights-container input[name="attr_carrier_count"][value="8"] ~ .fighter-flights-rows .ff-row-2,
+.fighter-flights-container input[name="attr_carrier_count"][value="8"] ~ .fighter-flights-rows .ff-row-3,
+.fighter-flights-container input[name="attr_carrier_count"][value="8"] ~ .fighter-flights-rows .ff-row-4,
+.fighter-flights-container input[name="attr_carrier_count"][value="8"] ~ .fighter-flights-rows .ff-row-5,
+.fighter-flights-container input[name="attr_carrier_count"][value="8"] ~ .fighter-flights-rows .ff-row-6,
+.fighter-flights-container input[name="attr_carrier_count"][value="8"] ~ .fighter-flights-rows .ff-row-7,
+.fighter-flights-container input[name="attr_carrier_count"][value="8"] ~ .fighter-flights-rows .ff-row-8 { display: flex; }
+.fighter-flights-container input[name="attr_carrier_count"][value="8"] ~ .fighter-flights-rows .ff-row-9 { display: none; }
+
+.fighter-flights-container input[name="attr_carrier_count"][value="9"] ~ .fighter-flights-rows .ff-row-1,
+.fighter-flights-container input[name="attr_carrier_count"][value="9"] ~ .fighter-flights-rows .ff-row-2,
+.fighter-flights-container input[name="attr_carrier_count"][value="9"] ~ .fighter-flights-rows .ff-row-3,
+.fighter-flights-container input[name="attr_carrier_count"][value="9"] ~ .fighter-flights-rows .ff-row-4,
+.fighter-flights-container input[name="attr_carrier_count"][value="9"] ~ .fighter-flights-rows .ff-row-5,
+.fighter-flights-container input[name="attr_carrier_count"][value="9"] ~ .fighter-flights-rows .ff-row-6,
+.fighter-flights-container input[name="attr_carrier_count"][value="9"] ~ .fighter-flights-rows .ff-row-7,
+.fighter-flights-container input[name="attr_carrier_count"][value="9"] ~ .fighter-flights-rows .ff-row-8,
+.fighter-flights-container input[name="attr_carrier_count"][value="9"] ~ .fighter-flights-rows .ff-row-9 { display: flex; }
+
+/* Fighter Flight Row */
+.fighter-flight-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 3px;
+}
+
+/* ID Field */
+.fighter-flight-id {
+    width: 100px;
+    height: 26px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+    padding: 4px 8px;
+    box-sizing: border-box;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    text-align: left;
+}
+
+.fighter-flight-id::placeholder {
+    color: #999;
+}
+
+/* Fighter Flight Slot (Number Boxes - stat-box style) */
+.fighter-flight-slot {
+    width: 26px;
+    height: 26px;
+    background-color: white;
+    border: none;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+/* Hide the checkbox input */
+.fighter-flight-slot input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    opacity: 0;
+}
+
+/* Show number normally */
+.fighter-flight-slot span {
+    position: relative;
+    z-index: 1;
+    pointer-events: none;
+    font-family: 'Arial Narrow', 'Helvetica Neue', sans-serif;
+    font-size: 22px;
+    line-height: 1;
+    color: #000;
+}
+
+/* Red X overlay when checked */
+.fighter-flight-slot input[type="checkbox"]:checked ~ span::after {
+    content: "X";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #c00;
+    font-family: 'Arial Narrow', 'Helvetica Neue', sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+}
+
+/* Dark Mode */
+.darkmodetoggle[value="1"] ~ section .fighter-flights-container {
+    background-color: #3a3a3a;
+    border-color: #555;
+}
+
+.darkmodetoggle[value="1"] ~ section .fighter-flights-header {
+    color: #CCC;
+}
+
+.darkmodetoggle[value="1"] ~ section .fighter-flight-id {
+    background-color: #333;
+    border-color: #555;
+    color: #eee;
+}
+
+.darkmodetoggle[value="1"] ~ section .fighter-flight-slot {
+    background-color: #333;
+}
+
+.darkmodetoggle[value="1"] ~ section .fighter-flight-slot span {
+    color: #fff;
+}
+
+.darkmodetoggle[value="1"] ~ section .fighter-flight-slot input[type="checkbox"]:checked ~ span::after {
+    color: #f55;
+}
+
+.afb-box {
+    margin: 9px 0 2px 6px;
+    width: fit-content;
+    max-width: 100%;
+}
+
+.afb-content {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 6px 10px;
+    box-sizing: border-box;
+    min-height: 36px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    width: fit-content;
+}
+
+.afb-box input[name="attr_has_afb"][value="1"] ~ .afb-content {
+    display: flex;
+}
+
+.afb-checks {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.afb-checks .afb-check {
+    display: none;
+}
+
+.afb-label {
+    font-family: 'Roboto Condensed', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: #000;
+    line-height: 1;
+}
+
+.afb-label-toggle {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    cursor: pointer;
+}
+
+.afb-box input[name="attr_afb_label_strike"][value="1"] ~ .afb-content .afb-label {
+    text-decoration-line: line-through;
+    text-decoration-color: #c00;
+    text-decoration-thickness: 2px;
+}
+
+.ui-dialog .charsheet .afb-check,
+.charsheet .afb-check,
+.afb-check {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    min-height: 18px;
+    max-width: 18px;
+    max-height: 18px;
+    border: 2px solid #111;
+    border-radius: 5px;
+    background: #fff;
+    margin: 0;
+    cursor: pointer;
+    position: relative;
+    box-sizing: border-box;
+    display: none;
+    vertical-align: middle;
+    background-image: none;
+}
+
+.ui-dialog .charsheet .afb-check:checked::after,
+.charsheet .afb-check:checked::after,
+.afb-check:checked::after {
+    content: "x";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #c00;
+    line-height: 1;
+}
+
+.darkmodetoggle[value="1"] ~ section .afb-content {
+    background-color: #2a2a2a;
+    border-color: #444;
+}
+
+.darkmodetoggle[value="1"] ~ section .afb-label {
+    color: #eee;
+}
+
+.darkmodetoggle[value="1"] ~ section .afb-box input[name="attr_afb_label_strike"][value="1"] ~ .afb-content .afb-label {
+    text-decoration-color: #f55;
+}
+
+.darkmodetoggle[value="1"] ~ section .afb-check {
+    background: #1a1a1a;
+    border-color: #aaa;
+}
+
+.darkmodetoggle[value="1"] ~ section .afb-check:checked::after {
+    color: #f55;
+}
+
+.afb-box input[name="attr_afb_count"][value="1"] ~ .afb-content .afb-check:nth-of-type(-n+1),
+.afb-box input[name="attr_afb_count"][value="2"] ~ .afb-content .afb-check:nth-of-type(-n+2),
+.afb-box input[name="attr_afb_count"][value="3"] ~ .afb-content .afb-check:nth-of-type(-n+3),
+.afb-box input[name="attr_afb_count"][value="4"] ~ .afb-content .afb-check:nth-of-type(-n+4),
+.afb-box input[name="attr_afb_count"][value="5"] ~ .afb-content .afb-check:nth-of-type(-n+5),
+.afb-box input[name="attr_afb_count"][value="6"] ~ .afb-content .afb-check:nth-of-type(-n+6),
+.afb-box input[name="attr_afb_count"][value="7"] ~ .afb-content .afb-check:nth-of-type(-n+7),
+.afb-box input[name="attr_afb_count"][value="8"] ~ .afb-content .afb-check:nth-of-type(-n+8),
+.afb-box input[name="attr_afb_count"][value="9"] ~ .afb-content .afb-check:nth-of-type(-n+9),
+.afb-box input[name="attr_afb_count"][value="10"] ~ .afb-content .afb-check:nth-of-type(-n+10),
+.afb-box input[name="attr_afb_count"][value="11"] ~ .afb-content .afb-check:nth-of-type(-n+11),
+.afb-box input[name="attr_afb_count"][value="12"] ~ .afb-content .afb-check:nth-of-type(-n+12),
+.afb-box input[name="attr_afb_count"][value="13"] ~ .afb-content .afb-check:nth-of-type(-n+13),
+.afb-box input[name="attr_afb_count"][value="14"] ~ .afb-content .afb-check:nth-of-type(-n+14),
+.afb-box input[name="attr_afb_count"][value="15"] ~ .afb-content .afb-check:nth-of-type(-n+15),
+.afb-box input[name="attr_afb_count"][value="16"] ~ .afb-content .afb-check:nth-of-type(-n+16),
+.afb-box input[name="attr_afb_count"][value="17"] ~ .afb-content .afb-check:nth-of-type(-n+17),
+.afb-box input[name="attr_afb_count"][value="18"] ~ .afb-content .afb-check:nth-of-type(-n+18),
+.afb-box input[name="attr_afb_count"][value="19"] ~ .afb-content .afb-check:nth-of-type(-n+19),
+.afb-box input[name="attr_afb_count"][value="20"] ~ .afb-content .afb-check:nth-of-type(-n+20),
+.afb-box input[name="attr_afb_count"][value="21"] ~ .afb-content .afb-check:nth-of-type(-n+21),
+.afb-box input[name="attr_afb_count"][value="22"] ~ .afb-content .afb-check:nth-of-type(-n+22),
+.afb-box input[name="attr_afb_count"][value="23"] ~ .afb-content .afb-check:nth-of-type(-n+23),
+.afb-box input[name="attr_afb_count"][value="24"] ~ .afb-content .afb-check:nth-of-type(-n+24) {
+    display: inline-block;
+}
+
+/*** HYPERDRIVE BOX ***/
+.hyperdrive-box {
+    margin: 9px 0 2px;
+    width: fit-content;
+    max-width: 100%;
+}
+
+.hyperdrive-content {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 6px 10px;
+    box-sizing: border-box;
+    min-height: 36px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    width: fit-content;
+}
+
+.hyperdrive-box input[name="attr_has_hyperdrive"][value="1"] ~ .hyperdrive-content {
+    display: flex;
+}
+
+.hyperdrive-checks {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.hyperdrive-checks .hyperdrive-check {
+    display: none;
+}
+
+.hyperdrive-label {
+    font-family: 'Roboto Condensed', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: #000;
+    line-height: 1;
+}
+
+.hyperdrive-label-toggle {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    cursor: pointer;
+}
+
+.hyperdrive-box input[name="attr_hyperdrive_label_strike"][value="1"] ~ .hyperdrive-content .hyperdrive-label {
+    text-decoration-line: line-through;
+    text-decoration-color: #c00;
+    text-decoration-thickness: 2px;
+}
+
+.ui-dialog .charsheet .hyperdrive-check,
+.charsheet .hyperdrive-check,
+.hyperdrive-check {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    min-height: 18px;
+    max-width: 18px;
+    max-height: 18px;
+    border: 2px solid #111;
+    border-radius: 5px;
+    background: #fff;
+    margin: 0;
+    cursor: pointer;
+    position: relative;
+    box-sizing: border-box;
+    display: none;
+    vertical-align: middle;
+    background-image: none;
+}
+
+.ui-dialog .charsheet .hyperdrive-check:checked::after,
+.charsheet .hyperdrive-check:checked::after,
+.hyperdrive-check:checked::after {
+    content: "x";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #c00;
+    line-height: 1;
+}
+
+.darkmodetoggle[value="1"] ~ section .hyperdrive-content {
+    background-color: #2a2a2a;
+    border-color: #444;
+}
+
+.darkmodetoggle[value="1"] ~ section .hyperdrive-label {
+    color: #eee;
+}
+
+.darkmodetoggle[value="1"] ~ section .hyperdrive-box input[name="attr_hyperdrive_label_strike"][value="1"] ~ .hyperdrive-content .hyperdrive-label {
+    text-decoration-color: #f55;
+}
+
+.darkmodetoggle[value="1"] ~ section .hyperdrive-check {
+    background: #1a1a1a;
+    border-color: #aaa;
+}
+
+.darkmodetoggle[value="1"] ~ section .hyperdrive-check:checked::after {
+    color: #f55;
+}
+
+.hyperdrive-box input[name="attr_hyperdrive_count"][value="1"] ~ .hyperdrive-content .hyperdrive-check:nth-of-type(-n+1),
+.hyperdrive-box input[name="attr_hyperdrive_count"][value="2"] ~ .hyperdrive-content .hyperdrive-check:nth-of-type(-n+2),
+.hyperdrive-box input[name="attr_hyperdrive_count"][value="3"] ~ .hyperdrive-content .hyperdrive-check:nth-of-type(-n+3),
+.hyperdrive-box input[name="attr_hyperdrive_count"][value="4"] ~ .hyperdrive-content .hyperdrive-check:nth-of-type(-n+4),
+.hyperdrive-box input[name="attr_hyperdrive_count"][value="5"] ~ .hyperdrive-content .hyperdrive-check:nth-of-type(-n+5),
+.hyperdrive-box input[name="attr_hyperdrive_count"][value="6"] ~ .hyperdrive-content .hyperdrive-check:nth-of-type(-n+6),
+.hyperdrive-box input[name="attr_hyperdrive_count"][value="7"] ~ .hyperdrive-content .hyperdrive-check:nth-of-type(-n+7),
+.hyperdrive-box input[name="attr_hyperdrive_count"][value="8"] ~ .hyperdrive-content .hyperdrive-check:nth-of-type(-n+8),
+.hyperdrive-box input[name="attr_hyperdrive_count"][value="9"] ~ .hyperdrive-content .hyperdrive-check:nth-of-type(-n+9),
+.hyperdrive-box input[name="attr_hyperdrive_count"][value="10"] ~ .hyperdrive-content .hyperdrive-check:nth-of-type(-n+10),
+.hyperdrive-box input[name="attr_hyperdrive_count"][value="11"] ~ .hyperdrive-content .hyperdrive-check:nth-of-type(-n+11),
+.hyperdrive-box input[name="attr_hyperdrive_count"][value="12"] ~ .hyperdrive-content .hyperdrive-check:nth-of-type(-n+12),
+.hyperdrive-box input[name="attr_hyperdrive_count"][value="13"] ~ .hyperdrive-content .hyperdrive-check:nth-of-type(-n+13),
+.hyperdrive-box input[name="attr_hyperdrive_count"][value="14"] ~ .hyperdrive-content .hyperdrive-check:nth-of-type(-n+14),
+.hyperdrive-box input[name="attr_hyperdrive_count"][value="15"] ~ .hyperdrive-content .hyperdrive-check:nth-of-type(-n+15),
+.hyperdrive-box input[name="attr_hyperdrive_count"][value="16"] ~ .hyperdrive-content .hyperdrive-check:nth-of-type(-n+16),
+.hyperdrive-box input[name="attr_hyperdrive_count"][value="17"] ~ .hyperdrive-content .hyperdrive-check:nth-of-type(-n+17),
+.hyperdrive-box input[name="attr_hyperdrive_count"][value="18"] ~ .hyperdrive-content .hyperdrive-check:nth-of-type(-n+18),
+.hyperdrive-box input[name="attr_hyperdrive_count"][value="19"] ~ .hyperdrive-content .hyperdrive-check:nth-of-type(-n+19),
+.hyperdrive-box input[name="attr_hyperdrive_count"][value="20"] ~ .hyperdrive-content .hyperdrive-check:nth-of-type(-n+20),
+.hyperdrive-box input[name="attr_hyperdrive_count"][value="21"] ~ .hyperdrive-content .hyperdrive-check:nth-of-type(-n+21),
+.hyperdrive-box input[name="attr_hyperdrive_count"][value="22"] ~ .hyperdrive-content .hyperdrive-check:nth-of-type(-n+22),
+.hyperdrive-box input[name="attr_hyperdrive_count"][value="23"] ~ .hyperdrive-content .hyperdrive-check:nth-of-type(-n+23),
+.hyperdrive-box input[name="attr_hyperdrive_count"][value="24"] ~ .hyperdrive-content .hyperdrive-check:nth-of-type(-n+24) {
+    display: inline-block;
+}
+
+/*** MARINES BOX ***/
+.marines-box {
+    margin: 9px 0 2px;
+    width: fit-content;
+    max-width: 100%;
+}
+
+.marines-content {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 6px 10px;
+    box-sizing: border-box;
+    min-height: 36px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    width: fit-content;
+}
+
+.marines-box input[name="attr_has_marines"][value="1"] ~ .marines-content {
+    display: flex;
+}
+
+.marines-checks {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.marines-checks .marines-check {
+    display: none;
+}
+
+.marines-label {
+    font-family: 'Roboto Condensed', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: #000;
+    line-height: 1;
+}
+
+.darkmodetoggle[value="1"] ~ section .marines-content {
+    background-color: #2a2a2a;
+    border-color: #444;
+}
+
+.darkmodetoggle[value="1"] ~ section .marines-label {
+    color: #eee;
+}
+
+.marines-label-toggle {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    cursor: pointer;
+}
+
+.ui-dialog .charsheet .marines-check,
+.charsheet .marines-check,
+.marines-check {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 14.4px;
+    height: 14.4px;
+    min-width: 14.4px;
+    min-height: 14.4px;
+    max-width: 14.4px;
+    max-height: 14.4px;
+    border: 2px solid #111;
+    border-radius: 0;
+    background: #fff;
+    margin: 0;
+    cursor: pointer;
+    position: relative;
+    box-sizing: border-box;
+    display: none;
+    vertical-align: middle;
+    background-image: none;
+    transform: rotate(45deg);
+    transform-origin: center;
+}
+
+.ui-dialog .charsheet .marines-check:checked::after,
+.charsheet .marines-check:checked::after,
+.marines-check:checked::after {
+    content: "x";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: #c00;
+    line-height: 1;
+    transform: rotate(-45deg);
+}
+
+.darkmodetoggle[value="1"] ~ section .marines-check {
+    background: #1a1a1a;
+    border-color: #aaa;
+}
+
+.darkmodetoggle[value="1"] ~ section .marines-check:checked::after {
+    color: #f55;
+}
+
+.marines-box input[name="attr_marines_label_strike"][value="1"] ~ .marines-content .marines-label {
+    text-decoration-line: line-through;
+    text-decoration-color: #c00;
+    text-decoration-thickness: 2px;
+}
+
+.darkmodetoggle[value="1"] ~ section .marines-box input[name="attr_marines_label_strike"][value="1"] ~ .marines-content .marines-label {
+    text-decoration-color: #f55;
+}
+
+.marines-box input[name="attr_marines_count"][value="1"] ~ .marines-content .marines-check:nth-of-type(-n+1),
+.marines-box input[name="attr_marines_count"][value="2"] ~ .marines-content .marines-check:nth-of-type(-n+2),
+.marines-box input[name="attr_marines_count"][value="3"] ~ .marines-content .marines-check:nth-of-type(-n+3),
+.marines-box input[name="attr_marines_count"][value="4"] ~ .marines-content .marines-check:nth-of-type(-n+4),
+.marines-box input[name="attr_marines_count"][value="5"] ~ .marines-content .marines-check:nth-of-type(-n+5),
+.marines-box input[name="attr_marines_count"][value="6"] ~ .marines-content .marines-check:nth-of-type(-n+6),
+.marines-box input[name="attr_marines_count"][value="7"] ~ .marines-content .marines-check:nth-of-type(-n+7),
+.marines-box input[name="attr_marines_count"][value="8"] ~ .marines-content .marines-check:nth-of-type(-n+8),
+.marines-box input[name="attr_marines_count"][value="9"] ~ .marines-content .marines-check:nth-of-type(-n+9),
+.marines-box input[name="attr_marines_count"][value="10"] ~ .marines-content .marines-check:nth-of-type(-n+10),
+.marines-box input[name="attr_marines_count"][value="11"] ~ .marines-content .marines-check:nth-of-type(-n+11),
+.marines-box input[name="attr_marines_count"][value="12"] ~ .marines-content .marines-check:nth-of-type(-n+12),
+.marines-box input[name="attr_marines_count"][value="13"] ~ .marines-content .marines-check:nth-of-type(-n+13),
+.marines-box input[name="attr_marines_count"][value="14"] ~ .marines-content .marines-check:nth-of-type(-n+14),
+.marines-box input[name="attr_marines_count"][value="15"] ~ .marines-content .marines-check:nth-of-type(-n+15),
+.marines-box input[name="attr_marines_count"][value="16"] ~ .marines-content .marines-check:nth-of-type(-n+16),
+.marines-box input[name="attr_marines_count"][value="17"] ~ .marines-content .marines-check:nth-of-type(-n+17),
+.marines-box input[name="attr_marines_count"][value="18"] ~ .marines-content .marines-check:nth-of-type(-n+18),
+.marines-box input[name="attr_marines_count"][value="19"] ~ .marines-content .marines-check:nth-of-type(-n+19),
+.marines-box input[name="attr_marines_count"][value="20"] ~ .marines-content .marines-check:nth-of-type(-n+20),
+.marines-box input[name="attr_marines_count"][value="21"] ~ .marines-content .marines-check:nth-of-type(-n+21),
+.marines-box input[name="attr_marines_count"][value="22"] ~ .marines-content .marines-check:nth-of-type(-n+22),
+.marines-box input[name="attr_marines_count"][value="23"] ~ .marines-content .marines-check:nth-of-type(-n+23),
+.marines-box input[name="attr_marines_count"][value="24"] ~ .marines-content .marines-check:nth-of-type(-n+24) {
+    display: inline-block;
+}
+
+/**************** WEAPON DATA TABLES ****************/
+.weapon-row {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #fff;
+    overflow: hidden;
+    gap: 4px;
+    margin-bottom: 2px;
+}
+
+.weapon-left {
+    flex: 0 0 62%;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.weapon-title-bar {
+    background-color: #ddd;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.weapon-title-left {
+    display: inline-flex;
+    align-items: center;
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.weapon-title-bar input,
+.weapon-title-bar select,
+.weapon-title-bar span {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #000;
+    border: none;
+    background: transparent;
+    padding: 1px 0;
+    margin: 0;
+}
+
+.weapon-abbr {
+    width: 32px;
+    text-align: right;
+}
+
+.weapon-hyphen {
+    margin: 0 1px;
+}
+
+.weapon-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    padding-right: 0 !important;
+    background-image: none !important;
+}
+
+.weapon-size {
+    width: 24px;
+    text-align: center;
+}
+
+.weapon-variant {
+    width: 36px;
+    text-align: left;
+}
+
+.weapon-type {
+    width: auto;
+    min-width: 0;
+}
+
+.weapon-triangle {
+    font-size: 10px;
+}
+
+.weapon-loss {
+    width: 20px;
+    text-align: center;
+}
+
+.weapon-loss-paren {
+    font-weight: 700;
+}
+
+.weapon-stat-label {
+    white-space: pre;
+}
+
+.weapon-title-right {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+
+.weapon-title-right input,
+.weapon-title-right span {
+    color: #888 !important;
+}
+
+.weapon-title-bar input[type="number"].weapon-rof,
+.weapon-title-bar input[type="number"].weapon-dmg {
+    width: 24px;
+    text-align: center;
+    appearance: textfield;
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+}
+
+.weapon-title-bar input[type="number"].weapon-rof::-webkit-outer-spin-button,
+.weapon-title-bar input[type="number"].weapon-rof::-webkit-inner-spin-button,
+.weapon-title-bar input[type="number"].weapon-dmg::-webkit-outer-spin-button,
+.weapon-title-bar input[type="number"].weapon-dmg::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.weapon-content {
+    flex: 1;
+    padding: 0 8px;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.weapon-hex-area {
+    position: relative;
+    text-align: center;
+    width: 100%;
+    min-height: 41.57px;
+    padding: 0 28px;
+    box-sizing: border-box;
+}
+
+.weapon-hex-cb {
+    display: none;
+}
+
+.weapon-hex-glyph {
+    display: none;
+    position: relative;
+    vertical-align: middle;
+    width: 48px;
+    height: 41.57px;
+    box-sizing: border-box;
+    overflow: visible;
+    margin: 0 2px;
+}
+
+.weapon-hex-visual {
+    display: block;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(25% 6%, 75% 6%, 96% 50%, 75% 94%, 25% 94%, 4% 50%);
+    background: #444;
+    cursor: pointer;
+    position: relative;
+    isolation: isolate;
+}
+
+.weapon-hex-visual:focus {
+    outline: none;
+}
+
+.weapon-hex-visual::after {
+    content: '';
+    position: absolute;
+    inset: 10%;
+    clip-path: polygon(25% 6%, 75% 6%, 96% 50%, 75% 94%, 25% 94%, 4% 50%);
+    background: #fff;
+    z-index: 1;
+}
+
+.weapon-arc-flag {
+    display: none;
+}
+
+.arc-mark {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background: #111;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* A-F arcs: outer-ring sectors (do not enter hex center) */
+.arc-a { clip-path: polygon(14.5% 28%, 25% 6%, 50% 6%, 50% 22.72%, 34.5% 22.72%, 27.99% 36.36%); }
+.arc-b { clip-path: polygon(50% 6%, 75% 6%, 85.5% 28%, 72.01% 36.36%, 65.5% 22.72%, 50% 22.72%); }
+.arc-c { clip-path: polygon(14.5% 28%, 4% 50%, 14.5% 72%, 27.99% 63.64%, 21.48% 50%, 27.99% 36.36%); }
+.arc-d { clip-path: polygon(85.5% 28%, 96% 50%, 85.5% 72%, 72.01% 63.64%, 78.52% 50%, 72.01% 36.36%); }
+.arc-e { clip-path: polygon(14.5% 72%, 25% 94%, 50% 94%, 50% 77.28%, 34.5% 77.28%, 27.99% 63.64%); }
+.arc-f { clip-path: polygon(50% 94%, 75% 94%, 85.5% 72%, 72.01% 63.64%, 65.5% 77.28%, 50% 77.28%); }
+
+/* G-L arcs: full edge bands (vertex-to-vertex), same thickness as A-F */
+.arc-g { clip-path: polygon(25% 6%, 75% 6%, 65.5% 22.72%, 34.5% 22.72%); }
+.arc-h { clip-path: polygon(4% 50%, 25% 6%, 34.5% 22.72%, 21.48% 50%); }
+.arc-i { clip-path: polygon(75% 6%, 96% 50%, 78.52% 50%, 65.5% 22.72%); }
+.arc-j { clip-path: polygon(4% 50%, 25% 94%, 34.5% 77.28%, 21.48% 50%); }
+.arc-k { clip-path: polygon(96% 50%, 75% 94%, 65.5% 77.28%, 78.52% 50%); }
+.arc-l { clip-path: polygon(25% 94%, 75% 94%, 65.5% 77.28%, 34.5% 77.28%); }
+
+.wa-a[value='1'] ~ .weapon-hex-visual .arc-a,
+.wa-b[value='1'] ~ .weapon-hex-visual .arc-b,
+.wa-c[value='1'] ~ .weapon-hex-visual .arc-c,
+.wa-d[value='1'] ~ .weapon-hex-visual .arc-d,
+.wa-e[value='1'] ~ .weapon-hex-visual .arc-e,
+.wa-f[value='1'] ~ .weapon-hex-visual .arc-f,
+.wa-g[value='1'] ~ .weapon-hex-visual .arc-g,
+.wa-h[value='1'] ~ .weapon-hex-visual .arc-h,
+.wa-i[value='1'] ~ .weapon-hex-visual .arc-i,
+.wa-j[value='1'] ~ .weapon-hex-visual .arc-j,
+.wa-k[value='1'] ~ .weapon-hex-visual .arc-k,
+.wa-l[value='1'] ~ .weapon-hex-visual .arc-l {
+    display: block;
+}
+
+.weapon-hex-add,
+.weapon-hex-remove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1.5px solid #ccc;
+    background: #f5f5f5;
+    color: #aaa;
+    font-size: 18px;
+    line-height: 1;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    flex-shrink: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    font-family: sans-serif;
+    font-weight: 300;
+}
+
+.weapon-hex-remove {
+    display: none;
+    left: 0;
+}
+
+.weapon-hex-add {
+    right: 0;
+}
+
+/* Reveal hex glyphs and remove button based on checkbox state */
+.wh-cb-1:checked ~ .weapon-hex-remove { display: inline-flex; }
+.wh-cb-1:checked ~ .wh-g-1 { display: inline-block; }
+.wh-cb-2:checked ~ .wh-g-2 { display: inline-block; }
+.wh-cb-3:checked ~ .wh-g-3 { display: inline-block; }
+.wh-cb-4:checked ~ .wh-g-4 { display: inline-block; }
+.wh-cb-5:checked ~ .wh-g-5 { display: inline-block; }
+.wh-cb-6:checked ~ .wh-g-6 { display: inline-block; }
+.wh-cb-7:checked ~ .wh-g-7 { display: inline-block; }
+.wh-cb-8:checked ~ .wh-g-8 { display: inline-block; }
+.wh-cb-8:checked ~ .weapon-hex-add { display: none; }
+
+/* Firing Arcs popup */
+.hex-popup {
+    display: none;
+    position: absolute;
+    bottom: calc(100% - 8px);
+    left: 0;
+    z-index: 1000;
+    background: #fff;
+    border: 1px solid #888;
+    border-radius: 4px;
+    padding: 8px 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    min-width: 140px;
+}
+
+.weapon-hex-glyph:focus-within .hex-popup {
+    display: block;
+}
+
+.firing-arc-title {
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+.firing-arc-input {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 4px 6px;
+    font-size: 13px;
+    text-transform: uppercase;
+    outline: none;
+}
+
+.firing-arc-input:focus {
+    border-color: #666;
+}
+
+.weapon-middle {
+    flex: 1 1 0%;
+    min-width: 0;
+    min-height: 60px;
+    border-left: 2px solid #ccc;
+    border-top: 2px solid #ccc;
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    align-items: center;
+    padding: 2px 4px;
+}
+
+.weapon-right {
+    flex: 1 1 0%;
+    min-width: 0;
+    min-height: 60px;
+    border-left: 2px solid #ccc;
+    border-top: 2px solid #ccc;
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    align-items: center;
+    padding: 2px 4px;
+}
+
+.weapon-middle > div,
+.weapon-right > div {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.weapon-middle-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    column-gap: 6px;
+}
+
+.weapon-right-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.weapon-middle-range,
+.weapon-middle-accuracy {
+    width: 100%;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #000;
+    border: none;
+    background: transparent !important;
+    -webkit-text-fill-color: #000;
+    opacity: 1;
+    padding: 0;
+    margin: 0;
+    cursor: default;
+}
+
+.weapon-right-property {
+    width: 100%;
+    text-align: right;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    font-style: italic;
+    font-weight: 700;
+    color: #000;
+    border: none;
+    background: transparent !important;
+    -webkit-text-fill-color: #000;
+    opacity: 1;
+    padding: 0;
+    margin: 0;
+    cursor: default;
+}
+
+/* Dark mode - Weapons */
+.darkmodetoggle[value="1"] ~ section .weapon-row {
+    background-color: #1a1a1a;
+}
+.darkmodetoggle[value="1"] ~ section .weapon-title-bar {
+    background-color: #333;
+}
+.darkmodetoggle[value="1"] ~ section .weapon-title-bar input,
+.darkmodetoggle[value="1"] ~ section .weapon-title-bar select,
+.darkmodetoggle[value="1"] ~ section .weapon-title-bar span {
+    color: #eee;
+}
+.darkmodetoggle[value="1"] ~ section .weapon-title-bar select option {
+    background-color: #333;
+    color: #eee;
+}
+.darkmodetoggle[value="1"] ~ section .weapon-hex-glyph {
+    background: #bbb;
+}
+.darkmodetoggle[value="1"] ~ section .weapon-hex-glyph::after {
+    background: #1a1a1a;
+}
+.darkmodetoggle[value="1"] ~ section .weapon-hex-add,
+.darkmodetoggle[value="1"] ~ section .weapon-hex-remove {
+    background: #2a2a2a;
+    border-color: #555;
+    color: #777;
+}
+.darkmodetoggle[value="1"] ~ section .weapon-middle,
+.darkmodetoggle[value="1"] ~ section .weapon-right {
+    border-color: #444;
+    color: #eee
+}
+.darkmodetoggle[value="1"] ~ section .weapon-middle-range,
+.darkmodetoggle[value="1"] ~ section .weapon-middle-accuracy {
+    color: #eee;
+    -webkit-text-fill-color: #eee;
+    opacity: 1;
+}
+.darkmodetoggle[value="1"] ~ section .weapon-right-property {
+    color: #eee;
+    -webkit-text-fill-color: #eee;
+    opacity: 1;
+}
