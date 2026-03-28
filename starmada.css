@@ -275,6 +275,400 @@ input[type="number"][readonly] {
     margin-bottom: 10px;
 }
 
+.shield-fwd-indicator-group {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.shield-port-indicator-group {
+    position: absolute;
+    top: 50%;
+    left: 8px;
+    transform: translateY(-50%);
+    z-index: 3;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.shield-stbd-indicator-group {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    z-index: 3;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.shield-aft-indicator-group {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.shield-fwd-indicator,
+.shield-port-indicator,
+.shield-stbd-indicator,
+.shield-aft-indicator {
+    display: none;
+    width: 18px;
+    height: 18px;
+    box-sizing: border-box;
+    border: 2px solid #222;
+    border-radius: 50%;
+    background: transparent;
+    position: relative;
+}
+
+.shield-fwd-indicator .mark-overlay,
+.shield-port-indicator .mark-overlay,
+.shield-stbd-indicator .mark-overlay,
+.shield-aft-indicator .mark-overlay,
+.design-screen-indicator .mark-overlay {
+    position: absolute;
+    inset: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+    padding: 0;
+    margin: 0;
+    font-size: 0;
+    color: transparent;
+}
+
+.shield-fwd-indicator input[type="hidden"][value="X"] ~ .mark-overlay::after,
+.shield-port-indicator input[type="hidden"][value="X"] ~ .mark-overlay::after,
+.shield-stbd-indicator input[type="hidden"][value="X"] ~ .mark-overlay::after,
+.shield-aft-indicator input[type="hidden"][value="X"] ~ .mark-overlay::after,
+.design-screen-indicator input[type="hidden"][value="X"] ~ .mark-overlay::after {
+    content: "X";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Arial Narrow', 'Helvetica Neue', sans-serif;
+    font-weight: bold;
+    color: #c00;
+    pointer-events: none;
+}
+
+.shield-fwd-indicator input[type="hidden"][value="X"] ~ .mark-overlay::after,
+.shield-port-indicator input[type="hidden"][value="X"] ~ .mark-overlay::after,
+.shield-stbd-indicator input[type="hidden"][value="X"] ~ .mark-overlay::after,
+.shield-aft-indicator input[type="hidden"][value="X"] ~ .mark-overlay::after {
+    font-size: 16px;
+    line-height: 16px;
+}
+
+.sheet-side-left input[name="attr_shield_fwd_count"][value="1"] ~ .shield-fwd-indicator-group,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="2"] ~ .shield-fwd-indicator-group,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="3"] ~ .shield-fwd-indicator-group,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="4"] ~ .shield-fwd-indicator-group,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="5"] ~ .shield-fwd-indicator-group,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="6"] ~ .shield-fwd-indicator-group,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="7"] ~ .shield-fwd-indicator-group,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="8"] ~ .shield-fwd-indicator-group,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="9"] ~ .shield-fwd-indicator-group {
+    display: flex;
+}
+
+.sheet-side-left input[name="attr_shield_port_count"][value="1"] ~ .shield-port-indicator-group,
+.sheet-side-left input[name="attr_shield_port_count"][value="2"] ~ .shield-port-indicator-group,
+.sheet-side-left input[name="attr_shield_port_count"][value="3"] ~ .shield-port-indicator-group,
+.sheet-side-left input[name="attr_shield_port_count"][value="4"] ~ .shield-port-indicator-group,
+.sheet-side-left input[name="attr_shield_port_count"][value="5"] ~ .shield-port-indicator-group,
+.sheet-side-left input[name="attr_shield_port_count"][value="6"] ~ .shield-port-indicator-group,
+.sheet-side-left input[name="attr_shield_port_count"][value="7"] ~ .shield-port-indicator-group,
+.sheet-side-left input[name="attr_shield_port_count"][value="8"] ~ .shield-port-indicator-group,
+.sheet-side-left input[name="attr_shield_port_count"][value="9"] ~ .shield-port-indicator-group {
+    display: flex;
+}
+
+.sheet-side-left input[name="attr_shield_stbd_count"][value="1"] ~ .shield-stbd-indicator-group,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="2"] ~ .shield-stbd-indicator-group,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="3"] ~ .shield-stbd-indicator-group,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="4"] ~ .shield-stbd-indicator-group,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="5"] ~ .shield-stbd-indicator-group,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="6"] ~ .shield-stbd-indicator-group,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="7"] ~ .shield-stbd-indicator-group,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="8"] ~ .shield-stbd-indicator-group,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="9"] ~ .shield-stbd-indicator-group {
+    display: flex;
+}
+
+.sheet-side-left input[name="attr_shield_aft_count"][value="1"] ~ .shield-aft-indicator-group,
+.sheet-side-left input[name="attr_shield_aft_count"][value="2"] ~ .shield-aft-indicator-group,
+.sheet-side-left input[name="attr_shield_aft_count"][value="3"] ~ .shield-aft-indicator-group,
+.sheet-side-left input[name="attr_shield_aft_count"][value="4"] ~ .shield-aft-indicator-group,
+.sheet-side-left input[name="attr_shield_aft_count"][value="5"] ~ .shield-aft-indicator-group,
+.sheet-side-left input[name="attr_shield_aft_count"][value="6"] ~ .shield-aft-indicator-group,
+.sheet-side-left input[name="attr_shield_aft_count"][value="7"] ~ .shield-aft-indicator-group,
+.sheet-side-left input[name="attr_shield_aft_count"][value="8"] ~ .shield-aft-indicator-group,
+.sheet-side-left input[name="attr_shield_aft_count"][value="9"] ~ .shield-aft-indicator-group {
+    display: flex;
+}
+
+.sheet-side-left input[name="attr_shield_fwd_count"][value="1"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-1,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="2"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-1,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="2"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-2,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="3"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-1,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="3"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-2,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="3"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-3,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="4"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-1,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="4"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-2,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="4"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-3,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="4"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-4,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="5"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-1,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="5"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-2,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="5"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-3,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="5"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-4,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="5"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-5,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="6"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-1,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="6"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-2,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="6"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-3,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="6"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-4,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="6"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-5,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="6"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-6,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="7"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-1,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="7"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-2,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="7"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-3,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="7"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-4,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="7"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-5,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="7"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-6,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="7"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-7,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="8"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-1,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="8"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-2,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="8"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-3,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="8"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-4,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="8"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-5,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="8"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-6,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="8"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-7,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="8"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-8,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="9"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-1,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="9"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-2,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="9"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-3,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="9"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-4,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="9"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-5,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="9"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-6,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="9"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-7,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="9"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-8,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="9"] ~ .shield-fwd-indicator-group .shield-fwd-indicator-9 {
+    display: inline-block;
+}
+
+.sheet-side-left input[name="attr_shield_fwd_count"][value="1"] ~ .screen-indicator-group-fwd,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="2"] ~ .screen-indicator-group-fwd,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="3"] ~ .screen-indicator-group-fwd,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="4"] ~ .screen-indicator-group-fwd,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="5"] ~ .screen-indicator-group-fwd,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="6"] ~ .screen-indicator-group-fwd,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="7"] ~ .screen-indicator-group-fwd,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="8"] ~ .screen-indicator-group-fwd,
+.sheet-side-left input[name="attr_shield_fwd_count"][value="9"] ~ .screen-indicator-group-fwd {
+    top: 34px;
+}
+
+.sheet-side-left input[name="attr_shield_port_count"][value="1"] ~ .shield-port-indicator-group .shield-port-indicator-1,
+.sheet-side-left input[name="attr_shield_port_count"][value="2"] ~ .shield-port-indicator-group .shield-port-indicator-1,
+.sheet-side-left input[name="attr_shield_port_count"][value="2"] ~ .shield-port-indicator-group .shield-port-indicator-2,
+.sheet-side-left input[name="attr_shield_port_count"][value="3"] ~ .shield-port-indicator-group .shield-port-indicator-1,
+.sheet-side-left input[name="attr_shield_port_count"][value="3"] ~ .shield-port-indicator-group .shield-port-indicator-2,
+.sheet-side-left input[name="attr_shield_port_count"][value="3"] ~ .shield-port-indicator-group .shield-port-indicator-3,
+.sheet-side-left input[name="attr_shield_port_count"][value="4"] ~ .shield-port-indicator-group .shield-port-indicator-1,
+.sheet-side-left input[name="attr_shield_port_count"][value="4"] ~ .shield-port-indicator-group .shield-port-indicator-2,
+.sheet-side-left input[name="attr_shield_port_count"][value="4"] ~ .shield-port-indicator-group .shield-port-indicator-3,
+.sheet-side-left input[name="attr_shield_port_count"][value="4"] ~ .shield-port-indicator-group .shield-port-indicator-4,
+.sheet-side-left input[name="attr_shield_port_count"][value="5"] ~ .shield-port-indicator-group .shield-port-indicator-1,
+.sheet-side-left input[name="attr_shield_port_count"][value="5"] ~ .shield-port-indicator-group .shield-port-indicator-2,
+.sheet-side-left input[name="attr_shield_port_count"][value="5"] ~ .shield-port-indicator-group .shield-port-indicator-3,
+.sheet-side-left input[name="attr_shield_port_count"][value="5"] ~ .shield-port-indicator-group .shield-port-indicator-4,
+.sheet-side-left input[name="attr_shield_port_count"][value="5"] ~ .shield-port-indicator-group .shield-port-indicator-5,
+.sheet-side-left input[name="attr_shield_port_count"][value="6"] ~ .shield-port-indicator-group .shield-port-indicator-1,
+.sheet-side-left input[name="attr_shield_port_count"][value="6"] ~ .shield-port-indicator-group .shield-port-indicator-2,
+.sheet-side-left input[name="attr_shield_port_count"][value="6"] ~ .shield-port-indicator-group .shield-port-indicator-3,
+.sheet-side-left input[name="attr_shield_port_count"][value="6"] ~ .shield-port-indicator-group .shield-port-indicator-4,
+.sheet-side-left input[name="attr_shield_port_count"][value="6"] ~ .shield-port-indicator-group .shield-port-indicator-5,
+.sheet-side-left input[name="attr_shield_port_count"][value="6"] ~ .shield-port-indicator-group .shield-port-indicator-6,
+.sheet-side-left input[name="attr_shield_port_count"][value="7"] ~ .shield-port-indicator-group .shield-port-indicator-1,
+.sheet-side-left input[name="attr_shield_port_count"][value="7"] ~ .shield-port-indicator-group .shield-port-indicator-2,
+.sheet-side-left input[name="attr_shield_port_count"][value="7"] ~ .shield-port-indicator-group .shield-port-indicator-3,
+.sheet-side-left input[name="attr_shield_port_count"][value="7"] ~ .shield-port-indicator-group .shield-port-indicator-4,
+.sheet-side-left input[name="attr_shield_port_count"][value="7"] ~ .shield-port-indicator-group .shield-port-indicator-5,
+.sheet-side-left input[name="attr_shield_port_count"][value="7"] ~ .shield-port-indicator-group .shield-port-indicator-6,
+.sheet-side-left input[name="attr_shield_port_count"][value="7"] ~ .shield-port-indicator-group .shield-port-indicator-7,
+.sheet-side-left input[name="attr_shield_port_count"][value="8"] ~ .shield-port-indicator-group .shield-port-indicator-1,
+.sheet-side-left input[name="attr_shield_port_count"][value="8"] ~ .shield-port-indicator-group .shield-port-indicator-2,
+.sheet-side-left input[name="attr_shield_port_count"][value="8"] ~ .shield-port-indicator-group .shield-port-indicator-3,
+.sheet-side-left input[name="attr_shield_port_count"][value="8"] ~ .shield-port-indicator-group .shield-port-indicator-4,
+.sheet-side-left input[name="attr_shield_port_count"][value="8"] ~ .shield-port-indicator-group .shield-port-indicator-5,
+.sheet-side-left input[name="attr_shield_port_count"][value="8"] ~ .shield-port-indicator-group .shield-port-indicator-6,
+.sheet-side-left input[name="attr_shield_port_count"][value="8"] ~ .shield-port-indicator-group .shield-port-indicator-7,
+.sheet-side-left input[name="attr_shield_port_count"][value="8"] ~ .shield-port-indicator-group .shield-port-indicator-8,
+.sheet-side-left input[name="attr_shield_port_count"][value="9"] ~ .shield-port-indicator-group .shield-port-indicator-1,
+.sheet-side-left input[name="attr_shield_port_count"][value="9"] ~ .shield-port-indicator-group .shield-port-indicator-2,
+.sheet-side-left input[name="attr_shield_port_count"][value="9"] ~ .shield-port-indicator-group .shield-port-indicator-3,
+.sheet-side-left input[name="attr_shield_port_count"][value="9"] ~ .shield-port-indicator-group .shield-port-indicator-4,
+.sheet-side-left input[name="attr_shield_port_count"][value="9"] ~ .shield-port-indicator-group .shield-port-indicator-5,
+.sheet-side-left input[name="attr_shield_port_count"][value="9"] ~ .shield-port-indicator-group .shield-port-indicator-6,
+.sheet-side-left input[name="attr_shield_port_count"][value="9"] ~ .shield-port-indicator-group .shield-port-indicator-7,
+.sheet-side-left input[name="attr_shield_port_count"][value="9"] ~ .shield-port-indicator-group .shield-port-indicator-8,
+.sheet-side-left input[name="attr_shield_port_count"][value="9"] ~ .shield-port-indicator-group .shield-port-indicator-9 {
+    display: inline-block;
+}
+
+.sheet-side-left input[name="attr_shield_stbd_count"][value="1"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-1,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="2"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-1,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="2"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-2,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="3"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-1,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="3"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-2,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="3"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-3,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="4"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-1,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="4"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-2,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="4"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-3,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="4"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-4,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="5"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-1,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="5"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-2,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="5"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-3,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="5"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-4,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="5"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-5,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="6"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-1,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="6"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-2,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="6"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-3,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="6"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-4,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="6"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-5,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="6"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-6,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="7"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-1,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="7"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-2,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="7"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-3,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="7"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-4,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="7"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-5,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="7"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-6,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="7"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-7,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="8"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-1,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="8"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-2,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="8"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-3,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="8"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-4,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="8"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-5,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="8"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-6,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="8"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-7,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="8"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-8,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="9"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-1,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="9"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-2,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="9"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-3,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="9"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-4,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="9"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-5,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="9"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-6,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="9"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-7,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="9"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-8,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="9"] ~ .shield-stbd-indicator-group .shield-stbd-indicator-9 {
+    display: inline-block;
+}
+
+.sheet-side-left input[name="attr_shield_aft_count"][value="1"] ~ .shield-aft-indicator-group .shield-aft-indicator-1,
+.sheet-side-left input[name="attr_shield_aft_count"][value="2"] ~ .shield-aft-indicator-group .shield-aft-indicator-1,
+.sheet-side-left input[name="attr_shield_aft_count"][value="2"] ~ .shield-aft-indicator-group .shield-aft-indicator-2,
+.sheet-side-left input[name="attr_shield_aft_count"][value="3"] ~ .shield-aft-indicator-group .shield-aft-indicator-1,
+.sheet-side-left input[name="attr_shield_aft_count"][value="3"] ~ .shield-aft-indicator-group .shield-aft-indicator-2,
+.sheet-side-left input[name="attr_shield_aft_count"][value="3"] ~ .shield-aft-indicator-group .shield-aft-indicator-3,
+.sheet-side-left input[name="attr_shield_aft_count"][value="4"] ~ .shield-aft-indicator-group .shield-aft-indicator-1,
+.sheet-side-left input[name="attr_shield_aft_count"][value="4"] ~ .shield-aft-indicator-group .shield-aft-indicator-2,
+.sheet-side-left input[name="attr_shield_aft_count"][value="4"] ~ .shield-aft-indicator-group .shield-aft-indicator-3,
+.sheet-side-left input[name="attr_shield_aft_count"][value="4"] ~ .shield-aft-indicator-group .shield-aft-indicator-4,
+.sheet-side-left input[name="attr_shield_aft_count"][value="5"] ~ .shield-aft-indicator-group .shield-aft-indicator-1,
+.sheet-side-left input[name="attr_shield_aft_count"][value="5"] ~ .shield-aft-indicator-group .shield-aft-indicator-2,
+.sheet-side-left input[name="attr_shield_aft_count"][value="5"] ~ .shield-aft-indicator-group .shield-aft-indicator-3,
+.sheet-side-left input[name="attr_shield_aft_count"][value="5"] ~ .shield-aft-indicator-group .shield-aft-indicator-4,
+.sheet-side-left input[name="attr_shield_aft_count"][value="5"] ~ .shield-aft-indicator-group .shield-aft-indicator-5,
+.sheet-side-left input[name="attr_shield_aft_count"][value="6"] ~ .shield-aft-indicator-group .shield-aft-indicator-1,
+.sheet-side-left input[name="attr_shield_aft_count"][value="6"] ~ .shield-aft-indicator-group .shield-aft-indicator-2,
+.sheet-side-left input[name="attr_shield_aft_count"][value="6"] ~ .shield-aft-indicator-group .shield-aft-indicator-3,
+.sheet-side-left input[name="attr_shield_aft_count"][value="6"] ~ .shield-aft-indicator-group .shield-aft-indicator-4,
+.sheet-side-left input[name="attr_shield_aft_count"][value="6"] ~ .shield-aft-indicator-group .shield-aft-indicator-5,
+.sheet-side-left input[name="attr_shield_aft_count"][value="6"] ~ .shield-aft-indicator-group .shield-aft-indicator-6,
+.sheet-side-left input[name="attr_shield_aft_count"][value="7"] ~ .shield-aft-indicator-group .shield-aft-indicator-1,
+.sheet-side-left input[name="attr_shield_aft_count"][value="7"] ~ .shield-aft-indicator-group .shield-aft-indicator-2,
+.sheet-side-left input[name="attr_shield_aft_count"][value="7"] ~ .shield-aft-indicator-group .shield-aft-indicator-3,
+.sheet-side-left input[name="attr_shield_aft_count"][value="7"] ~ .shield-aft-indicator-group .shield-aft-indicator-4,
+.sheet-side-left input[name="attr_shield_aft_count"][value="7"] ~ .shield-aft-indicator-group .shield-aft-indicator-5,
+.sheet-side-left input[name="attr_shield_aft_count"][value="7"] ~ .shield-aft-indicator-group .shield-aft-indicator-6,
+.sheet-side-left input[name="attr_shield_aft_count"][value="7"] ~ .shield-aft-indicator-group .shield-aft-indicator-7,
+.sheet-side-left input[name="attr_shield_aft_count"][value="8"] ~ .shield-aft-indicator-group .shield-aft-indicator-1,
+.sheet-side-left input[name="attr_shield_aft_count"][value="8"] ~ .shield-aft-indicator-group .shield-aft-indicator-2,
+.sheet-side-left input[name="attr_shield_aft_count"][value="8"] ~ .shield-aft-indicator-group .shield-aft-indicator-3,
+.sheet-side-left input[name="attr_shield_aft_count"][value="8"] ~ .shield-aft-indicator-group .shield-aft-indicator-4,
+.sheet-side-left input[name="attr_shield_aft_count"][value="8"] ~ .shield-aft-indicator-group .shield-aft-indicator-5,
+.sheet-side-left input[name="attr_shield_aft_count"][value="8"] ~ .shield-aft-indicator-group .shield-aft-indicator-6,
+.sheet-side-left input[name="attr_shield_aft_count"][value="8"] ~ .shield-aft-indicator-group .shield-aft-indicator-7,
+.sheet-side-left input[name="attr_shield_aft_count"][value="8"] ~ .shield-aft-indicator-group .shield-aft-indicator-8,
+.sheet-side-left input[name="attr_shield_aft_count"][value="9"] ~ .shield-aft-indicator-group .shield-aft-indicator-1,
+.sheet-side-left input[name="attr_shield_aft_count"][value="9"] ~ .shield-aft-indicator-group .shield-aft-indicator-2,
+.sheet-side-left input[name="attr_shield_aft_count"][value="9"] ~ .shield-aft-indicator-group .shield-aft-indicator-3,
+.sheet-side-left input[name="attr_shield_aft_count"][value="9"] ~ .shield-aft-indicator-group .shield-aft-indicator-4,
+.sheet-side-left input[name="attr_shield_aft_count"][value="9"] ~ .shield-aft-indicator-group .shield-aft-indicator-5,
+.sheet-side-left input[name="attr_shield_aft_count"][value="9"] ~ .shield-aft-indicator-group .shield-aft-indicator-6,
+.sheet-side-left input[name="attr_shield_aft_count"][value="9"] ~ .shield-aft-indicator-group .shield-aft-indicator-7,
+.sheet-side-left input[name="attr_shield_aft_count"][value="9"] ~ .shield-aft-indicator-group .shield-aft-indicator-8,
+.sheet-side-left input[name="attr_shield_aft_count"][value="9"] ~ .shield-aft-indicator-group .shield-aft-indicator-9 {
+    display: inline-block;
+}
+
+.sheet-side-left input[name="attr_shield_port_count"][value="1"] ~ .screen-indicator-group-port,
+.sheet-side-left input[name="attr_shield_port_count"][value="2"] ~ .screen-indicator-group-port,
+.sheet-side-left input[name="attr_shield_port_count"][value="3"] ~ .screen-indicator-group-port,
+.sheet-side-left input[name="attr_shield_port_count"][value="4"] ~ .screen-indicator-group-port,
+.sheet-side-left input[name="attr_shield_port_count"][value="5"] ~ .screen-indicator-group-port,
+.sheet-side-left input[name="attr_shield_port_count"][value="6"] ~ .screen-indicator-group-port,
+.sheet-side-left input[name="attr_shield_port_count"][value="7"] ~ .screen-indicator-group-port,
+.sheet-side-left input[name="attr_shield_port_count"][value="8"] ~ .screen-indicator-group-port,
+.sheet-side-left input[name="attr_shield_port_count"][value="9"] ~ .screen-indicator-group-port {
+    left: 34px;
+}
+
+.sheet-side-left input[name="attr_shield_stbd_count"][value="1"] ~ .screen-indicator-group-stbd,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="2"] ~ .screen-indicator-group-stbd,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="3"] ~ .screen-indicator-group-stbd,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="4"] ~ .screen-indicator-group-stbd,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="5"] ~ .screen-indicator-group-stbd,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="6"] ~ .screen-indicator-group-stbd,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="7"] ~ .screen-indicator-group-stbd,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="8"] ~ .screen-indicator-group-stbd,
+.sheet-side-left input[name="attr_shield_stbd_count"][value="9"] ~ .screen-indicator-group-stbd {
+    right: 34px;
+}
+
+.sheet-side-left input[name="attr_shield_aft_count"][value="1"] ~ .screen-indicator-group-aft,
+.sheet-side-left input[name="attr_shield_aft_count"][value="2"] ~ .screen-indicator-group-aft,
+.sheet-side-left input[name="attr_shield_aft_count"][value="3"] ~ .screen-indicator-group-aft,
+.sheet-side-left input[name="attr_shield_aft_count"][value="4"] ~ .screen-indicator-group-aft,
+.sheet-side-left input[name="attr_shield_aft_count"][value="5"] ~ .screen-indicator-group-aft,
+.sheet-side-left input[name="attr_shield_aft_count"][value="6"] ~ .screen-indicator-group-aft,
+.sheet-side-left input[name="attr_shield_aft_count"][value="7"] ~ .screen-indicator-group-aft,
+.sheet-side-left input[name="attr_shield_aft_count"][value="8"] ~ .screen-indicator-group-aft,
+.sheet-side-left input[name="attr_shield_aft_count"][value="9"] ~ .screen-indicator-group-aft {
+    bottom: 34px;
+}
+
 .screen-indicator-group {
     position: absolute;
     top: 8px;
@@ -332,30 +726,11 @@ input[type="number"][readonly] {
 }
 
 .design-screen-indicator .mark-overlay {
-    position: absolute;
-    inset: 0;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    z-index: 2;
-    padding: 0;
-    margin: 0;
-    font-size: 0;
-    color: transparent;
+    border-radius: 6px;
 }
 
 .design-screen-indicator input[type="hidden"][value="X"] ~ .mark-overlay::after {
-    content: "X";
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Arial Narrow', 'Helvetica Neue', sans-serif;
     font-size: 22px;
-    font-weight: bold;
-    color: #c00;
-    pointer-events: none;
 }
 
 .screen-indicator-group input[name="attr_screen_fwd_boxes"][value="1"] ~ .screen-indicator-1,
@@ -482,11 +857,34 @@ input[type="number"][readonly] {
     text-align: center;
 }
 
+.design-system-row input[name="attr_system_shield_count"].design-system-shield-count {
+    display: none;
+    width: 28px;
+    min-width: 32px;
+    max-width: 32px;
+    height: 22px;
+    min-height: 22px;
+    line-height: 20px;
+    padding: 0 2px;
+    box-sizing: border-box;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    background: #fff;
+    color: #222;
+    font-family: inherit;
+    font-size: 14px;
+    text-align: center;
+}
+
 .design-system-row input[name="attr_system_is_munitions"][value="1"] ~ .design-system-munition-count {
     display: inline-block;
 }
 
 .design-system-row input[name="attr_system_is_carrier"][value="1"] ~ .design-system-carrier-count {
+    display: inline-block;
+}
+
+.design-system-row input[name="attr_system_is_shield"][value="1"] ~ .design-system-shield-count {
     display: inline-block;
 }
 
@@ -626,6 +1024,20 @@ input[type="number"][readonly] {
 }
 
 .darkmodetoggle[value="1"] ~ section .design-screen-indicator input[type="hidden"][value="X"] ~ .mark-overlay::after {
+    color: #f55;
+}
+
+.darkmodetoggle[value="1"] ~ section .shield-fwd-indicator,
+.darkmodetoggle[value="1"] ~ section .shield-port-indicator,
+.darkmodetoggle[value="1"] ~ section .shield-stbd-indicator,
+.darkmodetoggle[value="1"] ~ section .shield-aft-indicator {
+    border-color: #ddd;
+}
+
+.darkmodetoggle[value="1"] ~ section .shield-fwd-indicator input[type="hidden"][value="X"] ~ .mark-overlay::after,
+.darkmodetoggle[value="1"] ~ section .shield-port-indicator input[type="hidden"][value="X"] ~ .mark-overlay::after,
+.darkmodetoggle[value="1"] ~ section .shield-stbd-indicator input[type="hidden"][value="X"] ~ .mark-overlay::after,
+.darkmodetoggle[value="1"] ~ section .shield-aft-indicator input[type="hidden"][value="X"] ~ .mark-overlay::after {
     color: #f55;
 }
 
@@ -1406,7 +1818,28 @@ input[type="number"][readonly] {
     max-width: 100%;
 }
 
+.shield-regenerator-box {
+    margin: 9px 0 2px;
+    width: fit-content;
+    max-width: 100%;
+}
+
 .hyperdrive-content {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 6px 10px;
+    box-sizing: border-box;
+    min-height: 36px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    width: fit-content;
+}
+
+.shield-regenerator-content {
     display: none;
     align-items: center;
     justify-content: space-between;
@@ -1425,7 +1858,18 @@ input[type="number"][readonly] {
     display: flex;
 }
 
+.shield-regenerator-box input[name="attr_has_shield_regenerator"][value="1"] ~ .shield-regenerator-content {
+    display: flex;
+}
+
 .hyperdrive-checks {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.shield-regenerator-checks {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -1436,7 +1880,20 @@ input[type="number"][readonly] {
     display: none;
 }
 
+.shield-regenerator-checks .shield-regenerator-check {
+    display: none;
+}
+
 .hyperdrive-label {
+    font-family: 'Roboto Condensed', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: #000;
+    line-height: 1;
+}
+
+.shield-regenerator-label {
     font-family: 'Roboto Condensed', 'Helvetica Neue', Arial, sans-serif;
     font-size: 16px;
     font-weight: 500;
@@ -1454,7 +1911,22 @@ input[type="number"][readonly] {
     cursor: pointer;
 }
 
+.shield-regenerator-label-toggle {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    cursor: pointer;
+}
+
 .hyperdrive-box input[name="attr_hyperdrive_label_strike"][value="1"] ~ .hyperdrive-content .hyperdrive-label {
+    text-decoration-line: line-through;
+    text-decoration-color: #c00;
+    text-decoration-thickness: 2px;
+}
+
+.shield-regenerator-box input[name="attr_shield_regenerator_label_strike"][value="1"] ~ .shield-regenerator-content .shield-regenerator-label {
     text-decoration-line: line-through;
     text-decoration-color: #c00;
     text-decoration-thickness: 2px;
@@ -1463,6 +1935,30 @@ input[type="number"][readonly] {
 .ui-dialog .charsheet .hyperdrive-check,
 .charsheet .hyperdrive-check,
 .hyperdrive-check {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    min-height: 18px;
+    max-width: 18px;
+    max-height: 18px;
+    border: 2px solid #111;
+    border-radius: 5px;
+    background: #fff;
+    margin: 0;
+    cursor: pointer;
+    position: relative;
+    box-sizing: border-box;
+    display: none;
+    vertical-align: middle;
+    background-image: none;
+}
+
+.ui-dialog .charsheet .shield-regenerator-check,
+.charsheet .shield-regenerator-check,
+.shield-regenerator-check {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -1500,7 +1996,28 @@ input[type="number"][readonly] {
     line-height: 1;
 }
 
+.ui-dialog .charsheet .shield-regenerator-check:checked::after,
+.charsheet .shield-regenerator-check:checked::after,
+.shield-regenerator-check:checked::after {
+    content: "x";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #c00;
+    line-height: 1;
+}
+
 .darkmodetoggle[value="1"] ~ section .hyperdrive-content {
+    background-color: #2a2a2a;
+    border-color: #444;
+}
+
+.darkmodetoggle[value="1"] ~ section .shield-regenerator-content {
     background-color: #2a2a2a;
     border-color: #444;
 }
@@ -1509,7 +2026,15 @@ input[type="number"][readonly] {
     color: #eee;
 }
 
+.darkmodetoggle[value="1"] ~ section .shield-regenerator-label {
+    color: #eee;
+}
+
 .darkmodetoggle[value="1"] ~ section .hyperdrive-box input[name="attr_hyperdrive_label_strike"][value="1"] ~ .hyperdrive-content .hyperdrive-label {
+    text-decoration-color: #f55;
+}
+
+.darkmodetoggle[value="1"] ~ section .shield-regenerator-box input[name="attr_shield_regenerator_label_strike"][value="1"] ~ .shield-regenerator-content .shield-regenerator-label {
     text-decoration-color: #f55;
 }
 
@@ -1518,7 +2043,16 @@ input[type="number"][readonly] {
     border-color: #aaa;
 }
 
+.darkmodetoggle[value="1"] ~ section .shield-regenerator-check {
+    background: #1a1a1a;
+    border-color: #aaa;
+}
+
 .darkmodetoggle[value="1"] ~ section .hyperdrive-check:checked::after {
+    color: #f55;
+}
+
+.darkmodetoggle[value="1"] ~ section .shield-regenerator-check:checked::after {
     color: #f55;
 }
 
@@ -1546,6 +2080,33 @@ input[type="number"][readonly] {
 .hyperdrive-box input[name="attr_hyperdrive_count"][value="22"] ~ .hyperdrive-content .hyperdrive-check:nth-of-type(-n+22),
 .hyperdrive-box input[name="attr_hyperdrive_count"][value="23"] ~ .hyperdrive-content .hyperdrive-check:nth-of-type(-n+23),
 .hyperdrive-box input[name="attr_hyperdrive_count"][value="24"] ~ .hyperdrive-content .hyperdrive-check:nth-of-type(-n+24) {
+    display: inline-block;
+}
+
+.shield-regenerator-box input[name="attr_shield_regenerator_count"][value="1"] ~ .shield-regenerator-content .shield-regenerator-check:nth-of-type(-n+1),
+.shield-regenerator-box input[name="attr_shield_regenerator_count"][value="2"] ~ .shield-regenerator-content .shield-regenerator-check:nth-of-type(-n+2),
+.shield-regenerator-box input[name="attr_shield_regenerator_count"][value="3"] ~ .shield-regenerator-content .shield-regenerator-check:nth-of-type(-n+3),
+.shield-regenerator-box input[name="attr_shield_regenerator_count"][value="4"] ~ .shield-regenerator-content .shield-regenerator-check:nth-of-type(-n+4),
+.shield-regenerator-box input[name="attr_shield_regenerator_count"][value="5"] ~ .shield-regenerator-content .shield-regenerator-check:nth-of-type(-n+5),
+.shield-regenerator-box input[name="attr_shield_regenerator_count"][value="6"] ~ .shield-regenerator-content .shield-regenerator-check:nth-of-type(-n+6),
+.shield-regenerator-box input[name="attr_shield_regenerator_count"][value="7"] ~ .shield-regenerator-content .shield-regenerator-check:nth-of-type(-n+7),
+.shield-regenerator-box input[name="attr_shield_regenerator_count"][value="8"] ~ .shield-regenerator-content .shield-regenerator-check:nth-of-type(-n+8),
+.shield-regenerator-box input[name="attr_shield_regenerator_count"][value="9"] ~ .shield-regenerator-content .shield-regenerator-check:nth-of-type(-n+9),
+.shield-regenerator-box input[name="attr_shield_regenerator_count"][value="10"] ~ .shield-regenerator-content .shield-regenerator-check:nth-of-type(-n+10),
+.shield-regenerator-box input[name="attr_shield_regenerator_count"][value="11"] ~ .shield-regenerator-content .shield-regenerator-check:nth-of-type(-n+11),
+.shield-regenerator-box input[name="attr_shield_regenerator_count"][value="12"] ~ .shield-regenerator-content .shield-regenerator-check:nth-of-type(-n+12),
+.shield-regenerator-box input[name="attr_shield_regenerator_count"][value="13"] ~ .shield-regenerator-content .shield-regenerator-check:nth-of-type(-n+13),
+.shield-regenerator-box input[name="attr_shield_regenerator_count"][value="14"] ~ .shield-regenerator-content .shield-regenerator-check:nth-of-type(-n+14),
+.shield-regenerator-box input[name="attr_shield_regenerator_count"][value="15"] ~ .shield-regenerator-content .shield-regenerator-check:nth-of-type(-n+15),
+.shield-regenerator-box input[name="attr_shield_regenerator_count"][value="16"] ~ .shield-regenerator-content .shield-regenerator-check:nth-of-type(-n+16),
+.shield-regenerator-box input[name="attr_shield_regenerator_count"][value="17"] ~ .shield-regenerator-content .shield-regenerator-check:nth-of-type(-n+17),
+.shield-regenerator-box input[name="attr_shield_regenerator_count"][value="18"] ~ .shield-regenerator-content .shield-regenerator-check:nth-of-type(-n+18),
+.shield-regenerator-box input[name="attr_shield_regenerator_count"][value="19"] ~ .shield-regenerator-content .shield-regenerator-check:nth-of-type(-n+19),
+.shield-regenerator-box input[name="attr_shield_regenerator_count"][value="20"] ~ .shield-regenerator-content .shield-regenerator-check:nth-of-type(-n+20),
+.shield-regenerator-box input[name="attr_shield_regenerator_count"][value="21"] ~ .shield-regenerator-content .shield-regenerator-check:nth-of-type(-n+21),
+.shield-regenerator-box input[name="attr_shield_regenerator_count"][value="22"] ~ .shield-regenerator-content .shield-regenerator-check:nth-of-type(-n+22),
+.shield-regenerator-box input[name="attr_shield_regenerator_count"][value="23"] ~ .shield-regenerator-content .shield-regenerator-check:nth-of-type(-n+23),
+.shield-regenerator-box input[name="attr_shield_regenerator_count"][value="24"] ~ .shield-regenerator-content .shield-regenerator-check:nth-of-type(-n+24) {
     display: inline-block;
 }
 
@@ -1699,6 +2260,145 @@ input[type="number"][readonly] {
 .marines-box input[name="attr_marines_count"][value="22"] ~ .marines-content .marines-check:nth-of-type(-n+22),
 .marines-box input[name="attr_marines_count"][value="23"] ~ .marines-content .marines-check:nth-of-type(-n+23),
 .marines-box input[name="attr_marines_count"][value="24"] ~ .marines-content .marines-check:nth-of-type(-n+24) {
+    display: inline-block;
+}
+
+/**************** MINES BOX ****************/
+
+.mines-box {
+    margin: 9px 0 2px;
+    width: fit-content;
+    max-width: 100%;
+}
+
+.mines-content {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 6px 10px;
+    box-sizing: border-box;
+    min-height: 36px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    width: fit-content;
+}
+
+.mines-box input[name="attr_has_mines"][value="1"] ~ .mines-content {
+    display: flex;
+}
+
+.mines-checks {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.mines-checks .mines-check {
+    display: none;
+}
+
+.mines-label {
+    font-family: 'Roboto Condensed', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: #000;
+    line-height: 1;
+}
+
+.darkmodetoggle[value="1"] ~ section .mines-content {
+    background-color: #2a2a2a;
+    border-color: #444;
+}
+
+.darkmodetoggle[value="1"] ~ section .mines-label {
+    color: #eee;
+}
+
+.mines-label-toggle {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    cursor: pointer;
+}
+
+.ui-dialog .charsheet .mines-check,
+.charsheet .mines-check,
+.mines-check {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 14.4px;
+    height: 14.4px;
+    min-width: 14.4px;
+    min-height: 14.4px;
+    max-width: 14.4px;
+    max-height: 14.4px;
+    border: 2px solid #111;
+    border-radius: 0;
+    background: #fff;
+    margin: 0;
+    cursor: pointer;
+    position: relative;
+    box-sizing: border-box;
+    display: none;
+    vertical-align: middle;
+    background-image: none;
+    transform: rotate(45deg);
+    transform-origin: center;
+}
+
+.ui-dialog .charsheet .mines-check:checked::after,
+.charsheet .mines-check:checked::after,
+.mines-check:checked::after {
+    content: "x";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: #c00;
+    line-height: 1;
+    transform: rotate(-45deg);
+}
+
+.darkmodetoggle[value="1"] ~ section .mines-check {
+    background: #1a1a1a;
+    border-color: #aaa;
+}
+
+.darkmodetoggle[value="1"] ~ section .mines-check:checked::after {
+    color: #f55;
+}
+
+.mines-box input[name="attr_mines_label_strike"][value="1"] ~ .mines-content .mines-label {
+    text-decoration-line: line-through;
+    text-decoration-color: #c00;
+    text-decoration-thickness: 2px;
+}
+
+.darkmodetoggle[value="1"] ~ section .mines-box input[name="attr_mines_label_strike"][value="1"] ~ .mines-content .mines-label {
+    text-decoration-color: #f55;
+}
+
+.mines-box input[name="attr_mines_count"][value="1"] ~ .mines-content .mines-check:nth-of-type(-n+1),
+.mines-box input[name="attr_mines_count"][value="2"] ~ .mines-content .mines-check:nth-of-type(-n+2),
+.mines-box input[name="attr_mines_count"][value="3"] ~ .mines-content .mines-check:nth-of-type(-n+3),
+.mines-box input[name="attr_mines_count"][value="4"] ~ .mines-content .mines-check:nth-of-type(-n+4),
+.mines-box input[name="attr_mines_count"][value="5"] ~ .mines-content .mines-check:nth-of-type(-n+5),
+.mines-box input[name="attr_mines_count"][value="6"] ~ .mines-content .mines-check:nth-of-type(-n+6),
+.mines-box input[name="attr_mines_count"][value="7"] ~ .mines-content .mines-check:nth-of-type(-n+7),
+.mines-box input[name="attr_mines_count"][value="8"] ~ .mines-content .mines-check:nth-of-type(-n+8),
+.mines-box input[name="attr_mines_count"][value="9"] ~ .mines-content .mines-check:nth-of-type(-n+9) {
     display: inline-block;
 }
 
