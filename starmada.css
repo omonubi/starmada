@@ -259,6 +259,51 @@ input[type="number"][readonly] {
     transform: rotate(45deg);
 }
 
+.current-speed-display {
+    position: absolute;
+    right: 32px;
+    bottom: 32px;
+    width: 2ch;
+    min-width: 2ch;
+    max-width: 2ch;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: none !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    color: #333;
+    -webkit-text-fill-color: #333;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    appearance: textfield;
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+}
+
+.current-speed-display:focus {
+    outline: none;
+}
+
+.darkmodetoggle[value="1"] ~ section .current-speed-display {
+    background: none !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    color: #ddd;
+    -webkit-text-fill-color: #ddd;
+}
+
+.current-speed-display::-webkit-outer-spin-button,
+.current-speed-display::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 .sheet-side-right {
     background-color: #ddd;
 }
@@ -1316,6 +1361,29 @@ input[type="number"][readonly] {
 .darkmodetoggle[value="1"] ~ section .movement-box input[type="text"] {
     background-color: #1a1a1a;
     color: #eee;
+}
+
+input[name="attr_move_overthrust_1"][value="1"] ~ .movement-orders .movement-box:nth-child(1) input[type="text"],
+input[name="attr_move_overthrust_2"][value="1"] ~ .movement-orders .movement-box:nth-child(2) input[type="text"],
+input[name="attr_move_overthrust_3"][value="1"] ~ .movement-orders .movement-box:nth-child(3) input[type="text"],
+input[name="attr_move_overthrust_4"][value="1"] ~ .movement-orders .movement-box:nth-child(4) input[type="text"],
+input[name="attr_move_overthrust_5"][value="1"] ~ .movement-orders .movement-box:nth-child(5) input[type="text"],
+input[name="attr_move_overthrust_6"][value="1"] ~ .movement-orders .movement-box:nth-child(6) input[type="text"],
+input[name="attr_move_overthrust_7"][value="1"] ~ .movement-orders .movement-box:nth-child(7) input[type="text"],
+input[name="attr_move_overthrust_8"][value="1"] ~ .movement-orders .movement-box:nth-child(8) input[type="text"] {
+    background-color: #fdd;
+}
+
+.darkmodetoggle[value="1"] ~ section input[name="attr_move_overthrust_1"][value="1"] ~ .movement-orders .movement-box:nth-child(1) input[type="text"],
+.darkmodetoggle[value="1"] ~ section input[name="attr_move_overthrust_2"][value="1"] ~ .movement-orders .movement-box:nth-child(2) input[type="text"],
+.darkmodetoggle[value="1"] ~ section input[name="attr_move_overthrust_3"][value="1"] ~ .movement-orders .movement-box:nth-child(3) input[type="text"],
+.darkmodetoggle[value="1"] ~ section input[name="attr_move_overthrust_4"][value="1"] ~ .movement-orders .movement-box:nth-child(4) input[type="text"],
+.darkmodetoggle[value="1"] ~ section input[name="attr_move_overthrust_5"][value="1"] ~ .movement-orders .movement-box:nth-child(5) input[type="text"],
+.darkmodetoggle[value="1"] ~ section input[name="attr_move_overthrust_6"][value="1"] ~ .movement-orders .movement-box:nth-child(6) input[type="text"],
+.darkmodetoggle[value="1"] ~ section input[name="attr_move_overthrust_7"][value="1"] ~ .movement-orders .movement-box:nth-child(7) input[type="text"],
+.darkmodetoggle[value="1"] ~ section input[name="attr_move_overthrust_8"][value="1"] ~ .movement-orders .movement-box:nth-child(8) input[type="text"] {
+    background-color: #fdd;
+    color: #111;
 }
 
 .systems-boxes-container {

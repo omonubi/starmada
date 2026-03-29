@@ -266,6 +266,7 @@
                     <span class='diag diag-2'></span>
                     <span class='diag diag-3'></span>
                     <span class='diag diag-4'></span>
+                    <input type='number' name='attr_current_speed' class='current-speed-display' title='Current speed' readonly tabindex='-1' min='0' max='99' />
                     <div class='center-image-control'>
                         <input type='hidden' name='attr_has_center_image' />
                         <span class='center-image-hit' tabindex='0'></span>
@@ -327,15 +328,23 @@
                 </div>
             </div>
         </div>
+        <input type='hidden' name='attr_move_overthrust_1' />
+        <input type='hidden' name='attr_move_overthrust_2' />
+        <input type='hidden' name='attr_move_overthrust_3' />
+        <input type='hidden' name='attr_move_overthrust_4' />
+        <input type='hidden' name='attr_move_overthrust_5' />
+        <input type='hidden' name='attr_move_overthrust_6' />
+        <input type='hidden' name='attr_move_overthrust_7' />
+        <input type='hidden' name='attr_move_overthrust_8' />
         <div class='movement-orders'>
-            <div class='movement-box'><span class='movement-number'>1</span><input type='text' name='attr_move_1' /></div>
-            <div class='movement-box'><span class='movement-number'>2</span><input type='text' name='attr_move_2' /></div>
-            <div class='movement-box'><span class='movement-number'>3</span><input type='text' name='attr_move_3' /></div>
-            <div class='movement-box'><span class='movement-number'>4</span><input type='text' name='attr_move_4' /></div>
-            <div class='movement-box'><span class='movement-number'>5</span><input type='text' name='attr_move_5' /></div>
-            <div class='movement-box'><span class='movement-number'>6</span><input type='text' name='attr_move_6' /></div>
-            <div class='movement-box'><span class='movement-number'>7</span><input type='text' name='attr_move_7' /></div>
-            <div class='movement-box'><span class='movement-number'>8</span><input type='text' name='attr_move_8' /></div>
+            <div class='movement-box'><span class='movement-number'>1</span><input type='text' name='attr_move_1' pattern='[0-9PSULR()]*' /></div>
+            <div class='movement-box'><span class='movement-number'>2</span><input type='text' name='attr_move_2' pattern='[0-9PSULR()]*' /></div>
+            <div class='movement-box'><span class='movement-number'>3</span><input type='text' name='attr_move_3' pattern='[0-9PSULR()]*' /></div>
+            <div class='movement-box'><span class='movement-number'>4</span><input type='text' name='attr_move_4' pattern='[0-9PSULR()]*' /></div>
+            <div class='movement-box'><span class='movement-number'>5</span><input type='text' name='attr_move_5' pattern='[0-9PSULR()]*' /></div>
+            <div class='movement-box'><span class='movement-number'>6</span><input type='text' name='attr_move_6' pattern='[0-9PSULR()]*' /></div>
+            <div class='movement-box'><span class='movement-number'>7</span><input type='text' name='attr_move_7' pattern='[0-9PSULR()]*' /></div>
+            <div class='movement-box'><span class='movement-number'>8</span><input type='text' name='attr_move_8' pattern='[0-9PSULR()]*' /></div>
         </div>
         <fieldset class='repeating_weapons'>
             <div class='weapon-row'>
@@ -1171,6 +1180,126 @@ on('sheet:opened change:repeating_systems:system_type change:repeating_systems:s
     await updateSystemsStatBoxes();
 });
 
+on('sheet:opened change:hull_size change:engine_rating change:move_1 change:move_2 change:move_3 change:move_4 change:move_5 change:move_6 change:move_7 change:move_8 change:mark_engine_1 change:mark_engine_2 change:mark_engine_3 change:mark_engine_4 change:mark_engine_5 change:mark_engine_6 change:mark_engine_7 change:mark_engine_8 change:mark_engine_9 change:mark_engine_10 change:mark_engine_11 change:mark_engine_12 change:mark_engine_13 change:mark_engine_14 change:mark_engine_15 change:mark_engine_16 change:mark_engine_17 change:mark_engine_18 change:mark_engine_19 change:mark_engine_20 change:mark_engine_21 change:mark_engine_22 change:mark_engine_23 change:mark_engine_24', async function(eventInfo) {
+    const moveAttrs = ['move_1', 'move_2', 'move_3', 'move_4', 'move_5', 'move_6', 'move_7', 'move_8'];
+    const engineAttrs = [];
+    for (let i = 1; i <= 24; i++) {
+        engineAttrs.push(`engine_box_${i}`);
+        engineAttrs.push(`mark_engine_${i}`);
+    }
+    const values = await getAttrsAsync([...moveAttrs, ...engineAttrs]);
+    const attrs = {};
+    const commandStrings = [];
+    const commandTotals = [];
+
+    moveAttrs.forEach((attr, index) => {
+        const current = values[attr] || '';
+        const withoutTotalSuffix = current.replace(/\(\d+\)\s*$/, '');
+        const uppercased = withoutTotalSuffix.toUpperCase();
+        const allowedOnly = uppercased.replace(/[^0-9PSULR]/g, '');
+        const hasU = allowedOnly.includes('U');
+        let spCount = 0;
+        let uSeen = false;
+        let hasL = false;
+        let hasR = false;
+        let hasS = false;
+        let hasP = false;
+        let command = '';
+
+        for (const ch of allowedOnly) {
+            if (ch === 'U') {
+                if (uSeen) {
+                    continue;
+                }
+                uSeen = true;
+                command += ch;
+                continue;
+            }
+
+            if (ch === 'S' || ch === 'P') {
+                if (hasU) {
+                    continue;
+                }
+                if (spCount >= 3) {
+                    continue;
+                }
+                if (ch === 'S' && hasL) {
+                    continue;
+                }
+                if (ch === 'P' && hasR) {
+                    continue;
+                }
+                spCount += 1;
+                if (ch === 'S') {
+                    hasS = true;
+                }
+                if (ch === 'P') {
+                    hasP = true;
+                }
+                command += ch;
+                continue;
+            }
+
+            if (ch === 'L' || ch === 'R') {
+                if (ch === 'L') {
+                    if (hasR || hasS) {
+                        continue;
+                    }
+                    hasL = true;
+                    command += ch;
+                    continue;
+                }
+                if (hasL || hasP) {
+                    continue;
+                }
+                hasR = true;
+                command += ch;
+                continue;
+            }
+
+            command += ch;
+        }
+
+        const total = command.split('').reduce((sum, ch) => sum + (/\d/.test(ch) ? Number(ch) : (ch === 'L' || ch === 'R' ? 1 : 0)), 0);
+        const formatted = command ? `${command}(${total})` : '';
+        commandStrings[index] = command;
+        commandTotals[index] = total;
+
+        if (formatted !== current) {
+            attrs[attr] = formatted;
+        }
+    });
+
+    let currentThrust = 0;
+    for (let i = 1; i <= 24; i++) {
+        const mark = values[`mark_engine_${i}`] || '';
+        const engineValue = parseInt(values[`engine_box_${i}`], 10);
+        if (mark !== 'X' && Number.isFinite(engineValue) && engineValue > currentThrust) {
+            currentThrust = engineValue;
+        }
+    }
+
+    let highestMoveIndex = -1;
+    for (let i = 7; i >= 0; i--) {
+        if (commandStrings[i]) {
+            highestMoveIndex = i;
+            break;
+        }
+    }
+
+    for (let i = 1; i <= 8; i++) {
+        attrs[`move_overthrust_${i}`] = '';
+    }
+
+    if (highestMoveIndex >= 0 && commandTotals[highestMoveIndex] > currentThrust) {
+        attrs[`move_overthrust_${highestMoveIndex + 1}`] = '1';
+    }
+
+    if (Object.keys(attrs).length) {
+        await setAttrsAsync(attrs);
+    }
+});
+
 // Update weapon abbreviation when weapon type changes
 on('change:repeating_weapons:weapon_type', function(eventInfo) {
     const match = eventInfo.sourceAttribute.match(/repeating_weapons_(.+?)_weapon_type/);
@@ -1358,11 +1487,12 @@ markSections.forEach(section => {
 });
 
 // Update Space Units and Hull Box values when Hull Size changes
-on('change:hull_size change:engine_rating', async function() {
+on('sheet:opened change:hull_size change:engine_rating', async function() {
     const values = await getAttrsAsync(['hull_size', 'engine_rating']);
     const hullSize = parseInt(values.hull_size) || 0;
     const engineRating = parseInt(values.engine_rating) || 0;
-    const attrs = { space_units: hullSize * 100 };
+    const clampedSpeed = Math.max(0, Math.min(99, engineRating));
+    const attrs = { space_units: hullSize * 100, current_speed: clampedSpeed };
     for (let i = 1; i <= 24; i++) {
         attrs['hull_box_' + i] = (i <= hullSize) ? (hullSize - i + 1) : '';
     }
