@@ -1412,7 +1412,7 @@ input[name="attr_current_move_box"][value="17"] ~ .movement-orders .movement-box
     font-weight: 700;
     color: #999;
     padding: 0 8px;
-    background-color: #fff;
+    background-color: #e8e8e8;
     border-right: 1px solid #ccc;
     min-width: 24px;
 }
@@ -1426,7 +1426,7 @@ input[name="attr_current_move_box"][value="17"] ~ .movement-orders .movement-box
     font-weight: 700;
     color: #333;
     padding: 0 8px;
-    background-color: #fff;
+    background-color: #e8e8e8;
     border: none;
     border-right: 1px solid #ccc;
     border-radius: 0;
@@ -1440,10 +1440,14 @@ input[name="attr_current_move_box"][value="17"] ~ .movement-orders .movement-box
     outline: none;
 }
 
+.movement-number-btn:active {
+    background-color: #fff;
+}
+
 .movement-box input[type="text"] {
     flex: 1;
     border: none;
-    background-color: #fff;
+    background-color: #e8e8e8;
     font-family: 'Orbitron', sans-serif;
     font-size: 18px;
     padding: 4px 8px;
@@ -1473,6 +1477,45 @@ input[name="attr_current_move_box"][value="16"] ~ .movement-orders .movement-box
     cursor: text;
     outline: 1px solid #555;
     outline-offset: -1px;
+    background-color: #fff;
+}
+
+input[name="attr_current_move_box"][value="1"] ~ .movement-orders .movement-box:nth-child(1) .movement-number,
+input[name="attr_current_move_box"][value="2"] ~ .movement-orders .movement-box:nth-child(2) .movement-number,
+input[name="attr_current_move_box"][value="3"] ~ .movement-orders .movement-box:nth-child(3) .movement-number,
+input[name="attr_current_move_box"][value="4"] ~ .movement-orders .movement-box:nth-child(4) .movement-number,
+input[name="attr_current_move_box"][value="5"] ~ .movement-orders .movement-box:nth-child(5) .movement-number,
+input[name="attr_current_move_box"][value="6"] ~ .movement-orders .movement-box:nth-child(6) .movement-number,
+input[name="attr_current_move_box"][value="7"] ~ .movement-orders .movement-box:nth-child(7) .movement-number,
+input[name="attr_current_move_box"][value="8"] ~ .movement-orders .movement-box:nth-child(8) .movement-number,
+input[name="attr_current_move_box"][value="9"] ~ .movement-orders .movement-box:nth-child(9) .movement-number,
+input[name="attr_current_move_box"][value="10"] ~ .movement-orders .movement-box:nth-child(10) .movement-number,
+input[name="attr_current_move_box"][value="11"] ~ .movement-orders .movement-box:nth-child(11) .movement-number,
+input[name="attr_current_move_box"][value="12"] ~ .movement-orders .movement-box:nth-child(12) .movement-number,
+input[name="attr_current_move_box"][value="13"] ~ .movement-orders .movement-box:nth-child(13) .movement-number,
+input[name="attr_current_move_box"][value="14"] ~ .movement-orders .movement-box:nth-child(14) .movement-number,
+input[name="attr_current_move_box"][value="15"] ~ .movement-orders .movement-box:nth-child(15) .movement-number,
+input[name="attr_current_move_box"][value="16"] ~ .movement-orders .movement-box:nth-child(16) .movement-number {
+    background-color: #fff;
+}
+
+input[name="attr_current_move_box"][value="1"] ~ .movement-orders .movement-box:nth-child(1) .movement-number-btn,
+input[name="attr_current_move_box"][value="2"] ~ .movement-orders .movement-box:nth-child(2) .movement-number-btn,
+input[name="attr_current_move_box"][value="3"] ~ .movement-orders .movement-box:nth-child(3) .movement-number-btn,
+input[name="attr_current_move_box"][value="4"] ~ .movement-orders .movement-box:nth-child(4) .movement-number-btn,
+input[name="attr_current_move_box"][value="5"] ~ .movement-orders .movement-box:nth-child(5) .movement-number-btn,
+input[name="attr_current_move_box"][value="6"] ~ .movement-orders .movement-box:nth-child(6) .movement-number-btn,
+input[name="attr_current_move_box"][value="7"] ~ .movement-orders .movement-box:nth-child(7) .movement-number-btn,
+input[name="attr_current_move_box"][value="8"] ~ .movement-orders .movement-box:nth-child(8) .movement-number-btn,
+input[name="attr_current_move_box"][value="9"] ~ .movement-orders .movement-box:nth-child(9) .movement-number-btn,
+input[name="attr_current_move_box"][value="10"] ~ .movement-orders .movement-box:nth-child(10) .movement-number-btn,
+input[name="attr_current_move_box"][value="11"] ~ .movement-orders .movement-box:nth-child(11) .movement-number-btn,
+input[name="attr_current_move_box"][value="12"] ~ .movement-orders .movement-box:nth-child(12) .movement-number-btn,
+input[name="attr_current_move_box"][value="13"] ~ .movement-orders .movement-box:nth-child(13) .movement-number-btn,
+input[name="attr_current_move_box"][value="14"] ~ .movement-orders .movement-box:nth-child(14) .movement-number-btn,
+input[name="attr_current_move_box"][value="15"] ~ .movement-orders .movement-box:nth-child(15) .movement-number-btn,
+input[name="attr_current_move_box"][value="16"] ~ .movement-orders .movement-box:nth-child(16) .movement-number-btn {
+    background-color: #fff;
 }
 
 /* Dark mode - Movement Orders */
@@ -1486,7 +1529,7 @@ input[name="attr_current_move_box"][value="16"] ~ .movement-orders .movement-box
 }
 
 .darkmodetoggle[value="1"] ~ section .movement-number-btn {
-    background-color: #2a2a2a;
+    background-color: #e6e6e6;
     color: #ddd;
     border-right-color: #444;
 }

@@ -1233,12 +1233,32 @@ on('clicked:repair-reset', async function() {
         return;
     }
 
+    const engineAttrs = [];
+    for (let i = 1; i <= 24; i++) {
+        engineAttrs.push(`engine_box_${i}`);
+    }
+    const engineValues = await getAttrsAsync(engineAttrs);
+    let maxEngineValue = 0;
+    for (let i = 1; i <= 24; i++) {
+        const value = parseInt(engineValues[`engine_box_${i}`], 10);
+        if (Number.isFinite(value) && value > maxEngineValue) {
+            maxEngineValue = value;
+        }
+    }
+
     const attrs = { current_move_box: '1' };
     for (let i = 1; i <= 16; i++) {
         attrs[`move_${i}`] = '';
         attrs[`move_overthrust_${i}`] = '';
         attrs[`move_withinthrust_${i}`] = '';
     }
+    for (let i = 1; i <= 24; i++) {
+        attrs[`mark_hull_${i}`] = '';
+        attrs[`mark_engine_${i}`] = '';
+        attrs[`mark_weapons_${i}`] = '';
+        attrs[`mark_systems_${i}`] = '';
+    }
+    attrs['current_speed'] = String(maxEngineValue);
     await setAttrsAsync(attrs);
 });
 
