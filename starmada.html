@@ -360,6 +360,22 @@
         <input type='hidden' name='attr_move_withinthrust_14' />
         <input type='hidden' name='attr_move_withinthrust_15' />
         <input type='hidden' name='attr_move_withinthrust_16' />
+        <input type='hidden' name='attr_move_reviewdrop_1' />
+        <input type='hidden' name='attr_move_reviewdrop_2' />
+        <input type='hidden' name='attr_move_reviewdrop_3' />
+        <input type='hidden' name='attr_move_reviewdrop_4' />
+        <input type='hidden' name='attr_move_reviewdrop_5' />
+        <input type='hidden' name='attr_move_reviewdrop_6' />
+        <input type='hidden' name='attr_move_reviewdrop_7' />
+        <input type='hidden' name='attr_move_reviewdrop_8' />
+        <input type='hidden' name='attr_move_reviewdrop_9' />
+        <input type='hidden' name='attr_move_reviewdrop_10' />
+        <input type='hidden' name='attr_move_reviewdrop_11' />
+        <input type='hidden' name='attr_move_reviewdrop_12' />
+        <input type='hidden' name='attr_move_reviewdrop_13' />
+        <input type='hidden' name='attr_move_reviewdrop_14' />
+        <input type='hidden' name='attr_move_reviewdrop_15' />
+        <input type='hidden' name='attr_move_reviewdrop_16' />
         <input type='hidden' name='attr_current_move_box' value='1' />
         <div class='movement-orders'>
             <div class='movement-box'><span class='movement-number'>1</span><button type='action' name='act_commit-move-1' class='movement-number-btn'>1</button><input type='text' name='attr_move_1' tabindex='-1' pattern='[0-9PSULR()]*' /></div>
@@ -1221,6 +1237,7 @@ for (let i = 1; i <= 16; i++) {
                 current_speed: parseInt(match[1], 10),
                 [`move_overthrust_${i}`]: '',
                 [`move_withinthrust_${i}`]: '',
+                [`move_reviewdrop_${i}`]: '',
                 current_move_box: String(i + 1)
             });
         }
@@ -1251,13 +1268,26 @@ on('clicked:repair-reset', async function() {
         attrs[`move_${i}`] = '';
         attrs[`move_overthrust_${i}`] = '';
         attrs[`move_withinthrust_${i}`] = '';
+        attrs[`move_reviewdrop_${i}`] = '';
     }
     for (let i = 1; i <= 24; i++) {
         attrs[`mark_hull_${i}`] = '';
         attrs[`mark_engine_${i}`] = '';
         attrs[`mark_weapons_${i}`] = '';
         attrs[`mark_systems_${i}`] = '';
+        attrs[`afb_checked_${i}`] = '';
+        attrs[`hyperdrive_checked_${i}`] = '';
+        attrs[`shield_regenerator_checked_${i}`] = '';
+        attrs[`marines_checked_${i}`] = '';
     }
+    for (let i = 1; i <= 9; i++) {
+        attrs[`mines_checked_${i}`] = '';
+    }
+    attrs['afb_label_strike'] = '';
+    attrs['hyperdrive_label_strike'] = '';
+    attrs['shield_regenerator_label_strike'] = '';
+    attrs['mines_label_strike'] = '';
+    attrs['marines_label_strike'] = '';
     attrs['current_speed'] = String(maxEngineValue);
     await setAttrsAsync(attrs);
 });
@@ -1275,15 +1305,18 @@ on('sheet:opened change:repeating_systems:system_type change:repeating_systems:s
 
 on('sheet:opened change:hull_size change:engine_rating change:current_speed change:move_1 change:move_2 change:move_3 change:move_4 change:move_5 change:move_6 change:move_7 change:move_8 change:move_9 change:move_10 change:move_11 change:move_12 change:move_13 change:move_14 change:move_15 change:move_16 change:mark_engine_1 change:mark_engine_2 change:mark_engine_3 change:mark_engine_4 change:mark_engine_5 change:mark_engine_6 change:mark_engine_7 change:mark_engine_8 change:mark_engine_9 change:mark_engine_10 change:mark_engine_11 change:mark_engine_12 change:mark_engine_13 change:mark_engine_14 change:mark_engine_15 change:mark_engine_16 change:mark_engine_17 change:mark_engine_18 change:mark_engine_19 change:mark_engine_20 change:mark_engine_21 change:mark_engine_22 change:mark_engine_23 change:mark_engine_24', async function(eventInfo) {
     const moveAttrs = ['move_1', 'move_2', 'move_3', 'move_4', 'move_5', 'move_6', 'move_7', 'move_8', 'move_9', 'move_10', 'move_11', 'move_12', 'move_13', 'move_14', 'move_15', 'move_16'];
+    const editedMoveMatch = (eventInfo.sourceAttribute || '').match(/^move_(\d+)$/);
+    const editedMoveIndex = editedMoveMatch ? parseInt(editedMoveMatch[1], 10) - 1 : -1;
     const engineAttrs = [];
     for (let i = 1; i <= 24; i++) {
         engineAttrs.push(`engine_box_${i}`);
         engineAttrs.push(`mark_engine_${i}`);
     }
-    const values = await getAttrsAsync([...moveAttrs, ...engineAttrs, 'current_speed']);
+    const values = await getAttrsAsync([...moveAttrs, ...engineAttrs, 'current_speed', 'current_move_box']);
     const attrs = {};
     const commandStrings = [];
     const commandTotals = [];
+    const commandPivotCounts = [];
 
     moveAttrs.forEach((attr, index) => {
         const current = values[attr] || '';
@@ -1355,9 +1388,18 @@ on('sheet:opened change:hull_size change:engine_rating change:current_speed chan
 
         const tokens = command.match(/\d+|[LRPSU]/g) || [];
         const total = tokens.reduce((sum, token) => sum + (/^\d+$/.test(token) ? Number(token) : (token === 'L' || token === 'R' ? 1 : 0)), 0);
+        const pivotCount = (command.match(/[PS]/g) || []).length;
         const formatted = command ? `${command}(${total})` : '';
+        const wasTrimmedByReview = uppercased !== command;
         commandStrings[index] = command;
         commandTotals[index] = total;
+        commandPivotCounts[index] = pivotCount;
+
+        if (wasTrimmedByReview) {
+            attrs[`move_reviewdrop_${index + 1}`] = '1';
+        } else if (eventInfo.sourceAttribute === attr && eventInfo.sourceType !== 'sheetworker') {
+            attrs[`move_reviewdrop_${index + 1}`] = '';
+        }
 
         if (formatted !== current) {
             attrs[attr] = formatted;
@@ -1389,8 +1431,17 @@ on('sheet:opened change:hull_size change:engine_rating change:current_speed chan
     }
 
     let pendingThrustChange = false;
-    if (highestMoveIndex >= 0) {
-        const thrustNeeded = Math.abs(currentSpeed - commandTotals[highestMoveIndex]);
+    const clearedEditedMove = editedMoveIndex >= 0 && commandStrings[editedMoveIndex] === '';
+    if (highestMoveIndex >= 0 && !clearedEditedMove) {
+        const vettedCommand = commandStrings[highestMoveIndex] || '';
+        const pivotCount = commandPivotCounts[highestMoveIndex];
+        const turnCount = (vettedCommand.match(/[LR]/g) || []).length;
+        const baseThrustNeeded = pivotCount > 1 || vettedCommand.includes('U')
+            ? currentSpeed + commandTotals[highestMoveIndex]
+            : pivotCount === 1
+                ? Math.max(currentSpeed, commandTotals[highestMoveIndex])
+                : Math.abs(currentSpeed - commandTotals[highestMoveIndex]);
+        const thrustNeeded = baseThrustNeeded + turnCount;
         const isCommitSource = !eventInfo.sourceAttribute || eventInfo.sourceAttribute === 'current_speed';
         if (thrustNeeded > engineRating) {
             attrs[`move_overthrust_${highestMoveIndex + 1}`] = '1';
@@ -1401,8 +1452,18 @@ on('sheet:opened change:hull_size change:engine_rating change:current_speed chan
         }
     }
 
+    const persistedMoveBox = parseInt(values['current_move_box'], 10);
+    const isSheetOpenSource = !eventInfo.sourceAttribute;
+    const isDirectMoveEdit = editedMoveIndex >= 0 && eventInfo.sourceType !== 'sheetworker';
+    const isMoveWriteback = editedMoveIndex >= 0 && eventInfo.sourceType === 'sheetworker';
     let currentMoveBox = 17;
-    if (pendingThrustChange && highestMoveIndex >= 0) {
+    if (isSheetOpenSource && Number.isInteger(persistedMoveBox) && persistedMoveBox >= 1 && persistedMoveBox <= 17) {
+        currentMoveBox = persistedMoveBox;
+    } else if (isDirectMoveEdit) {
+        currentMoveBox = editedMoveIndex + 1;
+    } else if (isMoveWriteback && Number.isInteger(persistedMoveBox) && persistedMoveBox >= 1 && persistedMoveBox <= 17) {
+        currentMoveBox = persistedMoveBox;
+    } else if (pendingThrustChange && highestMoveIndex >= 0) {
         currentMoveBox = highestMoveIndex + 1;
     } else {
         for (let i = 0; i < commandStrings.length; i++) {
