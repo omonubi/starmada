@@ -986,7 +986,8 @@ input[type="number"][readonly] {
     margin-bottom: 0;
 }
 
-.sheet-side-right input[name="attr_id"] {
+.sheet-side-right input[name="attr_id"],
+.sheet-side-right input[name="attr_character_name"] {
     width: 100%;
     box-sizing: border-box;
     font-size: 16px;
@@ -1274,7 +1275,8 @@ input[type="number"][readonly] {
 .darkmodetoggle[value="1"] ~ section .sheet-side-right {
     background-color: #2a2a2a;
 }
-.darkmodetoggle[value="1"] ~ section .sheet-side-right input[name="attr_id"] {
+.darkmodetoggle[value="1"] ~ section .sheet-side-right input[name="attr_id"],
+.darkmodetoggle[value="1"] ~ section .sheet-side-right input[name="attr_character_name"] {
     background-color: #333;
     color: #eee;
     border-color: #555;
@@ -1518,6 +1520,26 @@ input[name="attr_current_move_box"][value="16"] ~ .movement-orders .movement-box
     background-color: #fff;
 }
 
+.darkmodetoggle[value="1"] ~ section input[name="attr_current_move_box"][value="1"] ~ .movement-orders .movement-box:nth-child(1) input[type="text"],
+.darkmodetoggle[value="1"] ~ section input[name="attr_current_move_box"][value="2"] ~ .movement-orders .movement-box:nth-child(2) input[type="text"],
+.darkmodetoggle[value="1"] ~ section input[name="attr_current_move_box"][value="3"] ~ .movement-orders .movement-box:nth-child(3) input[type="text"],
+.darkmodetoggle[value="1"] ~ section input[name="attr_current_move_box"][value="4"] ~ .movement-orders .movement-box:nth-child(4) input[type="text"],
+.darkmodetoggle[value="1"] ~ section input[name="attr_current_move_box"][value="5"] ~ .movement-orders .movement-box:nth-child(5) input[type="text"],
+.darkmodetoggle[value="1"] ~ section input[name="attr_current_move_box"][value="6"] ~ .movement-orders .movement-box:nth-child(6) input[type="text"],
+.darkmodetoggle[value="1"] ~ section input[name="attr_current_move_box"][value="7"] ~ .movement-orders .movement-box:nth-child(7) input[type="text"],
+.darkmodetoggle[value="1"] ~ section input[name="attr_current_move_box"][value="8"] ~ .movement-orders .movement-box:nth-child(8) input[type="text"],
+.darkmodetoggle[value="1"] ~ section input[name="attr_current_move_box"][value="9"] ~ .movement-orders .movement-box:nth-child(9) input[type="text"],
+.darkmodetoggle[value="1"] ~ section input[name="attr_current_move_box"][value="10"] ~ .movement-orders .movement-box:nth-child(10) input[type="text"],
+.darkmodetoggle[value="1"] ~ section input[name="attr_current_move_box"][value="11"] ~ .movement-orders .movement-box:nth-child(11) input[type="text"],
+.darkmodetoggle[value="1"] ~ section input[name="attr_current_move_box"][value="12"] ~ .movement-orders .movement-box:nth-child(12) input[type="text"],
+.darkmodetoggle[value="1"] ~ section input[name="attr_current_move_box"][value="13"] ~ .movement-orders .movement-box:nth-child(13) input[type="text"],
+.darkmodetoggle[value="1"] ~ section input[name="attr_current_move_box"][value="14"] ~ .movement-orders .movement-box:nth-child(14) input[type="text"],
+.darkmodetoggle[value="1"] ~ section input[name="attr_current_move_box"][value="15"] ~ .movement-orders .movement-box:nth-child(15) input[type="text"],
+.darkmodetoggle[value="1"] ~ section input[name="attr_current_move_box"][value="16"] ~ .movement-orders .movement-box:nth-child(16) input[type="text"] {
+    color: #222;
+    -webkit-text-fill-color: #222;
+}
+
 /* Dark mode - Movement Orders */
 .darkmodetoggle[value="1"] ~ section .movement-box {
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
@@ -1606,6 +1628,26 @@ input[name="attr_move_withinthrust_14"][value="1"] ~ .movement-orders .movement-
 input[name="attr_move_withinthrust_15"][value="1"] ~ .movement-orders .movement-box:nth-child(15) .movement-number-btn,
 input[name="attr_move_withinthrust_16"][value="1"] ~ .movement-orders .movement-box:nth-child(16) .movement-number-btn {
     display: flex;
+}
+
+.darkmodetoggle[value="1"] ~ section input[name="attr_move_withinthrust_1"][value="1"] ~ .movement-orders .movement-box:nth-child(1) .movement-number-btn,
+.darkmodetoggle[value="1"] ~ section input[name="attr_move_withinthrust_2"][value="1"] ~ .movement-orders .movement-box:nth-child(2) .movement-number-btn,
+.darkmodetoggle[value="1"] ~ section input[name="attr_move_withinthrust_3"][value="1"] ~ .movement-orders .movement-box:nth-child(3) .movement-number-btn,
+.darkmodetoggle[value="1"] ~ section input[name="attr_move_withinthrust_4"][value="1"] ~ .movement-orders .movement-box:nth-child(4) .movement-number-btn,
+.darkmodetoggle[value="1"] ~ section input[name="attr_move_withinthrust_5"][value="1"] ~ .movement-orders .movement-box:nth-child(5) .movement-number-btn,
+.darkmodetoggle[value="1"] ~ section input[name="attr_move_withinthrust_6"][value="1"] ~ .movement-orders .movement-box:nth-child(6) .movement-number-btn,
+.darkmodetoggle[value="1"] ~ section input[name="attr_move_withinthrust_7"][value="1"] ~ .movement-orders .movement-box:nth-child(7) .movement-number-btn,
+.darkmodetoggle[value="1"] ~ section input[name="attr_move_withinthrust_8"][value="1"] ~ .movement-orders .movement-box:nth-child(8) .movement-number-btn,
+.darkmodetoggle[value="1"] ~ section input[name="attr_move_withinthrust_9"][value="1"] ~ .movement-orders .movement-box:nth-child(9) .movement-number-btn,
+.darkmodetoggle[value="1"] ~ section input[name="attr_move_withinthrust_10"][value="1"] ~ .movement-orders .movement-box:nth-child(10) .movement-number-btn,
+.darkmodetoggle[value="1"] ~ section input[name="attr_move_withinthrust_11"][value="1"] ~ .movement-orders .movement-box:nth-child(11) .movement-number-btn,
+.darkmodetoggle[value="1"] ~ section input[name="attr_move_withinthrust_12"][value="1"] ~ .movement-orders .movement-box:nth-child(12) .movement-number-btn,
+.darkmodetoggle[value="1"] ~ section input[name="attr_move_withinthrust_13"][value="1"] ~ .movement-orders .movement-box:nth-child(13) .movement-number-btn,
+.darkmodetoggle[value="1"] ~ section input[name="attr_move_withinthrust_14"][value="1"] ~ .movement-orders .movement-box:nth-child(14) .movement-number-btn,
+.darkmodetoggle[value="1"] ~ section input[name="attr_move_withinthrust_15"][value="1"] ~ .movement-orders .movement-box:nth-child(15) .movement-number-btn,
+.darkmodetoggle[value="1"] ~ section input[name="attr_move_withinthrust_16"][value="1"] ~ .movement-orders .movement-box:nth-child(16) .movement-number-btn {
+    color: #222;
+    -webkit-text-fill-color: #222;
 }
 
 input[name="attr_move_overthrust_1"][value="1"] ~ .movement-orders .movement-box:nth-child(1) .movement-number-btn,
@@ -3230,4 +3272,166 @@ input[name="attr_move_withinthrust_16"][value="1"] ~ input[name="attr_move_revie
     color: #eee;
     -webkit-text-fill-color: #eee;
     opacity: 1;
+}
+
+/**************** ROLL TEMPLATES ****************/
+.sheet-rolltemplate-custom,
+.sheet-rolltemplate-menu {
+  margin-left: -37px;
+}
+.withoutavatars .sheet-rolltemplate-custom,
+.withoutavatars .sheet-rolltemplate-menu {
+  margin-left: -7px;
+}
+
+.sheet-rolltemplate-custom .sheet-container,
+.sheet-rolltemplate-menu .sheet-container {
+  border: 1px solid;
+  /* by default, the border is the same color as the header. You can change this here, e.g. to black */
+  border-color: var(--header-bg-color);
+}
+
+/* Header formatting - title and subtitle */
+.sheet-rolltemplate-custom .sheet-header,
+.sheet-rolltemplate-menu .sheet-header {
+  background-image: var(--header-bg-image);
+  background-color: var(--header-bg-color);
+  /* change text-align to center to center the header text */
+  text-align: left;
+  color: var(--header-text-color);
+  padding: 5px;
+}
+.sheet-rolltemplate-custom .sheet-header a,
+.sheet-rolltemplate-menu .sheet-header a {
+  color: #fff;
+}
+.sheet-rolltemplate-custom .sheet-title,
+.sheet-rolltemplate-menu .sheet-title {
+  font-size:1.1em;
+  text-align: center;
+}
+.sheet-rolltemplate-custom .sheet-subtitle,
+.sheet-rolltemplate-menu .sheet-subtitle {
+  font-size:.9em;
+  text-align: center;
+}
+
+/* example colors */
+.sheet-rolltemplate-custom .sheet-container,
+.sheet-rolltemplate-menu .sheet-container {
+  /* this is the default color */
+  --header-bg-color:dimgray;
+  --header-text-color: white;
+}
+.sheet-rolltemplate-custom .sheet-container.sheet-color-black,
+.sheet-rolltemplate-menu .sheet-container.sheet-color-black {
+  --header-bg-color: black;
+  --header-text-color: white;
+}
+.sheet-rolltemplate-custom .sheet-container.sheet-color-brown,
+.sheet-rolltemplate-menu .sheet-container.sheet-color-brown {
+  --header-bg-color: sienna;
+  --header-text-color: white;
+}
+.sheet-rolltemplate-custom .sheet-container.sheet-color-blue,
+.sheet-rolltemplate-menu .sheet-container.sheet-color-blue {
+  --header-bg-color: darkblue;
+  --header-text-color: white;
+}
+.sheet-rolltemplate-custom .sheet-container.sheet-color-gold,
+.sheet-rolltemplate-menu .sheet-container.sheet-color-gold {
+  --header-bg-color: saddlebrown;
+  --header-text-color: white;
+}
+.sheet-rolltemplate-custom .sheet-container.sheet-color-green,
+.sheet-rolltemplate-menu .sheet-container.sheet-color-green {
+  --header-bg-color: darkolivegreen;
+  --header-text-color: white;
+}
+.sheet-rolltemplate-custom .sheet-container.sheet-color-orange,
+.sheet-rolltemplate-menu .sheet-container.sheet-color-orange {
+  --header-bg-color: darkorange;
+  --header-text-color: white;
+}
+.sheet-rolltemplate-custom .sheet-container.sheet-color-purple,
+.sheet-rolltemplate-menu .sheet-container.sheet-color-purple {
+  --header-bg-color: violet;
+  --header-text-color: black;
+}
+.sheet-rolltemplate-custom .sheet-container.sheet-color-red,
+.sheet-rolltemplate-menu .sheet-container.sheet-color-red {
+  --header-bg-color: maroon;
+  --header-text-color: white;
+}
+
+/* Success/Failure colors*/
+.sheet-rolltemplate-custom .sheet-success {
+  color: green;
+  font-weight: bold;
+}
+.sheet-rolltemplate-custom .sheet-failure {
+  color: red;
+  font-weight: bold;
+}
+  
+/* Allprops part */
+.sheet-rolltemplate-custom .sheet-content,
+.sheet-rolltemplate-menu .sheet-content {
+  display: grid;
+  background: #FFF;
+  color: #000;
+  /* Header formatting - modify the column layout below */
+  grid-template-columns: auto auto;
+  /* Line height to match default roll template */
+  line-height:1.4em;
+}
+.sheet-rolltemplate-custom .sheet-content > div,
+.sheet-rolltemplate-menu .sheet-content > div {
+  padding: 5px;
+}
+  
+/* Left column */
+.sheet-rolltemplate-custom .sheet-content .sheet-key,
+.sheet-rolltemplate-menu .sheet-content .sheet-key {
+  font-weight: bold;
+  padding-right: 10px;
+  text-align: right;
+}
+  
+/* Empty rule, use this if you want to change the right column */
+.sheet-rolltemplate-custom .sheet-value a {
+  color: #000;
+}
+  
+/* Make even-numbered rows grey */
+.sheet-rolltemplate-custom .sheet-content div:nth-child(4n+3),
+.sheet-rolltemplate-custom .sheet-content div:nth-child(4n) {
+  background:#EEE;
+}
+  
+/* Description field */
+.sheet-rolltemplate-custom .sheet-desc,
+.sheet-rolltemplate-menu .sheet-desc {
+  grid-column: span 2;
+  padding: 5px;
+  text-align: center;
+}
+
+/* Chat menu styles */
+.sheet-rolltemplate-custom a[href^='!'],.sheet-rolltemplate-custom a[href^='~'],
+.sheet-rolltemplate-menu a[href^='!'],.sheet-rolltemplate-menu a[href^='~'] {
+  background-color: transparent;
+  border:0;
+  color:#fff;
+  display:inline;
+  font-weight: bold;
+  padding: 0
+}
+
+.sheet-rolltemplate-custom .sheet-desc {
+  text-align: left;
+}
+
+.sheet-rolltemplate-custom a {
+  color: inherit;
 }
