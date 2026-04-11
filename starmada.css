@@ -115,6 +115,11 @@ input[type="number"][readonly] {
     font-size: 20px;
 }
 
+.ui-dialog .charsheet input[name="attr_bound_token_id"][value=""] ~ section.section-ssd .sheet-header {
+    background-color: #5a0000;
+    border-bottom-color: #2f0000;
+}
+
 .sheet-main {
     display: flex;
     width: 100%;
@@ -322,6 +327,46 @@ input[type="number"][readonly] {
 
 .section-settings .settings-action-row {
     margin-top: 4px;
+}
+
+.section-settings .settings-token-row {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+}
+
+.section-settings .settings-token-bind-row {
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+}
+
+.section-settings .settings-token-input {
+    flex: 1;
+    min-width: 0;
+    box-sizing: border-box;
+    height: 30px;
+    min-height: 30px;
+    padding: 4px 8px;
+    border: 1px solid #666;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    color: #222;
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: 12px;
+}
+
+.section-settings .settings-token-button {
+    flex: 0 0 auto;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    height: 30px;
+    min-height: 30px;
+    padding: 0 10px;
+    font-size: 10px;
 }
 
 .section-settings .settings-action-button {
@@ -1258,6 +1303,18 @@ input[type="number"][readonly] {
     color: #000;
 }
 
+.darkmodetoggle[value="1"] ~ input[name="attr_bound_token_id"][value=""] ~ section.section-ssd .sheet-header {
+    background-color: #5a0000;
+    color: #fff;
+    border-bottom-color: #2f0000;
+}
+
+.darkmodetoggle[value="1"] ~ input[name="attr_bound_token_id"][value=""] ~ section.section-ssd .sheet-header input,
+.darkmodetoggle[value="1"] ~ input[name="attr_bound_token_id"][value=""] ~ section.section-ssd .sheet-header select,
+.darkmodetoggle[value="1"] ~ input[name="attr_bound_token_id"][value=""] ~ section.section-ssd .sheet-header .sheet-dot {
+    color: #fff;
+}
+
 /* Sheet main area */
 .darkmodetoggle[value="1"] ~ section .sheet-main {
     border-color: #444;
@@ -1340,6 +1397,12 @@ input[type="number"][readonly] {
 .darkmodetoggle[value="1"] ~ section.section-settings .settings-action-button {
     background-color: #333;
     color: #ddd;
+    border-color: #555;
+}
+
+.darkmodetoggle[value="1"] ~ section.section-settings .settings-token-input {
+    background-color: #222;
+    color: #bbb;
     border-color: #555;
 }
 

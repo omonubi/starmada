@@ -1,6 +1,7 @@
 <div class='sheet-content'>
     <input type='hidden' class='darkmodetoggle' name='attr_dark_mode' />
     <input type='hidden' class='tabstoggle' name='attr_sheetTab' value='section-ssd'/>
+    <input type='hidden' name='attr_bound_token_id' />
     <div class='sheet-tabs'>
         <button type='action' class='btn-tab-ssd' name='act_section-ssd' >SSD</button>
         <button type='action' class='btn-tab-design' name='act_section-design' >Design</button>
@@ -768,6 +769,14 @@
                     <label for='attr_dark_mode'>Dark Mode</label>
                     <input type='checkbox' name='attr_dark_mode' value='1' />
                 </div>
+                <div class='field-row settings-token-row'>
+                    <label for='attr_bound_token_id'>Bound Token ID</label>
+                    <div class='settings-token-bind-row'>
+                        <input type='text' name='attr_bound_token_id' class='settings-token-input' readonly />
+                        <button type='action' name='act_bind-token-id' class='settings-action-button settings-token-button'>Bind Token</button>
+                        <button type='action' name='act_clear-token-id' class='settings-action-button settings-token-button'>Clear</button>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -829,6 +838,15 @@ const extractChatData = async (query) => {
     query = await startRoll(`!{{target=[[0[response=${query}]]]}}`);
     finishRoll(query.rollId);
     return query.results.target.expression.replace(/0\[response=(.+?)\]/,`$1`);
+};
+
+// Async function to return data for a targeted token.
+const extractTargetData = async () => {
+    const query = await startRoll(`!{{target=[[0+{"tokenName":"@{target|Target|token_name}","tokenId":"@{target|Target|token_id}"}]]}} /direct`);
+    finishRoll(query.rollId);
+    const expr = query.results.target.expression;
+    const jsonStr = expr.replace(/0\+\{(.+)\}/, `{$1}`);
+    return JSON.parse(jsonStr);
 };
 
 const getRollTemplateCharacterName = (characterName, fallbackName) => {
@@ -1365,6 +1383,15 @@ on('clicked:toggle-mines-label', async function() {
     const values = await getAttrsAsync(['mines_label_strike']);
     const isStruck = values.mines_label_strike === '1';
     await setAttrsAsync({ mines_label_strike: isStruck ? '' : '1' });
+});
+
+on('clicked:bind-token-id', async function() {
+    const targetData = await extractTargetData();
+    await setAttrsAsync({ bound_token_id: (targetData.tokenId || '').trim() });
+});
+
+on('clicked:clear-token-id', async function() {
+    await setAttrsAsync({ bound_token_id: '' });
 });
 
 for (let i = 1; i <= 16; i++) {
