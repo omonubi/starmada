@@ -765,10 +765,6 @@
                 </div>
             </div>
             <div class='sheet-side sheet-side-right'>
-                <div class='field-row'>
-                    <label for='attr_dark_mode'>Dark Mode</label>
-                    <input type='checkbox' name='attr_dark_mode' value='1' />
-                </div>
                 <div class='field-row settings-token-row'>
                     <label for='attr_bound_token_id'>Bound Token ID</label>
                     <div class='settings-token-bind-row'>
@@ -776,6 +772,11 @@
                         <button type='action' name='act_bind-token-id' class='settings-action-button settings-token-button'>Bind Token</button>
                         <button type='action' name='act_clear-token-id' class='settings-action-button settings-token-button'>Clear</button>
                     </div>
+                </div>
+                <hr/>
+                <div class='field-row'>
+                    <label for='attr_dark_mode'>Dark Mode</label>
+                    <input type='checkbox' name='attr_dark_mode' value='1' />
                 </div>
             </div>
         </div>
@@ -960,6 +961,20 @@ const getEmergencyEngineDamageAttrs = (values) => {
     }
 
     return { engineDamage, attrs };
+};
+
+const callHexMoveApi = async (tokenId) => {
+    const command = `!hexmove ${tokenId}`;
+    const result = await startRoll(command);
+    if (result && result.rollId) {
+        finishRoll(result.rollId);
+    }
+};
+
+const sendMovementErrorRoll = async (characterName, fallbackName, message) => {
+    const rollTitle = getRollTemplateCharacterName(characterName, fallbackName);
+    const roll = await startRoll(`&{template:custom} {{title=${rollTitle}}} {{subtitle=Movement Orders}} {{color=red}} {{Error=${message}}}`);
+    finishRoll(roll.rollId);
 };
 
 const sendMovementOrderRoll = async (characterName, fallbackName, order, currentSpeed, engineDamage) => {
@@ -1402,14 +1417,20 @@ for (let i = 1; i <= 16; i++) {
             engineAttrs.push(`mark_engine_${j}`);
         }
 
-        const values = await getAttrsAsync([`move_${i}`, 'character_name', 'class', 'current_speed', ...engineAttrs]);
+        const values = await getAttrsAsync([`move_${i}`, 'character_name', 'class', 'current_speed', 'bound_token_id', ...engineAttrs]);
         const moveValue = values[`move_${i}`] || '';
         const characterName = values.character_name || '';
         const fallbackName = values.class || 'Ship';
         const currentSpeed = parseInt(values.current_speed, 10) || 0;
+        const boundTokenId = (values.bound_token_id || '').trim();
         const isEmergencyThrust = parseMovementOrderDetails(moveValue).command.startsWith('!');
         const emergencyDamage = isEmergencyThrust ? getEmergencyEngineDamageAttrs(values) : null;
         if (moveValue) {
+            if (!boundTokenId) {
+                await sendMovementErrorRoll(characterName, fallbackName, 'No token is bound. Bind a token in Settings before submitting movement.');
+                return;
+            }
+
             await sendMovementOrderRoll(
                 characterName,
                 fallbackName,
@@ -1417,6 +1438,7 @@ for (let i = 1; i <= 16; i++) {
                 currentSpeed,
                 emergencyDamage ? emergencyDamage.engineDamage : undefined
             );
+            await callHexMoveApi(boundTokenId);
         }
         const match = moveValue.match(/\((\d+)\)$/);
         if (match) {
