@@ -931,6 +931,12 @@ const calculateMovementThrust = (order, currentSpeed) => {
     };
 };
 
+const getFirstForwardDistance = (order) => {
+    const command = parseMovementOrderDetails(order).command.replace(/^[!?#@$&]/, '');
+    const match = command.match(/\d+/);
+    return match ? parseInt(match[0], 10) : 0;
+};
+
 const getCurrentEngineRating = (values) => {
     let engineRating = 0;
 
@@ -963,8 +969,11 @@ const getEmergencyEngineDamageAttrs = (values) => {
     return { engineDamage, attrs };
 };
 
-const callHexMoveApi = async (tokenId) => {
-    const command = `!hexmove ${tokenId}`;
+const callHexMoveApi = async (tokenId, order) => {
+    const forwardDistance = getFirstForwardDistance(order);
+    const command = forwardDistance > 0
+        ? `!hexmove ${tokenId} forward ${forwardDistance}`
+        : `!hexmove ${tokenId}`;
     const result = await startRoll(command);
     if (result && result.rollId) {
         finishRoll(result.rollId);
@@ -1438,7 +1447,7 @@ for (let i = 1; i <= 16; i++) {
                 currentSpeed,
                 emergencyDamage ? emergencyDamage.engineDamage : undefined
             );
-            await callHexMoveApi(boundTokenId);
+            await callHexMoveApi(boundTokenId, moveValue);
         }
         const match = moveValue.match(/\((\d+)\)$/);
         if (match) {
