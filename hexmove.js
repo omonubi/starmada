@@ -35,6 +35,110 @@
 		};
 	};
 
+	const parseActionSequence = (args) => {
+		const actions = [];
+		const patterns = [];
+
+		for (let i = 0; i < args.length; i++) {
+			const arg = (args[i] || '').trim();
+			let charIndex = 0;
+
+			while (charIndex < arg.length) {
+				const char = arg[charIndex].toLowerCase();
+
+				if (char === '(') {
+					// Skip the entire "(x)" parameter
+					while (charIndex < arg.length && arg[charIndex] !== ')') {
+						charIndex += 1;
+					}
+					if (charIndex < arg.length) charIndex += 1; // skip the closing ')'
+					continue;
+				}
+
+				if (/\d/.test(char)) {
+					let digitStr = '';
+					while (charIndex < arg.length && /\d/.test(arg[charIndex])) {
+						digitStr += arg[charIndex];
+						charIndex += 1;
+					}
+					patterns.push(digitStr);
+					continue;
+				}
+
+				if (char === 'p' || char === 's') {
+					patterns.push(char);
+					charIndex += 1;
+					continue;
+				}
+
+				// Skip any other unknown characters
+				charIndex += 1;
+			}
+		}
+
+		let index = 0;
+		while (index < patterns.length) {
+			const rawArg = (patterns[index] || '').toLowerCase();
+
+			if (/^\d+$/.test(rawArg)) {
+				actions.push({
+					action: 'forward',
+					rawAction: rawArg,
+					args: [rawArg]
+				});
+				index += 1;
+				continue;
+			}
+
+			if (rawArg === 'p') {
+				actions.push({
+					action: 'rotate-left',
+					rawAction: 'P',
+					args: []
+				});
+				index += 1;
+				continue;
+			}
+
+			if (rawArg === 's') {
+				actions.push({
+					action: 'rotate-right',
+					rawAction: 'S',
+					args: []
+				});
+				index += 1;
+				continue;
+			}
+
+			if (rawArg === 'forward' || rawArg === 'f') {
+				actions.push({
+					action: 'forward',
+					rawAction: patterns[index],
+					args: [patterns[index + 1]]
+				});
+				index += 2;
+				continue;
+			}
+
+			actions.push({
+				action: 'unknown',
+				rawAction: patterns[index],
+				args: []
+			});
+			index += 1;
+		}
+
+		return actions;
+	};
+
+	const rotateTokenByDegrees = (token, deltaDegrees) => {
+		const currentRotation = Number(token.get('rotation')) || 0;
+		let nextRotation = (currentRotation + deltaDegrees) % 360;
+		if (nextRotation < 0) nextRotation += 360;
+		token.set({ rotation: nextRotation });
+		return nextRotation;
+	};
+
 	const validateTokenPageGrid = (msg, token) => {
 		const pageId = token.get('_pageid');
 		const page = pageId ? getObj('page', pageId) : null;
@@ -174,6 +278,11 @@
 		return nearestFacing;
 	};
 
+	const prepareTokenForMovement = (token, gridType) => {
+		snapTokenToClosestHexCenter(token, gridType);
+		snapTokenToNearestValidFacing(token, gridType);
+	};
+
 	const moveTokenForward = (token, hexes) => {
 		const page = getObj('page', token.get('_pageid'));
 		const increment = page ? Number(page.get('snapping_increment')) || 1 : 1;
@@ -197,28 +306,61 @@
 			msg,
 			[
 				'<div style="border:1px solid #666;padding:8px;background:#f8f8f8;color:#222;">',
-				'<b>hexmove mini-SDK</b><br>',
+				'<b>hexmove</b> token movement on hex grids<br>',
 				'<b>Current target:</b> ' + tokenId + ' (' + name + ')<br><br>',
-				'<b>Available right now</b><br>',
-				'1) <code>!hexmove &lt;token_id&gt;</code><br>',
-				'   Validates the token id and opens this help panel.<br><br>',
-				'2) <code>!hexmove &lt;token_id&gt; forward &lt;hexes&gt;</code><br>',
-				'   Moves token straight ahead by hexes based on token rotation.<br><br>',
-				'<b>Planned command shape</b><br>',
-				'<code>!hexmove &lt;token_id&gt; &lt;action&gt; [options]</code><br>',
-				'Actions and options will be added in upcoming versions.<br><br>',
-				'<b>Tips</b><br>',
-				'- Use the sheet Bind Token button before committing movement.<br>',
-				'- Movement uses token rotation directly (from ref01-style trig math).<br>',
-				'- If the token id is invalid, hexmove returns an error.<br>',
+				'<b>Usage</b><br>',
+				'<code>!hexmove &lt;token_id&gt; &lt;command_string&gt;</code><br><br>',
+				'<b>Command String Parameters</b><br>',
+				'- <code>N</code> : Move forward N hexes in current facing (example: <code>3</code>).<br>',
+				'- <code>P</code> : Rotate port (counter-clockwise) 60&deg;.<br>',
+				'- <code>S</code> : Rotate starboard (clockwise) 60&deg;.<br>',
+				'- <code>(x)</code> suffix: Ignored by parser (example: <code>2P3(1)</code>).<br><br>',
+				'<b>Examples</b><br>',
+				'- <code>2P3S1</code> = forward 2, port, forward 3, starboard, forward 1<br>',
+				'- <code>P</code> = rotate port only<br>',
+				'- <code>3</code> = forward 3 hexes<br><br>',
+				'<b>Notes</b><br>',
+				'- Token snaps to nearest hex center and valid facing before each forward move.<br>',
+				'- Requires Hex(V) or Hex(H) grid.<br>',
 				'</div>'
 			].join('')
 		);
 	};
 
+	const executeAction = (msg, token, gridType, actionEntry) => {
+		if (actionEntry.action === 'forward') {
+			const distance = parseInt(actionEntry.args[0], 10);
+			if (!Number.isFinite(distance) || distance <= 0) {
+				return {
+					ok: false,
+					error: `Invalid forward distance: ${actionEntry.args[0]}. Use a positive integer.`
+				};
+			}
+
+			prepareTokenForMovement(token, gridType);
+			moveTokenForward(token, distance);
+			return { ok: true };
+		}
+
+		if (actionEntry.action === 'rotate-left') {
+			rotateTokenByDegrees(token, -60);
+			return { ok: true };
+		}
+
+		if (actionEntry.action === 'rotate-right') {
+			rotateTokenByDegrees(token, 60);
+			return { ok: true };
+		}
+
+		return {
+			ok: false,
+			error: `Unknown hexmove action: ${actionEntry.rawAction}. Use !hexmove <token_id> for help.`
+		};
+	};
+
 	const handleHexMove = (msg, tokenId, args) => {
 		if (!tokenId) {
-			send(msg, 'Usage: !hexmove <token_id>');
+			sendHelp(msg, 'none', 'no token specified');
 			return;
 		}
 
@@ -237,25 +379,30 @@
 			return;
 		}
 
-		const action = (args[0] || '').toLowerCase();
-		if (action === 'forward' || action === 'f') {
-			const distance = parseInt(args[1], 10);
-			if (!Number.isFinite(distance) || distance <= 0) {
-				//send(msg, 'Usage: !hexmove <token_id> forward <hexes> (hexes must be a positive integer)');
-				return;
-			}
+		const page = getObj('page', token.get('_pageid'));
+		const gridType = page ? (page.get('grid_type') || '').toLowerCase() : 'hexh';
+		const actionSequence = parseActionSequence(args);
 
-			const page = getObj('page', token.get('_pageid'));
-			const gridType = page ? (page.get('grid_type') || '').toLowerCase() : 'hexh';
-			snapTokenToClosestHexCenter(token, gridType);
-			snapTokenToNearestValidFacing(token, gridType);
-
-			moveTokenForward(token, distance);
+		if (!actionSequence.length) {
+			send(
+				msg,
+				'No valid actions were found in the command string. Use digits for forward movement and P/S for turns, such as 2P3S1.'
+			);
+			sendHelp(msg, tokenId, token.get('name'));
 			return;
 		}
 
-		// TODO: Implement action handlers for args[0] and additional options.
-		send(msg, `Unknown hexmove action: ${args[0]}. Use !hexmove <token_id> for help.`);
+		log(
+			`${SCRIPT_NAME}: token=${tokenId}, rawArgs=${JSON.stringify(args)}, actions=${JSON.stringify(actionSequence.map(a => `${a.action}:${a.rawAction}`))}`
+		);
+
+		for (let i = 0; i < actionSequence.length; i++) {
+			const result = executeAction(msg, token, gridType, actionSequence[i]);
+			if (!result.ok) {
+				if (result.error) send(msg, result.error);
+				return;
+			}
+		}
 	};
 
 	on('chat:message', (msg) => {
