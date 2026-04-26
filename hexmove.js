@@ -66,6 +66,91 @@
 		return [0, 60, 120, 180, 240, 300];
 	};
 
+	const cubeRound = (q, r) => {
+		let x = q;
+		let z = r;
+		let y = -x - z;
+
+		let rx = Math.round(x);
+		let ry = Math.round(y);
+		let rz = Math.round(z);
+
+		const xDiff = Math.abs(rx - x);
+		const yDiff = Math.abs(ry - y);
+		const zDiff = Math.abs(rz - z);
+
+		if (xDiff > yDiff && xDiff > zDiff) {
+			rx = -ry - rz;
+		} else if (yDiff > zDiff) {
+			ry = -rx - rz;
+		} else {
+			rz = -rx - ry;
+		}
+
+		return { q: rx, r: rz };
+	};
+
+	const getHexCenterOrigin = (gridType, stepDistance) => {
+		const side = stepDistance / Math.sqrt(3);
+		const apothem = stepDistance / 2;
+		const type = (gridType || '').toLowerCase();
+
+		if (type === 'hex') {
+			// Hex(V): top vertex and left side are map-edge aligned.
+			return { x: apothem, y: side };
+		}
+
+		// Hex(H): top side and left vertex are map-edge aligned.
+		return { x: side, y: apothem };
+	};
+
+	const getNearestHexCenter = (left, top, gridType, stepDistance) => {
+		const side = stepDistance / Math.sqrt(3);
+		const type = (gridType || '').toLowerCase();
+		const origin = getHexCenterOrigin(type, stepDistance);
+		const px = (Number(left) || 0) - origin.x;
+		const py = (Number(top) || 0) - origin.y;
+
+		let q;
+		let r;
+
+		if (type === 'hex') {
+			// Pointy-top orientation (Hex(V)).
+			q = ((Math.sqrt(3) / 3) * px - (1 / 3) * py) / side;
+			r = ((2 / 3) * py) / side;
+		} else {
+			// Flat-top orientation (Hex(H)).
+			q = ((2 / 3) * px) / side;
+			r = ((-1 / 3) * px + (Math.sqrt(3) / 3) * py) / side;
+		}
+
+		const rounded = cubeRound(q, r);
+		let snappedX;
+		let snappedY;
+
+		if (type === 'hex') {
+			snappedX = side * Math.sqrt(3) * (rounded.q + rounded.r / 2);
+			snappedY = side * 1.5 * rounded.r;
+		} else {
+			snappedX = side * 1.5 * rounded.q;
+			snappedY = side * Math.sqrt(3) * (rounded.r + rounded.q / 2);
+		}
+
+		return {
+			left: Math.round(snappedX + origin.x),
+			top: Math.round(snappedY + origin.y)
+		};
+	};
+
+	const snapTokenToClosestHexCenter = (token, gridType) => {
+		const page = getObj('page', token.get('_pageid'));
+		const increment = page ? Number(page.get('snapping_increment')) || 1 : 1;
+		const stepDistance = 70 * increment;
+		const snapped = getNearestHexCenter(token.get('left'), token.get('top'), gridType, stepDistance);
+		token.set({ left: snapped.left, top: snapped.top });
+		return snapped;
+	};
+
 	const snapTokenToNearestValidFacing = (token, gridType) => {
 		const currentRotation = (Number(token.get('rotation')) || 0) % 360;
 		const validFacings = getValidHexFacings(gridType);
@@ -162,9 +247,10 @@
 
 			const page = getObj('page', token.get('_pageid'));
 			const gridType = page ? (page.get('grid_type') || '').toLowerCase() : 'hexh';
+			snapTokenToClosestHexCenter(token, gridType);
 			snapTokenToNearestValidFacing(token, gridType);
 
-			const direction = moveTokenForward(token, distance);
+			moveTokenForward(token, distance);
 			return;
 		}
 
