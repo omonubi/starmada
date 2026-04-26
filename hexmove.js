@@ -4,6 +4,11 @@
 	const SCRIPT_NAME = 'hexmove';
 	const COMMAND = '!hexmove';
 	const SUPPORTED_GRID_TYPES = ['hex', 'hexr'];
+	const TRAIL_LAYER = 'objects';
+	const TRAIL_STROKE = '#ffff00';
+	const TRAIL_STROKE_WIDTH = 4;
+	const TRAIL_LABEL_COLOR = '#ffff00';
+	const TRAIL_LABEL_FONT_SIZE = 16;
 
 	const sanitizeWho = (who) => (who || '').replace(/\s*\(GM\)\s*$/i, '').trim();
 
@@ -23,6 +28,104 @@
 	const send = (msg, message) => {
 		const target = getWhisperTarget(msg);
 		sendChat(SCRIPT_NAME, `/w "${target}" ${message}`);
+	};
+
+	const getTrailState = () => {
+		state[SCRIPT_NAME] = state[SCRIPT_NAME] || {};
+		if (!state[SCRIPT_NAME].trailState) {
+			state[SCRIPT_NAME].trailState = {
+				activePathId: null,
+				activeTokenId: null,
+				activeLabelId: null
+			};
+		}
+		return state[SCRIPT_NAME].trailState;
+	};
+
+	const clearActiveTrail = () => {
+		const trailState = getTrailState();
+		if (!trailState.activePathId) return;
+
+		const priorPath = getObj('path', trailState.activePathId);
+		if (priorPath) {
+			priorPath.remove();
+		}
+
+		const priorLabel = getObj('text', trailState.activeLabelId);
+		if (priorLabel) {
+			priorLabel.remove();
+		}
+
+		trailState.activePathId = null;
+		trailState.activeTokenId = null;
+		trailState.activeLabelId = null;
+	};
+
+	const createTrailForToken = (token, points) => {
+		if (!token || !points || points.length < 2) {
+			return null;
+		}
+
+		const pageId = token.get('_pageid');
+		if (!pageId) {
+			return null;
+		}
+
+		const xs = points.map(p => Number(p.left) || 0);
+		const ys = points.map(p => Number(p.top) || 0);
+		const padding = 1;
+		const minX = Math.min.apply(null, xs) - padding;
+		const maxX = Math.max.apply(null, xs) + padding;
+		const minY = Math.min.apply(null, ys) - padding;
+		const maxY = Math.max.apply(null, ys) + padding;
+
+		const width = Math.max(1, Math.round(maxX - minX));
+		const height = Math.max(1, Math.round(maxY - minY));
+		const left = Math.round(minX + width / 2);
+		const top = Math.round(minY + height / 2);
+
+		const pathData = points.map((point, index) => [
+			index === 0 ? 'M' : 'L',
+			Math.round((Number(point.left) || 0) - minX),
+			Math.round((Number(point.top) || 0) - minY)
+		]);
+
+		return createObj('path', {
+			pageid: pageId,
+			layer: TRAIL_LAYER,
+			stroke: TRAIL_STROKE,
+			stroke_width: TRAIL_STROKE_WIDTH,
+			fill: 'transparent',
+			width,
+			height,
+			top,
+			left,
+			path: JSON.stringify(pathData)
+		});
+	};
+
+	const createTrailLabelForToken = (token, points) => {
+		if (!token || !points || !points.length) {
+			return null;
+		}
+
+		const pageId = token.get('_pageid');
+		if (!pageId) {
+			return null;
+		}
+
+		const startPoint = points[0];
+		const tokenName = (token.get('name') || '').trim() || 'Unnamed Token';
+
+		return createObj('text', {
+			pageid: pageId,
+			layer: TRAIL_LAYER,
+			left: Math.round((Number(startPoint.left) || 0) + 10),
+			top: Math.round((Number(startPoint.top) || 0) - 18),
+			text: tokenName,
+			color: TRAIL_LABEL_COLOR,
+			font_size: TRAIL_LABEL_FONT_SIZE
+		});
 	};
 
 	const parseCommand = (content) => {
@@ -327,7 +430,7 @@
 		);
 	};
 
-	const executeAction = (msg, token, gridType, actionEntry) => {
+	const executeAction = (msg, token, gridType, actionEntry, trailPoints) => {
 		if (actionEntry.action === 'forward') {
 			const distance = parseInt(actionEntry.args[0], 10);
 			if (!Number.isFinite(distance) || distance <= 0) {
@@ -338,7 +441,19 @@
 			}
 
 			prepareTokenForMovement(token, gridType);
+			if (trailPoints && !trailPoints.length) {
+				trailPoints.push({
+					left: Number(token.get('left')) || 0,
+					top: Number(token.get('top')) || 0
+				});
+			}
 			moveTokenForward(token, distance);
+			if (trailPoints) {
+				trailPoints.push({
+					left: Number(token.get('left')) || 0,
+					top: Number(token.get('top')) || 0
+				});
+			}
 			return { ok: true };
 		}
 
@@ -382,6 +497,7 @@
 		const page = getObj('page', token.get('_pageid'));
 		const gridType = page ? (page.get('grid_type') || '').toLowerCase() : 'hexh';
 		const actionSequence = parseActionSequence(args);
+		const trailPoints = [];
 
 		if (!actionSequence.length) {
 			send(
@@ -397,11 +513,26 @@
 		);
 
 		for (let i = 0; i < actionSequence.length; i++) {
-			const result = executeAction(msg, token, gridType, actionSequence[i]);
+			const result = executeAction(msg, token, gridType, actionSequence[i], trailPoints);
 			if (!result.ok) {
 				if (result.error) send(msg, result.error);
 				return;
 			}
+		}
+
+		clearActiveTrail();
+		const newTrail = createTrailForToken(token, trailPoints);
+		if (newTrail) {
+			const newLabel = createTrailLabelForToken(token, trailPoints);
+			toBack(newTrail);
+			if (newLabel) {
+				toFront(newLabel);
+			}
+			toFront(token);
+			const trailState = getTrailState();
+			trailState.activePathId = newTrail.id;
+			trailState.activeTokenId = tokenId;
+			trailState.activeLabelId = newLabel ? newLabel.id : null;
 		}
 	};
 
@@ -412,6 +543,20 @@
 		if (command !== COMMAND) return;
 
 		handleHexMove(msg, tokenId, args);
+	});
+
+	on('change:graphic', (obj, prev) => {
+		const trailState = getTrailState();
+		if (!trailState.activePathId || !trailState.activeTokenId) return;
+		if (obj.id !== trailState.activeTokenId) return;
+
+		const prevLeft = Number(prev && prev.left);
+		const prevTop = Number(prev && prev.top);
+		const currLeft = Number(obj.get('left'));
+		const currTop = Number(obj.get('top'));
+		if (prevLeft === currLeft && prevTop === currTop) return;
+
+		clearActiveTrail();
 	});
 
 	on('ready', () => {
