@@ -3,6 +3,7 @@
 
 	const SCRIPT_NAME = 'hexmove';
 	const COMMAND = '!hexmove';
+	const SUPPORTED_GRID_TYPES = ['hex', 'hexr'];
 
 	const sanitizeWho = (who) => (who || '').replace(/\s*\(GM\)\s*$/i, '').trim();
 
@@ -32,6 +33,60 @@
 			tokenId: (parts.shift() || '').trim(),
 			args: parts
 		};
+	};
+
+	const validateTokenPageGrid = (msg, token) => {
+		const pageId = token.get('_pageid');
+		const page = pageId ? getObj('page', pageId) : null;
+		if (!page) {
+			send(msg, 'Unable to determine the token page. hexmove requires Hex(V) or Hex(H).');
+			return false;
+		}
+
+		const gridType = (page.get('grid_type') || '').toLowerCase();
+		if (SUPPORTED_GRID_TYPES.includes(gridType)) {
+			return true;
+		}
+
+		send(
+			msg,
+			`Map grid type "${gridType || 'none'}" is not supported. hexmove requires Hex(V) or Hex(H).`
+		);
+		return false;
+	};
+
+	const getValidHexFacings = (gridType) => {
+		const type = (gridType || '').toLowerCase();
+		if (type === 'hexr') {
+			return [0, 60, 120, 180, 240, 300];
+		}
+		if (type === 'hex') {
+			return [30, 90, 150, 210, 270, 330];
+		}
+		return [0, 60, 120, 180, 240, 300];
+	};
+
+	const snapTokenToNearestValidFacing = (token, gridType) => {
+		const currentRotation = (Number(token.get('rotation')) || 0) % 360;
+		const validFacings = getValidHexFacings(gridType);
+
+		let nearestFacing = validFacings[0];
+		let minDelta = 360;
+
+		validFacings.forEach(facing => {
+			let delta = (facing - currentRotation) % 360;
+			if (delta < 0) delta += 360;
+			if (delta < minDelta) {
+				minDelta = delta;
+				nearestFacing = facing;
+			}
+		});
+
+		if (Math.abs(minDelta) > 0.01) {
+			token.set({ rotation: nearestFacing });
+		}
+
+		return nearestFacing;
 	};
 
 	const moveTokenForward = (token, hexes) => {
@@ -88,6 +143,10 @@
 			return;
 		}
 
+		if (!validateTokenPageGrid(msg, token)) {
+			return;
+		}
+
 		if (!args || !args.length) {
 			sendHelp(msg, tokenId, token.get('name'));
 			return;
@@ -101,8 +160,11 @@
 				return;
 			}
 
+			const page = getObj('page', token.get('_pageid'));
+			const gridType = page ? (page.get('grid_type') || '').toLowerCase() : 'hexh';
+			snapTokenToNearestValidFacing(token, gridType);
+
 			const direction = moveTokenForward(token, distance);
-			send(msg, `Moved ${token.get('name') || 'token'} forward ${distance} hexes (facing ${direction}\u00b0).`);
 			return;
 		}
 
