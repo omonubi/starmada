@@ -97,7 +97,7 @@
 		if (action === 'forward' || action === 'f') {
 			const distance = parseInt(args[1], 10);
 			if (!Number.isFinite(distance) || distance <= 0) {
-				send(msg, 'Usage: !hexmove <token_id> forward <hexes> (hexes must be a positive integer)');
+				//send(msg, 'Usage: !hexmove <token_id> forward <hexes> (hexes must be a positive integer)');
 				return;
 			}
 
