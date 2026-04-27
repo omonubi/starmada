@@ -508,22 +508,31 @@
 	};
 
 	const snapTokenToNearestValidFacing = (token, gridType) => {
-		const currentRotation = (Number(token.get('rotation')) || 0) % 360;
+		const currentRotation = normalizeRotation(token.get('rotation'));
 		const validFacings = getValidHexFacings(gridType);
 
 		let nearestFacing = validFacings[0];
-		let minDelta = 360;
+		let minAbsDelta = 360;
+		let nearestClockwiseDelta = 360;
 
 		validFacings.forEach(facing => {
-			let delta = (facing - currentRotation) % 360;
-			if (delta < 0) delta += 360;
-			if (delta < minDelta) {
-				minDelta = delta;
+			let clockwiseDelta = (facing - currentRotation) % 360;
+			if (clockwiseDelta < 0) clockwiseDelta += 360;
+
+			const counterclockwiseDelta = clockwiseDelta === 0 ? 0 : 360 - clockwiseDelta;
+			const absDelta = Math.min(clockwiseDelta, counterclockwiseDelta);
+
+			if (
+				absDelta < minAbsDelta ||
+				(absDelta === minAbsDelta && clockwiseDelta < nearestClockwiseDelta)
+			) {
+				minAbsDelta = absDelta;
+				nearestClockwiseDelta = clockwiseDelta;
 				nearestFacing = facing;
 			}
 		});
 
-		if (Math.abs(minDelta) > 0.01) {
+		if (Math.abs(minAbsDelta) > 0.01) {
 			token.set({ rotation: nearestFacing });
 		}
 
