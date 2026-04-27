@@ -9,6 +9,7 @@
 	const TRAIL_STROKE_WIDTH = 4;
 	const TRAIL_LABEL_COLOR = '#ffff00';
 	const TRAIL_LABEL_FONT_SIZE = 16;
+	const ORIENTATION_MARKER_SIZE = 8;
 
 	const sanitizeWho = (who) => (who || '').replace(/\s*\(GM\)\s*$/i, '').trim();
 
@@ -36,7 +37,8 @@
 			state[SCRIPT_NAME].trailState = {
 				activePathId: null,
 				activeTokenId: null,
-				activeLabelId: null
+				activeLabelId: null,
+				activeMarkerIds: []
 			};
 		}
 		return state[SCRIPT_NAME].trailState;
@@ -56,9 +58,18 @@
 			priorLabel.remove();
 		}
 
+		const markerIds = trailState.activeMarkerIds || [];
+		for (let i = 0; i < markerIds.length; i++) {
+			const marker = getObj('path', markerIds[i]);
+			if (marker) {
+				marker.remove();
+			}
+		}
+
 		trailState.activePathId = null;
 		trailState.activeTokenId = null;
 		trailState.activeLabelId = null;
+		trailState.activeMarkerIds = [];
 	};
 
 	const createTrailForToken = (token, points) => {
@@ -126,6 +137,77 @@
 			color: TRAIL_LABEL_COLOR,
 			font_size: TRAIL_LABEL_FONT_SIZE
 		});
+	};
+
+	const normalizeRotation = (rotation) => {
+		let value = Number(rotation) || 0;
+		value %= 360;
+		if (value < 0) value += 360;
+		return value;
+	};
+
+	const pushOrientationMarkerPoint = (markerPoints, token) => {
+		if (!markerPoints || !token) return;
+
+		const point = {
+			left: Number(token.get('left')) || 0,
+			top: Number(token.get('top')) || 0,
+			rotation: normalizeRotation(token.get('rotation'))
+		};
+
+		const previous = markerPoints.length ? markerPoints[markerPoints.length - 1] : null;
+		if (
+			previous &&
+			previous.left === point.left &&
+			previous.top === point.top &&
+			previous.rotation === point.rotation
+		) {
+			return;
+		}
+
+		markerPoints.push(point);
+	};
+
+	const createOrientationMarker = (token, markerPoint) => {
+		if (!token || !markerPoint) return null;
+		const pageId = token.get('_pageid');
+		if (!pageId) return null;
+
+		const size = ORIENTATION_MARKER_SIZE;
+		const width = size * 2;
+		const height = size * 2;
+		const trianglePath = [
+			['M', size, 0],
+			['L', 0, height],
+			['L', width, height],
+			['L', size, 0]
+		];
+
+		return createObj('path', {
+			pageid: pageId,
+			layer: TRAIL_LAYER,
+			stroke: TRAIL_STROKE,
+			stroke_width: 2,
+			fill: TRAIL_STROKE,
+			width,
+			height,
+			left: markerPoint.left,
+			top: markerPoint.top,
+			rotation: markerPoint.rotation,
+			path: JSON.stringify(trianglePath)
+		});
+	};
+
+	const createOrientationMarkersForToken = (token, markerPoints) => {
+		const markers = [];
+		if (!token || !markerPoints || !markerPoints.length) return markers;
+
+		for (let i = 0; i < markerPoints.length; i++) {
+			const marker = createOrientationMarker(token, markerPoints[i]);
+			if (marker) markers.push(marker);
+		}
+
+		return markers;
 	};
 
 	const parseCommand = (content) => {
@@ -430,7 +512,7 @@
 		);
 	};
 
-	const executeAction = (msg, token, gridType, actionEntry, trailPoints) => {
+	const executeAction = (msg, token, gridType, actionEntry, trailPoints, markerPoints) => {
 		if (actionEntry.action === 'forward') {
 			const distance = parseInt(actionEntry.args[0], 10);
 			if (!Number.isFinite(distance) || distance <= 0) {
@@ -446,6 +528,7 @@
 					left: Number(token.get('left')) || 0,
 					top: Number(token.get('top')) || 0
 				});
+				pushOrientationMarkerPoint(markerPoints, token);
 			}
 			moveTokenForward(token, distance);
 			if (trailPoints) {
@@ -459,11 +542,13 @@
 
 		if (actionEntry.action === 'rotate-left') {
 			rotateTokenByDegrees(token, -60);
+			pushOrientationMarkerPoint(markerPoints, token);
 			return { ok: true };
 		}
 
 		if (actionEntry.action === 'rotate-right') {
 			rotateTokenByDegrees(token, 60);
+			pushOrientationMarkerPoint(markerPoints, token);
 			return { ok: true };
 		}
 
@@ -498,6 +583,7 @@
 		const gridType = page ? (page.get('grid_type') || '').toLowerCase() : 'hexh';
 		const actionSequence = parseActionSequence(args);
 		const trailPoints = [];
+		const markerPoints = [];
 
 		if (!actionSequence.length) {
 			send(
@@ -513,26 +599,35 @@
 		);
 
 		for (let i = 0; i < actionSequence.length; i++) {
-			const result = executeAction(msg, token, gridType, actionSequence[i], trailPoints);
+			const result = executeAction(msg, token, gridType, actionSequence[i], trailPoints, markerPoints);
 			if (!result.ok) {
 				if (result.error) send(msg, result.error);
 				return;
 			}
 		}
 
+		if (trailPoints.length) {
+			pushOrientationMarkerPoint(markerPoints, token);
+		}
+
 		clearActiveTrail();
 		const newTrail = createTrailForToken(token, trailPoints);
 		if (newTrail) {
 			const newLabel = createTrailLabelForToken(token, trailPoints);
-			toBack(newTrail);
+			const newMarkers = createOrientationMarkersForToken(token, markerPoints);
+			toFront(newTrail);
 			if (newLabel) {
 				toFront(newLabel);
+			}
+			for (let i = 0; i < newMarkers.length; i++) {
+				toFront(newMarkers[i]);
 			}
 			toFront(token);
 			const trailState = getTrailState();
 			trailState.activePathId = newTrail.id;
 			trailState.activeTokenId = tokenId;
 			trailState.activeLabelId = newLabel ? newLabel.id : null;
+			trailState.activeMarkerIds = newMarkers.map(marker => marker.id);
 		}
 	};
 
