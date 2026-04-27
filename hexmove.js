@@ -615,12 +615,12 @@
 		if (newTrail) {
 			const newLabel = createTrailLabelForToken(token, trailPoints);
 			const newMarkers = createOrientationMarkersForToken(token, markerPoints);
-			toFront(newTrail);
+			toBack(newTrail);
 			if (newLabel) {
 				toFront(newLabel);
 			}
 			for (let i = 0; i < newMarkers.length; i++) {
-				toFront(newMarkers[i]);
+				toBack(newMarkers[i]);
 			}
 			toFront(token);
 			const trailState = getTrailState();
