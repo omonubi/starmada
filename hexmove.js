@@ -287,7 +287,7 @@
 					continue;
 				}
 
-				if (char === 'p' || char === 's' || char === 'u') {
+				if (char === 'p' || char === 's' || char === 'u' || char === 'l' || char === 'r') {
 					patterns.push(char);
 					charIndex += 1;
 					continue;
@@ -336,6 +336,26 @@
 				actions.push({
 					action: 'u-turn',
 					rawAction: 'U',
+					args: []
+				});
+				index += 1;
+				continue;
+			}
+
+			if (rawArg === 'l') {
+				actions.push({
+					action: 'sideslip-left',
+					rawAction: 'L',
+					args: []
+				});
+				index += 1;
+				continue;
+			}
+
+			if (rawArg === 'r') {
+				actions.push({
+					action: 'sideslip-right',
+					rawAction: 'R',
 					args: []
 				});
 				index += 1;
@@ -515,6 +535,22 @@
 		snapTokenToNearestValidFacing(token, gridType);
 	};
 
+	const moveTokenSideslip = (token, direction) => {
+		const page = getObj('page', token.get('_pageid'));
+		const increment = page ? Number(page.get('snapping_increment')) || 1 : 1;
+		const distancePx = 70 * increment;
+		const rotation = Number(token.get('rotation')) || 0;
+		const sideslipAngle = rotation + (direction === 'right' ? 60 : -60);
+		const radians = sideslipAngle * Math.PI / 180;
+		const topDelta = -Math.cos(radians) * distancePx;
+		const leftDelta = Math.sin(radians) * distancePx;
+
+		token.set({
+			left: Math.round((Number(token.get('left')) || 0) + leftDelta),
+			top: Math.round((Number(token.get('top')) || 0) + topDelta)
+		});
+	};
+
 	const moveTokenForward = (token, hexes) => {
 		const page = getObj('page', token.get('_pageid'));
 		const increment = page ? Number(page.get('snapping_increment')) || 1 : 1;
@@ -547,10 +583,13 @@
 				'- <code>P</code> : Rotate port (counter-clockwise) 60&deg;.<br>',
 				'- <code>S</code> : Rotate starboard (clockwise) 60&deg;.<br>',
 				'- <code>U</code> : U-turn (rotate 180&deg;).<br>',
-				'- <code>(x)</code> suffix: Ignored by parser (example: <code>2P3(1)</code>).<br><br>',
-				'<b>Examples</b><br>',
-				'- <code>2P3S1</code> = forward 2, port, forward 3, starboard, forward 1<br>',
-				'- <code>2U1</code> = forward 2, u-turn, forward 1<br>',
+			'- <code>L</code> : Sideslip left (move one hex forward-left, heading unchanged).<br>',
+			'- <code>R</code> : Sideslip right (move one hex forward-right, heading unchanged).<br>',
+			'- <code>(x)</code> suffix: Ignored by parser (example: <code>2P3(1)</code>).<br><br>',
+			'<b>Examples</b><br>',
+			'- <code>2P3S1</code> = forward 2, port, forward 3, starboard, forward 1<br>',
+			'- <code>2U1</code> = forward 2, u-turn, forward 1<br>',
+			'- <code>1L1</code> = forward 1, sideslip left, forward 1<br>',
 				'- <code>P</code> = rotate port only<br>',
 				'- <code>3</code> = forward 3 hexes<br><br>',
 				'<b>Notes</b><br>',
@@ -604,6 +643,27 @@
 		if (actionEntry.action === 'u-turn') {
 			rotateTokenByDegrees(token, 180);
 			pushOrientationMarkerPoint(markerPoints, token, 'circle');
+			return { ok: true };
+		}
+
+		if (actionEntry.action === 'sideslip-left' || actionEntry.action === 'sideslip-right') {
+			const direction = actionEntry.action === 'sideslip-right' ? 'right' : 'left';
+
+			prepareTokenForMovement(token, gridType);
+			if (trailPoints && !trailPoints.length) {
+				trailPoints.push({
+					left: Number(token.get('left')) || 0,
+					top: Number(token.get('top')) || 0
+				});
+				pushOrientationMarkerPoint(markerPoints, token);
+			}
+			moveTokenSideslip(token, direction);
+			if (trailPoints) {
+				trailPoints.push({
+					left: Number(token.get('left')) || 0,
+					top: Number(token.get('top')) || 0
+				});
+			}
 			return { ok: true };
 		}
 
