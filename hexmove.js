@@ -10,6 +10,7 @@
 	const TRAIL_LABEL_COLOR = '#ffff00';
 	const TRAIL_LABEL_FONT_SIZE = 16;
 	const ORIENTATION_MARKER_SIZE = 8;
+	const UTURN_MARKER_SIZE = 6;
 
 	const sanitizeWho = (who) => (who || '').replace(/\s*\(GM\)\s*$/i, '').trim();
 
@@ -46,7 +47,13 @@
 
 	const clearActiveTrail = () => {
 		const trailState = getTrailState();
-		if (!trailState.activePathId) return;
+		if (
+			!trailState.activePathId &&
+			!trailState.activeLabelId &&
+			!(trailState.activeMarkerIds && trailState.activeMarkerIds.length)
+		) {
+			return;
+		}
 
 		const priorPath = getObj('path', trailState.activePathId);
 		if (priorPath) {
@@ -146,13 +153,14 @@
 		return value;
 	};
 
-	const pushOrientationMarkerPoint = (markerPoints, token) => {
+	const pushOrientationMarkerPoint = (markerPoints, token, markerType = 'triangle') => {
 		if (!markerPoints || !token) return;
 
 		const point = {
 			left: Number(token.get('left')) || 0,
 			top: Number(token.get('top')) || 0,
-			rotation: normalizeRotation(token.get('rotation'))
+			rotation: normalizeRotation(token.get('rotation')),
+			markerType
 		};
 
 		const previous = markerPoints.length ? markerPoints[markerPoints.length - 1] : null;
@@ -160,7 +168,8 @@
 			previous &&
 			previous.left === point.left &&
 			previous.top === point.top &&
-			previous.rotation === point.rotation
+			previous.rotation === point.rotation &&
+			previous.markerType === point.markerType
 		) {
 			return;
 		}
@@ -172,6 +181,34 @@
 		if (!token || !markerPoint) return null;
 		const pageId = token.get('_pageid');
 		if (!pageId) return null;
+
+		if (markerPoint.markerType === 'circle') {
+			const radius = UTURN_MARKER_SIZE;
+			const width = radius * 2;
+			const height = radius * 2;
+			const circlePath = [];
+			const segments = 16;
+			for (let i = 0; i <= segments; i++) {
+				const angle = (Math.PI * 2 * i) / segments;
+				const x = radius + Math.cos(angle) * radius;
+				const y = radius + Math.sin(angle) * radius;
+				circlePath.push([i === 0 ? 'M' : 'L', Math.round(x), Math.round(y)]);
+			}
+
+			return createObj('path', {
+				pageid: pageId,
+				layer: TRAIL_LAYER,
+				stroke: TRAIL_STROKE,
+				stroke_width: 2,
+				fill: TRAIL_STROKE,
+				width,
+				height,
+				left: markerPoint.left,
+				top: markerPoint.top,
+				rotation: 0,
+				path: JSON.stringify(circlePath)
+			});
+		}
 
 		const size = ORIENTATION_MARKER_SIZE;
 		const width = size * 2;
@@ -250,7 +287,7 @@
 					continue;
 				}
 
-				if (char === 'p' || char === 's') {
+				if (char === 'p' || char === 's' || char === 'u') {
 					patterns.push(char);
 					charIndex += 1;
 					continue;
@@ -289,6 +326,16 @@
 				actions.push({
 					action: 'rotate-right',
 					rawAction: 'S',
+					args: []
+				});
+				index += 1;
+				continue;
+			}
+
+			if (rawArg === 'u') {
+				actions.push({
+					action: 'u-turn',
+					rawAction: 'U',
 					args: []
 				});
 				index += 1;
@@ -499,9 +546,11 @@
 				'- <code>N</code> : Move forward N hexes in current facing (example: <code>3</code>).<br>',
 				'- <code>P</code> : Rotate port (counter-clockwise) 60&deg;.<br>',
 				'- <code>S</code> : Rotate starboard (clockwise) 60&deg;.<br>',
+				'- <code>U</code> : U-turn (rotate 180&deg;).<br>',
 				'- <code>(x)</code> suffix: Ignored by parser (example: <code>2P3(1)</code>).<br><br>',
 				'<b>Examples</b><br>',
 				'- <code>2P3S1</code> = forward 2, port, forward 3, starboard, forward 1<br>',
+				'- <code>2U1</code> = forward 2, u-turn, forward 1<br>',
 				'- <code>P</code> = rotate port only<br>',
 				'- <code>3</code> = forward 3 hexes<br><br>',
 				'<b>Notes</b><br>',
@@ -549,6 +598,12 @@
 		if (actionEntry.action === 'rotate-right') {
 			rotateTokenByDegrees(token, 60);
 			pushOrientationMarkerPoint(markerPoints, token);
+			return { ok: true };
+		}
+
+		if (actionEntry.action === 'u-turn') {
+			rotateTokenByDegrees(token, 180);
+			pushOrientationMarkerPoint(markerPoints, token, 'circle');
 			return { ok: true };
 		}
 
@@ -612,10 +667,12 @@
 
 		clearActiveTrail();
 		const newTrail = createTrailForToken(token, trailPoints);
-		if (newTrail) {
-			const newLabel = createTrailLabelForToken(token, trailPoints);
-			const newMarkers = createOrientationMarkersForToken(token, markerPoints);
+		const newLabel = newTrail ? createTrailLabelForToken(token, trailPoints) : null;
+		const newMarkers = createOrientationMarkersForToken(token, markerPoints);
+		if (newTrail || newMarkers.length) {
+			if (newTrail) {
 			toBack(newTrail);
+			}
 			if (newLabel) {
 				toFront(newLabel);
 			}
@@ -624,7 +681,7 @@
 			}
 			toFront(token);
 			const trailState = getTrailState();
-			trailState.activePathId = newTrail.id;
+			trailState.activePathId = newTrail ? newTrail.id : null;
 			trailState.activeTokenId = tokenId;
 			trailState.activeLabelId = newLabel ? newLabel.id : null;
 			trailState.activeMarkerIds = newMarkers.map(marker => marker.id);
