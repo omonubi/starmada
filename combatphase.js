@@ -15,6 +15,27 @@
         }
     };
 
+    const getCharAttr = (charId, attrName) => {
+        const existing = findObjs({ _type: 'attribute', characterid: charId, name: attrName })[0];
+        return (existing && existing.get('current')) || '';
+    };
+
+    const parseLongRangeMax = (longRangeBand) => {
+        const text = String(longRangeBand || '').trim();
+        const bandMatch = text.match(/^(\d+)\s*-\s*(\d+)$/);
+        if (bandMatch) return parseInt(bandMatch[2], 10);
+        const singleMatch = text.match(/^(\d+)$/);
+        if (singleMatch) return parseInt(singleMatch[1], 10);
+        return null;
+    };
+
+    const clearTargeting = (charId, prefix, hexNum) => {
+        setCharAttr(charId, `${prefix}weapon_target_state_${hexNum}`, '');
+        setCharAttr(charId, `${prefix}weapon_target_token_id_${hexNum}`, '');
+        setCharAttr(charId, `${prefix}weapon_target_range_${hexNum}`, '');
+        setCharAttr(charId, `${prefix}weapon_target_label_${hexNum}`, '');
+    };
+
     // ---------------------------------------------------------------------------
     // Hex-grid range calculation using cube coordinates.
     //
@@ -73,31 +94,62 @@
     //      weapon_target_label_N, and weapon_target_state_N back to the
     //      character sheet so the targeting button updates immediately.
     // ---------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------
+    // Help output — whispered to the caller (or GM) when !cphelp is used, or
+    // when a command is called with missing arguments.  Keep this block updated
+    // as new commands are added.
+    // ---------------------------------------------------------------------------
+    const showHelp = (msg) => {
+        const isGM = msg.playerid && playerIsGM(msg.playerid);
+        const target = isGM ? '/w gm ' : `/w "${msg.who}" `;
+        const lines = [
+            `<b>${SCRIPT_NAME} — command reference</b>`,
+            '<hr>',
+            '<b>!cprange</b> &lt;charId&gt; &lt;rowId&gt; &lt;hexNum&gt; &lt;srcTokenId&gt; &lt;tgtTokenId&gt;',
+            '&nbsp;&nbsp;Called automatically by the sheet when a targeting button is clicked.',
+            '&nbsp;&nbsp;Calculates hex-grid range between two tokens, validates against the',
+            `&nbsp;&nbsp;weapon's long-range band, and writes the result back to the sheet.`,
+            '&nbsp;&nbsp;On failure a chat message is posted and the slot is cleared.',
+            '<hr>',
+            '<b>!cphelp</b>',
+            '&nbsp;&nbsp;Show this help text.',
+        ];
+        sendChat(SCRIPT_NAME, `${target}<div style="font-size:0.9em;line-height:1.6">${lines.join('<br>')}</div>`, null, { noarchive: true });
+    };
+
     on('chat:message', (msg) => {
         if (msg.type !== 'api') return;
         const content = (msg.content || '').trim();
+
+        if (content === '!cphelp' || content.startsWith('!cphelp ')) {
+            showHelp(msg);
+            return;
+        }
+
         if (!content.startsWith('!cprange')) return;
 
         const parts = content.split(/\s+/);
         if (parts.length < 6) {
             log(`${SCRIPT_NAME}: !cprange — expected 5 args, got ${parts.length - 1}`);
+            showHelp(msg);
             return;
         }
 
         const [, charId, rowId, hexNum, srcTokenId, tgtTokenId] = parts;
+        const prefix = `repeating_weapons_${rowId}_`;
 
         const srcToken = getObj('graphic', srcTokenId);
         const tgtToken = getObj('graphic', tgtTokenId);
 
         if (!srcToken || !tgtToken) {
             log(`${SCRIPT_NAME}: !cprange — could not resolve token(s): src=${srcTokenId} tgt=${tgtTokenId}`);
-            setCharAttr(charId, `repeating_weapons_${rowId}_weapon_target_state_${hexNum}`, '');
+            clearTargeting(charId, prefix, hexNum);
             return;
         }
 
         if (srcToken.get('pageid') !== tgtToken.get('pageid')) {
             log(`${SCRIPT_NAME}: !cprange — tokens are on different pages`);
-            setCharAttr(charId, `repeating_weapons_${rowId}_weapon_target_state_${hexNum}`, '');
+            clearTargeting(charId, prefix, hexNum);
             return;
         }
 
@@ -113,13 +165,34 @@
 
         const range     = hexRange(srcLeft, srcTop, tgtLeft, tgtTop, hexPx, gridType);
         const tgtName   = tgtToken.get('name') || 'Unknown';
-        const label     = `${tgtName} (${range}h)`;
 
-        const prefix = `repeating_weapons_${rowId}_`;
+        const weaponLabel = (getCharAttr(charId, `${prefix}weapon_abbr`) || 'weapon').trim();
+        const longRangeBand = String(getCharAttr(charId, `${prefix}weapon_range_3`) || '').trim();
+        const maxLongRange = parseLongRangeMax(longRangeBand);
+
+        if (!Number.isInteger(maxLongRange)) {
+            clearTargeting(charId, prefix, hexNum);
+            sendChat(
+                SCRIPT_NAME,
+                `${weaponLabel} #${hexNum}: targeting failed. Long-range band is missing or invalid.`
+            );
+            return;
+        }
+
+        if (range > maxLongRange) {
+            clearTargeting(charId, prefix, hexNum);
+            sendChat(
+                SCRIPT_NAME,
+                `${weaponLabel} #${hexNum}: targeting failed. ${tgtName} is at ${range}h, beyond long range ${longRangeBand}.`
+            );
+            return;
+        }
+
+        const label = `${tgtName} (${range}h)`;
         setCharAttr(charId, `${prefix}weapon_target_token_id_${hexNum}`, tgtTokenId);
-        setCharAttr(charId, `${prefix}weapon_target_range_${hexNum}`,    String(range));
-        setCharAttr(charId, `${prefix}weapon_target_label_${hexNum}`,    label);
-        setCharAttr(charId, `${prefix}weapon_target_state_${hexNum}`,    '1');
+        setCharAttr(charId, `${prefix}weapon_target_range_${hexNum}`, String(range));
+        setCharAttr(charId, `${prefix}weapon_target_label_${hexNum}`, label);
+        setCharAttr(charId, `${prefix}weapon_target_state_${hexNum}`, '1');
     });
 
     on('ready', () => {
