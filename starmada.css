@@ -3503,3 +3503,131 @@ input[name="attr_move_withinthrust_16"][value="1"] ~ input[name="attr_move_revie
 .sheet-rolltemplate-custom a {
   color: inherit;
 }
+
+/*** WEAPON TARGETING (COMBAT PHASE) ***/
+
+/* Targeting bar: block element below the hex glyphs */
+.weapon-targeting-bar {
+    display: block;
+    text-align: center;
+    padding: 3px 28px 2px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* Targeting slots: hidden by default, inline-block when hex is active */
+.weapon-target-slot {
+    display: none;
+    width: 48px;
+    height: 28px;
+    vertical-align: top;
+    margin: 0 2px;
+}
+
+.wh-cb-1:checked ~ .weapon-targeting-bar .wt-slot-1 { display: inline-flex; align-items: center; justify-content: center; }
+.wh-cb-2:checked ~ .weapon-targeting-bar .wt-slot-2 { display: inline-flex; align-items: center; justify-content: center; }
+.wh-cb-3:checked ~ .weapon-targeting-bar .wt-slot-3 { display: inline-flex; align-items: center; justify-content: center; }
+.wh-cb-4:checked ~ .weapon-targeting-bar .wt-slot-4 { display: inline-flex; align-items: center; justify-content: center; }
+.wh-cb-5:checked ~ .weapon-targeting-bar .wt-slot-5 { display: inline-flex; align-items: center; justify-content: center; }
+.wh-cb-6:checked ~ .weapon-targeting-bar .wt-slot-6 { display: inline-flex; align-items: center; justify-content: center; }
+.wh-cb-7:checked ~ .weapon-targeting-bar .wt-slot-7 { display: inline-flex; align-items: center; justify-content: center; }
+.wh-cb-8:checked ~ .weapon-targeting-bar .wt-slot-8 { display: inline-flex; align-items: center; justify-content: center; }
+
+/* Base target button: untargeted state */
+.weapon-target-btn {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    min-height: 28px;
+    padding: 0;
+    border: 2px solid #999;
+    border-radius: 50%;
+    background-color: #e8e8e8;
+    color: #666;
+    font-size: 10px;
+    font-weight: 700;
+    font-family: 'Orbitron', sans-serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    line-height: 1;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.weapon-target-btn:focus { outline: none; }
+.weapon-target-btn:active { transform: translateY(1px); }
+
+/* State 1: Targeted — amber button with T label */
+.wts-1[value='1'] ~ .weapon-targeting-bar .wt-slot-1 .weapon-target-btn,
+.wts-2[value='1'] ~ .weapon-targeting-bar .wt-slot-2 .weapon-target-btn,
+.wts-3[value='1'] ~ .weapon-targeting-bar .wt-slot-3 .weapon-target-btn,
+.wts-4[value='1'] ~ .weapon-targeting-bar .wt-slot-4 .weapon-target-btn,
+.wts-5[value='1'] ~ .weapon-targeting-bar .wt-slot-5 .weapon-target-btn,
+.wts-6[value='1'] ~ .weapon-targeting-bar .wt-slot-6 .weapon-target-btn,
+.wts-7[value='1'] ~ .weapon-targeting-bar .wt-slot-7 .weapon-target-btn,
+.wts-8[value='1'] ~ .weapon-targeting-bar .wt-slot-8 .weapon-target-btn {
+    background-color: #e8a000;
+    border-color: #b07000;
+    color: #fff;
+}
+
+.wts-1[value='1'] ~ .weapon-targeting-bar .wt-slot-1 .weapon-target-btn::after,
+.wts-2[value='1'] ~ .weapon-targeting-bar .wt-slot-2 .weapon-target-btn::after,
+.wts-3[value='1'] ~ .weapon-targeting-bar .wt-slot-3 .weapon-target-btn::after,
+.wts-4[value='1'] ~ .weapon-targeting-bar .wt-slot-4 .weapon-target-btn::after,
+.wts-5[value='1'] ~ .weapon-targeting-bar .wt-slot-5 .weapon-target-btn::after,
+.wts-6[value='1'] ~ .weapon-targeting-bar .wt-slot-6 .weapon-target-btn::after,
+.wts-7[value='1'] ~ .weapon-targeting-bar .wt-slot-7 .weapon-target-btn::after,
+.wts-8[value='1'] ~ .weapon-targeting-bar .wt-slot-8 .weapon-target-btn::after { content: 'T'; }
+
+/* State 2: Fired — red button with F label */
+.wts-1[value='2'] ~ .weapon-targeting-bar .wt-slot-1 .weapon-target-btn,
+.wts-2[value='2'] ~ .weapon-targeting-bar .wt-slot-2 .weapon-target-btn,
+.wts-3[value='2'] ~ .weapon-targeting-bar .wt-slot-3 .weapon-target-btn,
+.wts-4[value='2'] ~ .weapon-targeting-bar .wt-slot-4 .weapon-target-btn,
+.wts-5[value='2'] ~ .weapon-targeting-bar .wt-slot-5 .weapon-target-btn,
+.wts-6[value='2'] ~ .weapon-targeting-bar .wt-slot-6 .weapon-target-btn,
+.wts-7[value='2'] ~ .weapon-targeting-bar .wt-slot-7 .weapon-target-btn,
+.wts-8[value='2'] ~ .weapon-targeting-bar .wt-slot-8 .weapon-target-btn {
+    background-color: #c00;
+    border-color: #800;
+    color: #fff;
+}
+
+.wts-1[value='2'] ~ .weapon-targeting-bar .wt-slot-1 .weapon-target-btn::after,
+.wts-2[value='2'] ~ .weapon-targeting-bar .wt-slot-2 .weapon-target-btn::after,
+.wts-3[value='2'] ~ .weapon-targeting-bar .wt-slot-3 .weapon-target-btn::after,
+.wts-4[value='2'] ~ .weapon-targeting-bar .wt-slot-4 .weapon-target-btn::after,
+.wts-5[value='2'] ~ .weapon-targeting-bar .wt-slot-5 .weapon-target-btn::after,
+.wts-6[value='2'] ~ .weapon-targeting-bar .wt-slot-6 .weapon-target-btn::after,
+.wts-7[value='2'] ~ .weapon-targeting-bar .wt-slot-7 .weapon-target-btn::after,
+.wts-8[value='2'] ~ .weapon-targeting-bar .wt-slot-8 .weapon-target-btn::after { content: 'F'; }
+
+/* Hex glyph ring color indicates targeting state */
+.wts-1[value='1'] ~ .wh-g-1 .weapon-hex-visual { background: #e8a000; }
+.wts-2[value='1'] ~ .wh-g-2 .weapon-hex-visual { background: #e8a000; }
+.wts-3[value='1'] ~ .wh-g-3 .weapon-hex-visual { background: #e8a000; }
+.wts-4[value='1'] ~ .wh-g-4 .weapon-hex-visual { background: #e8a000; }
+.wts-5[value='1'] ~ .wh-g-5 .weapon-hex-visual { background: #e8a000; }
+.wts-6[value='1'] ~ .wh-g-6 .weapon-hex-visual { background: #e8a000; }
+.wts-7[value='1'] ~ .wh-g-7 .weapon-hex-visual { background: #e8a000; }
+.wts-8[value='1'] ~ .wh-g-8 .weapon-hex-visual { background: #e8a000; }
+
+.wts-1[value='2'] ~ .wh-g-1 .weapon-hex-visual { background: #c00; }
+.wts-2[value='2'] ~ .wh-g-2 .weapon-hex-visual { background: #c00; }
+.wts-3[value='2'] ~ .wh-g-3 .weapon-hex-visual { background: #c00; }
+.wts-4[value='2'] ~ .wh-g-4 .weapon-hex-visual { background: #c00; }
+.wts-5[value='2'] ~ .wh-g-5 .weapon-hex-visual { background: #c00; }
+.wts-6[value='2'] ~ .wh-g-6 .weapon-hex-visual { background: #c00; }
+.wts-7[value='2'] ~ .wh-g-7 .weapon-hex-visual { background: #c00; }
+.wts-8[value='2'] ~ .wh-g-8 .weapon-hex-visual { background: #c00; }
+
+/* Dark mode: base targeting button */
+.darkmodetoggle[value="1"] ~ section .weapon-target-btn {
+    background-color: #333;
+    border-color: #666;
+    color: #888;
+}
