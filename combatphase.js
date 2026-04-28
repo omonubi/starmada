@@ -82,18 +82,54 @@
     };
 
     // ---------------------------------------------------------------------------
-    // !cprange — called by the sheet worker when a targeting button is first
-    // clicked on a weapon hex.
+    // Component firing-arc calculation.
     //
-    // Format:  !cprange <charId> <rowId> <hexNum> <srcTokenId> <tgtTokenId>
+    // All angles are in the ship's LOCAL reference frame: 0° = directly ahead
+    // (the ship's facing direction), increasing clockwise.
     //
-    // The script:
-    //   1. Resolves both tokens and verifies they are on the same page.
-    //   2. Calculates the hex-grid range between the two token centers.
-    //   3. Writes weapon_target_token_id_N, weapon_target_range_N,
-    //      weapon_target_label_N, and weapon_target_state_N back to the
-    //      character sheet so the targeting button updates immediately.
+    // A-F group — bounded by hex-row lines; boundaries every 60° from 0°:
+    //   A: [300°, 360°)   B: [  0°,  60°)
+    //   C: [240°, 300°)   D: [ 60°, 120°)
+    //   E: [180°, 240°)   F: [120°, 180°)
+    //
+    // G-L group — bounded by hex-spine lines; boundaries every 60° from 30°:
+    //   G: [330°,  30°)   H: [270°, 330°)
+    //   I: [ 30°,  90°)   J: [210°, 270°)
+    //   K: [ 90°, 150°)   L: [150°, 210°)
+    //
+    // Verification: relative bearing 0° (directly ahead) → {A, B, G} ✓
+    // A target on an arc boundary occupies both adjacent arcs.
     // ---------------------------------------------------------------------------
+    const ARC_EPS = 0.5; // degrees — tolerance for arc-boundary proximity
+
+    const getTargetArcs = (relativeBearing) => {
+        const b = ((relativeBearing % 360) + 360) % 360;
+        const arcs = new Set();
+
+        // A-F group: sector boundaries at multiples of 60° starting at 0°.
+        // Sector index 0 (0°–60°) = B, 1 = D, 2 = F, 3 = E, 4 = C, 5 = A.
+        const afSectors = ['B', 'D', 'F', 'E', 'C', 'A'];
+        const afIdx  = Math.floor(b / 60) % 6;
+        arcs.add(afSectors[afIdx]);
+        const bMod60 = b % 60;
+        if (bMod60 < ARC_EPS)            arcs.add(afSectors[(afIdx + 5) % 6]);
+        else if (bMod60 > 60 - ARC_EPS)  arcs.add(afSectors[(afIdx + 1) % 6]);
+
+        // G-L group: boundaries at 30° + multiples of 60°.
+        // Shift bearing by -30° so the same modular logic applies.
+        // Sector index 0 (shifted 0°–60° = original 30°–90°) = I, 1 = K, 2 = L,
+        //   3 = J, 4 = H, 5 = G.
+        const glSectors = ['I', 'K', 'L', 'J', 'H', 'G'];
+        const shifted = ((b - 30) % 360 + 360) % 360;
+        const glIdx  = Math.floor(shifted / 60) % 6;
+        arcs.add(glSectors[glIdx]);
+        const sMod60 = shifted % 60;
+        if (sMod60 < ARC_EPS)            arcs.add(glSectors[(glIdx + 5) % 6]);
+        else if (sMod60 > 60 - ARC_EPS)  arcs.add(glSectors[(glIdx + 1) % 6]);
+
+        return arcs; // Set of uppercase letters, e.g. Set {'A','B','G'}
+    };
+
     // ---------------------------------------------------------------------------
     // Help output — whispered to the caller (or GM) when !cphelp is used, or
     // when a command is called with missing arguments.  Keep this block updated
@@ -107,9 +143,11 @@
             '<hr>',
             '<b>!cprange</b> &lt;charId&gt; &lt;rowId&gt; &lt;hexNum&gt; &lt;srcTokenId&gt; &lt;tgtTokenId&gt;',
             '&nbsp;&nbsp;Called automatically by the sheet when a targeting button is clicked.',
-            '&nbsp;&nbsp;Calculates hex-grid range between two tokens, validates against the',
-            `&nbsp;&nbsp;weapon's long-range band, and writes the result back to the sheet.`,
-            '&nbsp;&nbsp;On failure a chat message is posted and the slot is cleared.',
+            '&nbsp;&nbsp;Validates the target against the weapon\'s long-range band and firing arc,',
+            '&nbsp;&nbsp;then writes the result back to the sheet.',
+            '&nbsp;&nbsp;Range band: read from <i>weapon_range_3</i> (e.g. "7-9").',
+            '&nbsp;&nbsp;Firing arc: read from <i>weapon_arc_N</i> (e.g. "AB", "JKL") — skipped if blank.',
+            '&nbsp;&nbsp;On failure a chat message is posted and the targeting slot is cleared.',
             '<hr>',
             '<b>!cphelp</b>',
             '&nbsp;&nbsp;Show this help text.',
@@ -166,7 +204,9 @@
         const range     = hexRange(srcLeft, srcTop, tgtLeft, tgtTop, hexPx, gridType);
         const tgtName   = tgtToken.get('name') || 'Unknown';
 
-        const weaponLabel = (getCharAttr(charId, `${prefix}weapon_abbr`) || 'weapon').trim();
+        const weaponAbbr = (getCharAttr(charId, `${prefix}weapon_abbr`) || 'weapon').trim();
+        const weaponVariant = String(getCharAttr(charId, `${prefix}weapon_variant`) || '').trim();
+        const weaponLabel = weaponVariant ? `${weaponAbbr}-${weaponVariant}` : weaponAbbr;
         const longRangeBand = String(getCharAttr(charId, `${prefix}weapon_range_3`) || '').trim();
         const maxLongRange = parseLongRangeMax(longRangeBand);
 
@@ -186,6 +226,32 @@
                 `${weaponLabel} #${hexNum}: targeting failed. ${tgtName} is at ${range}h, beyond long range ${longRangeBand}.`
             );
             return;
+        }
+
+        // --- Firing arc check ---
+        // weapon_arc_N holds the user-entered arc designation, e.g. "AB" or "JKL".
+        // If no arc is defined for this hex slot, the check is skipped.
+        const arcText = getCharAttr(charId, `${prefix}weapon_arc_${hexNum}`)
+            .toUpperCase().replace(/[^A-L]/g, '');
+        if (arcText.length > 0) {
+            const weaponArcSet  = new Set(arcText.split(''));
+            const shipHeading   = parseFloat(srcToken.get('rotation') || 0);
+            const dx            = tgtLeft - srcLeft;
+            const dy            = tgtTop  - srcTop;
+            const absBearing    = (Math.atan2(dx, -dy) * 180 / Math.PI + 360) % 360;
+            const relBearing    = (absBearing - shipHeading + 360) % 360;
+            const targetArcs    = getTargetArcs(relBearing);
+            const inArc         = [...targetArcs].some(arc => weaponArcSet.has(arc));
+            if (!inArc) {
+                clearTargeting(charId, prefix, hexNum);
+                const weaponArcStr = [...weaponArcSet].sort().join('');
+                const targetArcStr = [...targetArcs].sort().join('');
+                sendChat(
+                    SCRIPT_NAME,
+                    `${weaponLabel} #${hexNum}: targeting failed. ${tgtName} is in arc(s) [${targetArcStr}], outside weapon arc [${weaponArcStr}].`
+                );
+                return;
+            }
         }
 
         const label = `${tgtName} (${range}h)`;
