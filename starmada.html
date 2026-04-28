@@ -445,14 +445,54 @@
                             <div class='weapon-hex-glyph wh-g-8'><input type='hidden' name='attr_weapon_arc_a_8' class='weapon-arc-flag wa-a' /><input type='hidden' name='attr_weapon_arc_b_8' class='weapon-arc-flag wa-b' /><input type='hidden' name='attr_weapon_arc_c_8' class='weapon-arc-flag wa-c' /><input type='hidden' name='attr_weapon_arc_d_8' class='weapon-arc-flag wa-d' /><input type='hidden' name='attr_weapon_arc_e_8' class='weapon-arc-flag wa-e' /><input type='hidden' name='attr_weapon_arc_f_8' class='weapon-arc-flag wa-f' /><input type='hidden' name='attr_weapon_arc_g_8' class='weapon-arc-flag wa-g' /><input type='hidden' name='attr_weapon_arc_h_8' class='weapon-arc-flag wa-h' /><input type='hidden' name='attr_weapon_arc_i_8' class='weapon-arc-flag wa-i' /><input type='hidden' name='attr_weapon_arc_j_8' class='weapon-arc-flag wa-j' /><input type='hidden' name='attr_weapon_arc_k_8' class='weapon-arc-flag wa-k' /><input type='hidden' name='attr_weapon_arc_l_8' class='weapon-arc-flag wa-l' /><span class='weapon-hex-visual' tabindex='0'><span class='arc-mark arc-a arc-af'></span><span class='arc-mark arc-b arc-af'></span><span class='arc-mark arc-c arc-af'></span><span class='arc-mark arc-d arc-af'></span><span class='arc-mark arc-e arc-af'></span><span class='arc-mark arc-f arc-af'></span><span class='arc-mark arc-g arc-gl'></span><span class='arc-mark arc-h arc-gl'></span><span class='arc-mark arc-i arc-gl'></span><span class='arc-mark arc-j arc-gl'></span><span class='arc-mark arc-k arc-gl'></span><span class='arc-mark arc-l arc-gl'></span></span><div class='hex-popup'><input type='text' name='attr_weapon_arc_8' class='firing-arc-input' placeholder='Firing Arcs...'/></div></div>
                             <button type='action' name='act_weapon-add-hex' class='weapon-hex-add'>+</button>
                             <div class='weapon-targeting-bar'>
-                                <div class='weapon-target-slot wt-slot-1'><button type='action' name='act_weapon-cycle-target-1' class='weapon-target-btn'></button></div>
-                                <div class='weapon-target-slot wt-slot-2'><button type='action' name='act_weapon-cycle-target-2' class='weapon-target-btn'></button></div>
-                                <div class='weapon-target-slot wt-slot-3'><button type='action' name='act_weapon-cycle-target-3' class='weapon-target-btn'></button></div>
-                                <div class='weapon-target-slot wt-slot-4'><button type='action' name='act_weapon-cycle-target-4' class='weapon-target-btn'></button></div>
-                                <div class='weapon-target-slot wt-slot-5'><button type='action' name='act_weapon-cycle-target-5' class='weapon-target-btn'></button></div>
-                                <div class='weapon-target-slot wt-slot-6'><button type='action' name='act_weapon-cycle-target-6' class='weapon-target-btn'></button></div>
-                                <div class='weapon-target-slot wt-slot-7'><button type='action' name='act_weapon-cycle-target-7' class='weapon-target-btn'></button></div>
-                                <div class='weapon-target-slot wt-slot-8'><button type='action' name='act_weapon-cycle-target-8' class='weapon-target-btn'></button></div>
+                                <div class='weapon-target-slot wt-slot-1'>
+                                    <input type='hidden' name='attr_weapon_target_token_id_1' class='wtid-1' />
+                                    <input type='hidden' name='attr_weapon_target_range_1' class='wtr-1' />
+                                    <button type='action' name='act_weapon-cycle-target-1' class='weapon-target-btn'></button>
+                                    <div class='weapon-target-tooltip'><span name='attr_weapon_target_label_1'></span></div>
+                                </div>
+                                <div class='weapon-target-slot wt-slot-2'>
+                                    <input type='hidden' name='attr_weapon_target_token_id_2' class='wtid-2' />
+                                    <input type='hidden' name='attr_weapon_target_range_2' class='wtr-2' />
+                                    <button type='action' name='act_weapon-cycle-target-2' class='weapon-target-btn'></button>
+                                    <div class='weapon-target-tooltip'><span name='attr_weapon_target_label_2'></span></div>
+                                </div>
+                                <div class='weapon-target-slot wt-slot-3'>
+                                    <input type='hidden' name='attr_weapon_target_token_id_3' class='wtid-3' />
+                                    <input type='hidden' name='attr_weapon_target_range_3' class='wtr-3' />
+                                    <button type='action' name='act_weapon-cycle-target-3' class='weapon-target-btn'></button>
+                                    <div class='weapon-target-tooltip'><span name='attr_weapon_target_label_3'></span></div>
+                                </div>
+                                <div class='weapon-target-slot wt-slot-4'>
+                                    <input type='hidden' name='attr_weapon_target_token_id_4' class='wtid-4' />
+                                    <input type='hidden' name='attr_weapon_target_range_4' class='wtr-4' />
+                                    <button type='action' name='act_weapon-cycle-target-4' class='weapon-target-btn'></button>
+                                    <div class='weapon-target-tooltip'><span name='attr_weapon_target_label_4'></span></div>
+                                </div>
+                                <div class='weapon-target-slot wt-slot-5'>
+                                    <input type='hidden' name='attr_weapon_target_token_id_5' class='wtid-5' />
+                                    <input type='hidden' name='attr_weapon_target_range_5' class='wtr-5' />
+                                    <button type='action' name='act_weapon-cycle-target-5' class='weapon-target-btn'></button>
+                                    <div class='weapon-target-tooltip'><span name='attr_weapon_target_label_5'></span></div>
+                                </div>
+                                <div class='weapon-target-slot wt-slot-6'>
+                                    <input type='hidden' name='attr_weapon_target_token_id_6' class='wtid-6' />
+                                    <input type='hidden' name='attr_weapon_target_range_6' class='wtr-6' />
+                                    <button type='action' name='act_weapon-cycle-target-6' class='weapon-target-btn'></button>
+                                    <div class='weapon-target-tooltip'><span name='attr_weapon_target_label_6'></span></div>
+                                </div>
+                                <div class='weapon-target-slot wt-slot-7'>
+                                    <input type='hidden' name='attr_weapon_target_token_id_7' class='wtid-7' />
+                                    <input type='hidden' name='attr_weapon_target_range_7' class='wtr-7' />
+                                    <button type='action' name='act_weapon-cycle-target-7' class='weapon-target-btn'></button>
+                                    <div class='weapon-target-tooltip'><span name='attr_weapon_target_label_7'></span></div>
+                                </div>
+                                <div class='weapon-target-slot wt-slot-8'>
+                                    <input type='hidden' name='attr_weapon_target_token_id_8' class='wtid-8' />
+                                    <input type='hidden' name='attr_weapon_target_range_8' class='wtr-8' />
+                                    <button type='action' name='act_weapon-cycle-target-8' class='weapon-target-btn'></button>
+                                    <div class='weapon-target-tooltip'><span name='attr_weapon_target_label_8'></span></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1059,22 +1099,46 @@ on('clicked:repeating_weapons:weapon-remove-hex', async function(eventInfo) {
         await setAttrsAsync({
             [`${prefix}weapon_hex_${lastIdx}`]: '',
             [`${prefix}weapon_target_state_${lastIdx}`]: '',
+            [`${prefix}weapon_target_token_id_${lastIdx}`]: '',
+            [`${prefix}weapon_target_range_${lastIdx}`]: '',
+            [`${prefix}weapon_target_label_${lastIdx}`]: '',
             ...buildFiringArcAttrs(prefix, lastIdx, '')
         });
     }
 });
 
-// Weapon targeting: cycle state per hex (untargeted → targeted → fired → untargeted)
+// Weapon targeting buttons:
+//   empty  → prompt for target via API; API writes name/range data and sets state to '1'
+//   '1'    → weapon is targeted; click again to fire (future work — for now advance to '2')
+//   '2'    → weapon was fired; click to reset and clear all target data
 for (let n = 1; n <= 8; n++) {
     on(`clicked:repeating_weapons:weapon-cycle-target-${n}`, async function(eventInfo) {
         const match = (eventInfo.sourceAttribute || '').match(/repeating_weapons_(.+?)_weapon-cycle-target-\d+/);
         if (!match) return;
-        const prefix = `repeating_weapons_${match[1]}_`;
-        const attrName = `${prefix}weapon_target_state_${n}`;
-        const values = await getAttrsAsync([attrName]);
-        const current = values[attrName] || '';
-        const next = current === '' ? '1' : current === '1' ? '2' : '';
-        await setAttrsAsync({ [attrName]: next });
+        const rowId = match[1];
+        const prefix = `repeating_weapons_${rowId}_`;
+        const stateAttr = `${prefix}weapon_target_state_${n}`;
+        const values = await getAttrsAsync([stateAttr, 'bound_token_id']);
+        const current = values[stateAttr] || '';
+        const srcTokenId = (values['bound_token_id'] || '').trim();
+        if (current === '') {
+            // No target yet — send API command to prompt for target and calculate range
+            if (!srcTokenId) return; // ship not bound to a map token
+            startRoll(`!cprange @{character_id} ${rowId} ${n} ${srcTokenId} @{target|token_id}`, function(results) {
+                finishRoll(results.rollId);
+            });
+        } else if (current === '1') {
+            // Targeted — advance to fired (firing logic to be added later)
+            await setAttrsAsync({ [stateAttr]: '2' });
+        } else {
+            // Fired — reset and clear all target data for this hex
+            await setAttrsAsync({
+                [stateAttr]: '',
+                [`${prefix}weapon_target_token_id_${n}`]: '',
+                [`${prefix}weapon_target_range_${n}`]: '',
+                [`${prefix}weapon_target_label_${n}`]: ''
+            });
+        }
     });
 }
 
