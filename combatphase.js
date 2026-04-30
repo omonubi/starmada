@@ -36,6 +36,41 @@
         setCharAttr(charId, `${prefix}weapon_target_label_${hexNum}`, '');
     };
 
+    const templateSafe = (value) => String(value || '').replace(/[{}]/g, '');
+
+    const sendTargetingRoll = (shipName, weaponLabel, hexNum, tgtName, range, arcText) => {
+        const fields = [
+            '{{subtitle=Targeting}}',
+            '{{color=blue}}',
+            `{{Weapon=${templateSafe(weaponLabel)} #${templateSafe(hexNum)}}}`,
+            `{{Target=${templateSafe(tgtName)}}}`,
+            `{{Range=${templateSafe(range)}h}}`
+        ];
+
+        if (arcText) {
+            fields.push(`{{Arc=${templateSafe(arcText)}}}`);
+        }
+
+        sendChat(
+            SCRIPT_NAME,
+            `&{template:custom} {{title=${templateSafe(shipName || 'Ship')}}} ${fields.join(' ')}`
+        );
+    };
+
+    const sendTargetingErrorRoll = (shipName, weaponLabel, hexNum, message) => {
+        const fields = [
+            '{{subtitle=Targeting}}',
+            '{{color=gray}}',
+            `{{Weapon=${templateSafe(weaponLabel)} #${templateSafe(hexNum)}}}`,
+            `{{Error=${templateSafe(message)}}}`
+        ];
+
+        sendChat(
+            SCRIPT_NAME,
+            `&{template:custom} {{title=${templateSafe(shipName || 'Ship')}}} ${fields.join(' ')}`
+        );
+    };
+
     // ---------------------------------------------------------------------------
     // Hex-grid range calculation using cube coordinates.
     //
@@ -210,20 +245,22 @@
         const longRangeBand = String(getCharAttr(charId, `${prefix}weapon_range_3`) || '').trim();
         const maxLongRange = parseLongRangeMax(longRangeBand);
 
+        const charObj = getObj('character', charId);
+        const shipName = (srcToken.get('name') || (charObj && charObj.get('name')) || 'Ship').trim();
+
         if (!Number.isInteger(maxLongRange)) {
             clearTargeting(charId, prefix, hexNum);
-            sendChat(
-                SCRIPT_NAME,
-                `${weaponLabel} #${hexNum}: targeting failed. Long-range band is missing or invalid.`
-            );
+            sendTargetingErrorRoll(shipName, weaponLabel, hexNum, 'Targeting failed. Long-range band is missing or invalid.');
             return;
         }
 
         if (range > maxLongRange) {
             clearTargeting(charId, prefix, hexNum);
-            sendChat(
-                SCRIPT_NAME,
-                `${weaponLabel} #${hexNum}: targeting failed. ${tgtName} is at ${range}h, beyond long range ${longRangeBand}.`
+            sendTargetingErrorRoll(
+                shipName,
+                weaponLabel,
+                hexNum,
+                `Targeting failed. ${tgtName} is at ${range}h, beyond long range ${longRangeBand}.`
             );
             return;
         }
@@ -246,9 +283,11 @@
                 clearTargeting(charId, prefix, hexNum);
                 const weaponArcStr = [...weaponArcSet].sort().join('');
                 const targetArcStr = [...targetArcs].sort().join('');
-                sendChat(
-                    SCRIPT_NAME,
-                    `${weaponLabel} #${hexNum}: targeting failed. ${tgtName} is in arc(s) [${targetArcStr}], outside weapon arc [${weaponArcStr}].`
+                sendTargetingErrorRoll(
+                    shipName,
+                    weaponLabel,
+                    hexNum,
+                    `Targeting failed. ${tgtName} is in arc(s) [${targetArcStr}], outside weapon arc [${weaponArcStr}].`
                 );
                 return;
             }
@@ -259,6 +298,8 @@
         setCharAttr(charId, `${prefix}weapon_target_range_${hexNum}`, String(range));
         setCharAttr(charId, `${prefix}weapon_target_label_${hexNum}`, label);
         setCharAttr(charId, `${prefix}weapon_target_state_${hexNum}`, '1');
+
+        sendTargetingRoll(shipName, weaponLabel, hexNum, tgtName, range, arcText);
     });
 
     on('ready', () => {
