@@ -2,6 +2,21 @@
     'use strict';
 
     const SCRIPT_NAME = 'combatphase';
+    const TARGET_LINE_WIDTH  = 2;
+    const GRADIENT_SEGMENTS  = 12;
+    const GRADIENT_START     = [255, 224,   0]; // #ffe000 — yellow (source end)
+    const GRADIENT_MID       = [232, 160,   0]; // #e8a000 — orange (midpoint)
+    const GRADIENT_END       = [204,   0,   0]; // #cc0000 — red   (target end)
+
+    const gradientColor = (t) => {
+        const [c1, c2, lt] = t < 0.5
+            ? [GRADIENT_START, GRADIENT_MID, t * 2]
+            : [GRADIENT_MID,   GRADIENT_END, (t - 0.5) * 2];
+        const r = Math.round(c1[0] + (c2[0] - c1[0]) * lt);
+        const g = Math.round(c1[1] + (c2[1] - c1[1]) * lt);
+        const b = Math.round(c1[2] + (c2[2] - c1[2]) * lt);
+        return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+    };
 
     // ---------------------------------------------------------------------------
     // Utility: get or create a character attribute and set its current value
@@ -29,11 +44,81 @@
         return null;
     };
 
+    const clearTargetLine = (charId, prefix, hexNum) => {
+        const pathIdAttr = `${prefix}weapon_target_path_id_${hexNum}`;
+        const stored = String(getCharAttr(charId, pathIdAttr) || '').trim();
+        if (stored) {
+            stored.split(',').forEach(id => {
+                const p = id.trim();
+                if (p) {
+                    const pathObj = getObj('path', p);
+                    if (pathObj) pathObj.remove();
+                }
+            });
+        }
+        setCharAttr(charId, pathIdAttr, '');
+    };
+
     const clearTargeting = (charId, prefix, hexNum) => {
+        clearTargetLine(charId, prefix, hexNum);
         setCharAttr(charId, `${prefix}weapon_target_state_${hexNum}`, '');
         setCharAttr(charId, `${prefix}weapon_target_token_id_${hexNum}`, '');
         setCharAttr(charId, `${prefix}weapon_target_range_${hexNum}`, '');
         setCharAttr(charId, `${prefix}weapon_target_label_${hexNum}`, '');
+    };
+
+    // Draws a gradient line as GRADIENT_SEGMENTS short coloured segments.
+    // Returns a comma-separated string of path IDs for later cleanup.
+    const drawTargetLine = (pageId, srcLeft, srcTop, tgtLeft, tgtTop) => {
+        const x1 = Number(srcLeft);
+        const y1 = Number(srcTop);
+        const x2 = Number(tgtLeft);
+        const y2 = Number(tgtTop);
+        if (!Number.isFinite(x1) || !Number.isFinite(y1) || !Number.isFinite(x2) || !Number.isFinite(y2)) {
+            return '';
+        }
+
+        const ids = [];
+        const N = GRADIENT_SEGMENTS;
+        for (let i = 0; i < N; i++) {
+            const t0 = i / N;
+            const t1 = (i + 1) / N;
+            const sx1 = x1 + (x2 - x1) * t0;
+            const sy1 = y1 + (y2 - y1) * t0;
+            const sx2 = x1 + (x2 - x1) * t1;
+            const sy2 = y1 + (y2 - y1) * t1;
+
+            const minX = Math.min(sx1, sx2);
+            const minY = Math.min(sy1, sy2);
+            const w = Math.max(Math.abs(sx2 - sx1), 1);
+            const h = Math.max(Math.abs(sy2 - sy1), 1);
+            const color = gradientColor((i + 0.5) / N);
+            const pathData = JSON.stringify([
+                ['M', sx1 - minX, sy1 - minY],
+                ['L', sx2 - minX, sy2 - minY]
+            ]);
+
+            const pathObj = createObj('path', {
+                pageid: pageId,
+                layer: 'map',
+                left: minX + w / 2,
+                top: minY + h / 2,
+                width: w,
+                height: h,
+                stroke: color,
+                stroke_width: TARGET_LINE_WIDTH,
+                fill: 'transparent',
+                path: pathData
+            });
+
+            if (pathObj) {
+                pathObj.set('stroke_width', TARGET_LINE_WIDTH);
+                toBack(pathObj);
+                ids.push(pathObj.id);
+            }
+        }
+
+        return ids.join(',');
     };
 
     const templateSafe = (value) => String(value || '').replace(/[{}]/g, '');
@@ -182,6 +267,7 @@
             '&nbsp;&nbsp;then writes the result back to the sheet.',
             '&nbsp;&nbsp;Range band: read from <i>weapon_range_3</i> (e.g. "7-9").',
             '&nbsp;&nbsp;Firing arc: read from <i>weapon_arc_N</i> (e.g. "AB", "JKL") — skipped if blank.',
+            '&nbsp;&nbsp;On success, a targeting line is drawn on the map layer under tokens.',
             '&nbsp;&nbsp;On failure a chat message is posted and the targeting slot is cleared.',
             '<hr>',
             '<b>!cphelp</b>',
@@ -298,6 +384,10 @@
         setCharAttr(charId, `${prefix}weapon_target_range_${hexNum}`, String(range));
         setCharAttr(charId, `${prefix}weapon_target_label_${hexNum}`, label);
         setCharAttr(charId, `${prefix}weapon_target_state_${hexNum}`, '1');
+
+        clearTargetLine(charId, prefix, hexNum);
+        const pathId = drawTargetLine(srcToken.get('pageid'), srcLeft, srcTop, tgtLeft, tgtTop);
+        setCharAttr(charId, `${prefix}weapon_target_path_id_${hexNum}`, pathId);
 
         sendTargetingRoll(shipName, weaponLabel, hexNum, tgtName, range, arcText);
     });
