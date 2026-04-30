@@ -3,6 +3,7 @@
 
     const SCRIPT_NAME = 'combatphase';
     const TARGET_LINE_WIDTH  = 2;
+    const TARGET_PATH_OFFSET = 4;
     const GRADIENT_SEGMENTS  = 12;
     const GRADIENT_START     = [255, 224,   0]; // #ffe000 — yellow (source end)
     const GRADIENT_MID       = [232, 160,   0]; // #e8a000 — orange (midpoint)
@@ -44,27 +45,17 @@
         return null;
     };
 
-    const clearTargetLine = (charId, prefix, hexNum) => {
-        const pathIdAttr = `${prefix}weapon_target_path_id_${hexNum}`;
-        const stored = String(getCharAttr(charId, pathIdAttr) || '').trim();
-        if (stored) {
-            stored.split(',').forEach(id => {
-                const p = id.trim();
-                if (p) {
-                    const pathObj = getObj('path', p);
-                    if (pathObj) pathObj.remove();
-                }
-            });
-        }
-        setCharAttr(charId, pathIdAttr, '');
-    };
-
+    // clearTargeting reads the previous target before clearing so updateTargetDisplay
+    // (defined later) can decrement the shared line/label for that token.
     const clearTargeting = (charId, prefix, hexNum) => {
-        clearTargetLine(charId, prefix, hexNum);
+        const prevTgtTokenId = String(getCharAttr(charId, `${prefix}weapon_target_token_id_${hexNum}`) || '').trim();
         setCharAttr(charId, `${prefix}weapon_target_state_${hexNum}`, '');
         setCharAttr(charId, `${prefix}weapon_target_token_id_${hexNum}`, '');
         setCharAttr(charId, `${prefix}weapon_target_range_${hexNum}`, '');
         setCharAttr(charId, `${prefix}weapon_target_label_${hexNum}`, '');
+        if (prevTgtTokenId) {
+            updateTargetDisplay(charId, prevTgtTokenId, null);
+        }
     };
 
     // Draws a gradient line as GRADIENT_SEGMENTS short coloured segments.
@@ -78,15 +69,21 @@
             return '';
         }
 
+        const dx = x2 - x1;
+        const dy = y2 - y1;
+        const len = Math.sqrt(dx * dx + dy * dy) || 1;
+        const offX = (-dy / len) * TARGET_PATH_OFFSET;
+        const offY = (dx / len) * TARGET_PATH_OFFSET;
+
         const ids = [];
         const N = GRADIENT_SEGMENTS;
         for (let i = 0; i < N; i++) {
             const t0 = i / N;
             const t1 = (i + 1) / N;
-            const sx1 = x1 + (x2 - x1) * t0;
-            const sy1 = y1 + (y2 - y1) * t0;
-            const sx2 = x1 + (x2 - x1) * t1;
-            const sy2 = y1 + (y2 - y1) * t1;
+            const sx1 = x1 + dx * t0 + offX;
+            const sy1 = y1 + dy * t0 + offY;
+            const sx2 = x1 + dx * t1 + offX;
+            const sy2 = y1 + dy * t1 + offY;
 
             const minX = Math.min(sx1, sx2);
             const minY = Math.min(sy1, sy2);
@@ -119,6 +116,158 @@
         }
 
         return ids.join(',');
+    };
+
+    // ---------------------------------------------------------------------------
+    // Shared targeting display — one gradient line + one count label per unique
+    // (character, target token) pair, shared across all weapon slots.
+    //
+    // Character-level attributes (not in any repeating row):
+    //   cp_tgt_line_<tgtTokenId>  — comma-separated path IDs for line segments
+    //   cp_tgt_label_<tgtTokenId> — text object ID for the "(N)" count label
+    // ---------------------------------------------------------------------------
+    const countWeaponsTargetingToken = (charId, tgtTokenId) => {
+        return findObjs({ _type: 'attribute', characterid: charId })
+            .filter(a => {
+                const m = a.get('name').match(/^repeating_weapons_(.+?)_weapon_target_token_id_(\d+)$/);
+                if (!m) return false;
+                if (a.get('current') !== tgtTokenId) return false;
+                const stateAttr = `repeating_weapons_${m[1]}_weapon_target_state_${m[2]}`;
+                return String(getCharAttr(charId, stateAttr) || '') === '1';
+            }).length;
+    };
+
+    const removeSharedDisplay = (charId, tgtTokenId) => {
+        const lineAttr  = `cp_tgt_line_${tgtTokenId}`;
+        const labelAttr = `cp_tgt_label_${tgtTokenId}`;
+        String(getCharAttr(charId, lineAttr) || '').trim().split(',').forEach(id => {
+            const p = id.trim();
+            if (p) { const obj = getObj('path', p); if (obj) obj.remove(); }
+        });
+        setCharAttr(charId, lineAttr, '');
+        const labelId = String(getCharAttr(charId, labelAttr) || '').trim();
+        if (labelId) { const obj = getObj('text', labelId); if (obj) obj.remove(); }
+        setCharAttr(charId, labelAttr, '');
+    };
+
+    const updateTargetDisplay = (charId, tgtTokenId, posData) => {
+        if (!tgtTokenId) return;
+        const count = countWeaponsTargetingToken(charId, tgtTokenId);
+        if (count === 0) {
+            removeSharedDisplay(charId, tgtTokenId);
+            return;
+        }
+        const lineAttr  = `cp_tgt_line_${tgtTokenId}`;
+        const labelAttr = `cp_tgt_label_${tgtTokenId}`;
+
+        // Draw the gradient line the first time a token is targeted.
+        if (!String(getCharAttr(charId, lineAttr) || '').trim() && posData) {
+            const ids = drawTargetLine(posData.pageId, posData.srcLeft, posData.srcTop, posData.tgtLeft, posData.tgtTop);
+            setCharAttr(charId, lineAttr, ids);
+        }
+
+        // Update the count label, creating it if it does not yet exist.
+        const labelText = `(${count})`;
+        const labelId   = String(getCharAttr(charId, labelAttr) || '').trim();
+        const textObj   = labelId ? getObj('text', labelId) : null;
+        if (textObj) {
+            if (posData) {
+                const midX = (posData.srcLeft + posData.tgtLeft) / 2;
+                const midY = (posData.srcTop  + posData.tgtTop)  / 2;
+                const dx   = posData.tgtLeft - posData.srcLeft;
+                const dy   = posData.tgtTop  - posData.srcTop;
+                const len  = Math.sqrt(dx * dx + dy * dy) || 1;
+                const offX = (-dy / len) * TARGET_PATH_OFFSET;
+                const offY = (dx / len) * TARGET_PATH_OFFSET;
+                textObj.set({
+                    text: labelText,
+                    left: midX + offX + (-dy / len) * 22,
+                    top:  midY + offY + ( dx / len) * 22
+                });
+            } else {
+                textObj.set('text', labelText);
+            }
+        } else if (posData) {
+            const midX = (posData.srcLeft + posData.tgtLeft) / 2;
+            const midY = (posData.srcTop  + posData.tgtTop)  / 2;
+            const dx   = posData.tgtLeft - posData.srcLeft;
+            const dy   = posData.tgtTop  - posData.srcTop;
+            const len  = Math.sqrt(dx * dx + dy * dy) || 1;
+            const offX = (-dy / len) * TARGET_PATH_OFFSET;
+            const offY = (dx / len) * TARGET_PATH_OFFSET;
+            // Place label on the RIGHT side of source->target direction.
+            const newText = createObj('text', {
+                pageid:      posData.pageId,
+                layer:       'map',
+                left:        midX + offX + (-dy / len) * 22,
+                top:         midY + offY + ( dx / len) * 22,
+                width:       60,
+                height:      30,
+                text:        labelText,
+                font_size:   18,
+                color:       '#ffe000',
+                font_family: 'Arial'
+            });
+            if (newText) setCharAttr(charId, labelAttr, newText.id);
+        }
+    };
+
+    const syncTargetDisplayForSlot = (charId, rowId, hexNum, explicitTokenId) => {
+        const prefix = `repeating_weapons_${rowId}_`;
+        const tokenId = String(
+            explicitTokenId || getCharAttr(charId, `${prefix}weapon_target_token_id_${hexNum}`) || ''
+        ).trim();
+        if (!tokenId) return;
+        updateTargetDisplay(charId, tokenId, null);
+    };
+
+    const clearAllTargetDisplaysForCharacter = (charId) => {
+        const attrs = findObjs({ _type: 'attribute', characterid: charId }) || [];
+        attrs.forEach(attr => {
+            const name = attr.get('name') || '';
+            const lineMatch = name.match(/^cp_tgt_line_(.+)$/);
+            if (lineMatch) {
+                String(attr.get('current') || '').trim().split(',').forEach(id => {
+                    const p = id.trim();
+                    if (p) {
+                        const obj = getObj('path', p);
+                        if (obj) obj.remove();
+                    }
+                });
+                attr.set('current', '');
+                return;
+            }
+
+            if (/^cp_tgt_label_.+$/.test(name)) {
+                const id = String(attr.get('current') || '').trim();
+                if (id) {
+                    const obj = getObj('text', id);
+                    if (obj) obj.remove();
+                }
+                attr.set('current', '');
+                return;
+            }
+
+            // Also clear sheet targeting state/data so affected weapons are reset.
+            if (/^repeating_weapons_.+_weapon_target_state_\d+$/.test(name) ||
+                /^repeating_weapons_.+_weapon_target_token_id_\d+$/.test(name) ||
+                /^repeating_weapons_.+_weapon_target_range_\d+$/.test(name) ||
+                /^repeating_weapons_.+_weapon_target_label_\d+$/.test(name)) {
+                attr.set('current', '');
+            }
+        });
+    };
+
+    const clearAllTargetDisplays = (charIdOrAll) => {
+        const mode = String(charIdOrAll || '').trim().toLowerCase();
+        if (mode === 'all') {
+            const chars = findObjs({ _type: 'character' }) || [];
+            chars.forEach(c => clearAllTargetDisplaysForCharacter(c.id));
+            return chars.length;
+        }
+        if (!charIdOrAll) return 0;
+        clearAllTargetDisplaysForCharacter(charIdOrAll);
+        return 1;
     };
 
     const templateSafe = (value) => String(value || '').replace(/[{}]/g, '');
@@ -270,6 +419,9 @@
             '&nbsp;&nbsp;On success, a targeting line is drawn on the map layer under tokens.',
             '&nbsp;&nbsp;On failure a chat message is posted and the targeting slot is cleared.',
             '<hr>',
+            '<b>!cpclearpaths</b> &lt;charId|all&gt;',
+            '&nbsp;&nbsp;Clears all drawn targeting lines/labels and resets weapon target states/data.',
+            '<hr>',
             '<b>!cphelp</b>',
             '&nbsp;&nbsp;Show this help text.',
         ];
@@ -279,15 +431,37 @@
     on('chat:message', (msg) => {
         if (msg.type !== 'api') return;
         const content = (msg.content || '').trim();
+        const parts = content.split(/\s+/);
+        const command = parts[0] || '';
 
-        if (content === '!cphelp' || content.startsWith('!cphelp ')) {
+        if (command === '!cphelp') {
             showHelp(msg);
             return;
         }
 
-        if (!content.startsWith('!cprange')) return;
+        if (command === '!cptargetsync') {
+            if (parts.length < 4) {
+                log(`${SCRIPT_NAME}: !cptargetsync — expected at least 3 args, got ${parts.length - 1}`);
+                return;
+            }
+            const [, charId, rowId, hexNum, explicitTokenId] = parts;
+            syncTargetDisplayForSlot(charId, rowId, hexNum, explicitTokenId || '');
+            return;
+        }
 
-        const parts = content.split(/\s+/);
+        if (command === '!cpclearpaths') {
+            if (parts.length < 2) {
+                showHelp(msg);
+                return;
+            }
+            const [, target] = parts;
+            const clearedCount = clearAllTargetDisplays(target);
+            sendChat(SCRIPT_NAME, `/w gm cleared targeting paths and reset target states for ${clearedCount} character(s).`, null, { noarchive: true });
+            return;
+        }
+
+        if (command !== '!cprange') return;
+
         if (parts.length < 6) {
             log(`${SCRIPT_NAME}: !cprange — expected 5 args, got ${parts.length - 1}`);
             showHelp(msg);
@@ -379,15 +553,21 @@
             }
         }
 
+        // Capture any token this slot was already targeting before overwriting it.
+        const prevSlotTarget = String(getCharAttr(charId, `${prefix}weapon_target_token_id_${hexNum}`) || '').trim();
+
         const label = `${tgtName} (${range}h)`;
         setCharAttr(charId, `${prefix}weapon_target_token_id_${hexNum}`, tgtTokenId);
         setCharAttr(charId, `${prefix}weapon_target_range_${hexNum}`, String(range));
         setCharAttr(charId, `${prefix}weapon_target_label_${hexNum}`, label);
         setCharAttr(charId, `${prefix}weapon_target_state_${hexNum}`, '1');
 
-        clearTargetLine(charId, prefix, hexNum);
-        const pathId = drawTargetLine(srcToken.get('pageid'), srcLeft, srcTop, tgtLeft, tgtTop);
-        setCharAttr(charId, `${prefix}weapon_target_path_id_${hexNum}`, pathId);
+        // If this slot was pointing at a different token, decrement that token's display.
+        if (prevSlotTarget && prevSlotTarget !== tgtTokenId) {
+            updateTargetDisplay(charId, prevSlotTarget, null);
+        }
+        const posData = { pageId: srcToken.get('pageid'), srcLeft, srcTop, tgtLeft, tgtTop };
+        updateTargetDisplay(charId, tgtTokenId, posData);
 
         sendTargetingRoll(shipName, weaponLabel, hexNum, tgtName, range, arcText);
     });

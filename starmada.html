@@ -1093,9 +1093,16 @@ on('clicked:repeating_weapons:weapon-remove-hex', async function(eventInfo) {
     if (!match) return;
     const prefix = `repeating_weapons_${match[1]}_`;
     const hexAttrs = [1,2,3,4,5,6,7,8].map(n => `${prefix}weapon_hex_${n}`);
-    const values = await getAttrsAsync(hexAttrs);
+    const targetTokenAttrs = [1,2,3,4,5,6,7,8].map(n => `${prefix}weapon_target_token_id_${n}`);
+    const values = await getAttrsAsync([...hexAttrs, ...targetTokenAttrs]);
     const lastIdx = [8,7,6,5,4,3,2,1].find(n => values[`${prefix}weapon_hex_${n}`] === '1');
     if (lastIdx !== undefined) {
+        const prevTokenId = (values[`${prefix}weapon_target_token_id_${lastIdx}`] || '').trim();
+        if (prevTokenId) {
+            startRoll(`!cptargetsync @{character_id} ${match[1]} ${lastIdx} ${prevTokenId}`, function(results) {
+                finishRoll(results.rollId);
+            });
+        }
         await setAttrsAsync({
             [`${prefix}weapon_hex_${lastIdx}`]: '',
             [`${prefix}weapon_target_state_${lastIdx}`]: '',
@@ -1118,8 +1125,10 @@ for (let n = 1; n <= 8; n++) {
         const rowId = match[1];
         const prefix = `repeating_weapons_${rowId}_`;
         const stateAttr = `${prefix}weapon_target_state_${n}`;
-        const values = await getAttrsAsync([stateAttr, 'bound_token_id']);
+        const tokenAttr = `${prefix}weapon_target_token_id_${n}`;
+        const values = await getAttrsAsync([stateAttr, tokenAttr, 'bound_token_id']);
         const current = values[stateAttr] || '';
+        const prevTokenId = (values[tokenAttr] || '').trim();
         const srcTokenId = (values['bound_token_id'] || '').trim();
         if (current === '') {
             // No target yet — send API command to prompt for target and calculate range
@@ -1130,6 +1139,11 @@ for (let n = 1; n <= 8; n++) {
         } else if (current === '1') {
             // Targeted — advance to fired (firing logic to be added later)
             await setAttrsAsync({ [stateAttr]: '2' });
+            if (prevTokenId) {
+                startRoll(`!cptargetsync @{character_id} ${rowId} ${n} ${prevTokenId}`, function(results) {
+                    finishRoll(results.rollId);
+                });
+            }
         } else {
             // Fired — reset and clear all target data for this hex
             await setAttrsAsync({
@@ -1138,6 +1152,11 @@ for (let n = 1; n <= 8; n++) {
                 [`${prefix}weapon_target_range_${n}`]: '',
                 [`${prefix}weapon_target_label_${n}`]: ''
             });
+            if (prevTokenId) {
+                startRoll(`!cptargetsync @{character_id} ${rowId} ${n} ${prevTokenId}`, function(results) {
+                    finishRoll(results.rollId);
+                });
+            }
         }
     });
 }
