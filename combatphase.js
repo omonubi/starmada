@@ -270,15 +270,32 @@
         return 1;
     };
 
+    const rangeInBand = (range, bandStr) => {
+        const text = String(bandStr || '').trim();
+        const m = text.match(/^(\d+)\s*-\s*(\d+)$/);
+        if (m) return range >= parseInt(m[1], 10) && range <= parseInt(m[2], 10);
+        const s = text.match(/^(\d+)$/);
+        if (s) return range === parseInt(s[1], 10);
+        return false;
+    };
+
+    // Parse an accuracy band string of the form "ROFxACC+/dmg" (e.g. "1x5+/2").
+    // Returns { rof, acc } or null if the string is not in the expected format.
+    const parseAccuracyBand = (bandStr) => {
+        const m = String(bandStr || '').match(/^(\d+)x(\d+)\+/);
+        if (!m) return null;
+        return { rof: parseInt(m[1], 10), acc: parseInt(m[2], 10) };
+    };
+
     const templateSafe = (value) => String(value || '').replace(/[{}]/g, '');
 
-    const sendTargetingRoll = (shipName, weaponLabel, hexNum, tgtName, range, arcText) => {
+    const sendTargetingRoll = (shipName, weaponLabel, hexNum, tgtName, range, rangeBandStr, arcText) => {
         const fields = [
             '{{subtitle=Targeting}}',
             '{{color=blue}}',
             `{{Weapon=${templateSafe(weaponLabel)} #${templateSafe(hexNum)}}}`,
             `{{Target=${templateSafe(tgtName)}}}`,
-            `{{Range=${templateSafe(range)}h}}`
+            `{{@ Range ${templateSafe(String(range))}=${templateSafe(rangeBandStr)}}}`
         ];
 
         if (arcText) {
@@ -299,6 +316,24 @@
             `{{Error=${templateSafe(message)}}}`
         ];
 
+        sendChat(
+            SCRIPT_NAME,
+            `&{template:custom} {{title=${templateSafe(shipName || 'Ship')}}} ${fields.join(' ')}`
+        );
+    };
+
+    const sendFiringRoll = (shipName, weaponLabel, rangeBand, range, tgtNameOrLink, weaponCount, totalDice, rolls, hits) => {
+        const fields = [
+            '{{subtitle=Volley}}',
+            '{{color=red}}',
+            `{{Target=${templateSafe(tgtNameOrLink)}}}`,
+            `{{Weapon Type=${templateSafe(weaponLabel)}}}`,
+            `{{@ Range ${templateSafe(String(range))}=${templateSafe(rangeBand)}}}`,
+            `{{Weapons Targeted=${templateSafe(String(weaponCount))}}}`,
+            `{{Dice Rolled=${templateSafe(String(totalDice))}}}`,
+            `{{Roll Results=${templateSafe(rolls.join(', '))}}}`,
+            `{{Hits=${templateSafe(String(hits))}}}`
+        ];
         sendChat(
             SCRIPT_NAME,
             `&{template:custom} {{title=${templateSafe(shipName || 'Ship')}}} ${fields.join(' ')}`
@@ -400,6 +435,91 @@
     };
 
     // ---------------------------------------------------------------------------
+    // Weapon firing — volley resolution
+    //
+    // Collects all hex slots in the firing row that have state '1' and target
+    // the same token, determines the active range band, rolls ROF × count dice,
+    // counts hits (≥ ACC), advances all volley slots to state '2', then posts
+    // the result to chat.
+    // ---------------------------------------------------------------------------
+    const handleFire = (charId, rowId, hexNum, srcTokenId) => {
+        const prefix = `repeating_weapons_${rowId}_`;
+
+        const tgtTokenId = String(getCharAttr(charId, `${prefix}weapon_target_token_id_${hexNum}`) || '').trim();
+        if (!tgtTokenId) {
+            log(`${SCRIPT_NAME}: !cpfire — no target set for hex ${hexNum}`);
+            return;
+        }
+
+        const range = parseInt(getCharAttr(charId, `${prefix}weapon_target_range_${hexNum}`) || '0', 10);
+
+        // Collect all slots in this row at state '1' targeting the same token.
+        const volleySlots = [];
+        for (let n = 1; n <= 8; n++) {
+            const state     = String(getCharAttr(charId, `${prefix}weapon_target_state_${n}`)    || '').trim();
+            const slotToken = String(getCharAttr(charId, `${prefix}weapon_target_token_id_${n}`) || '').trim();
+            if (state === '1' && slotToken === tgtTokenId) {
+                volleySlots.push(n);
+            }
+        }
+
+        if (volleySlots.length === 0) {
+            log(`${SCRIPT_NAME}: !cpfire — no weapons at state 1 targeting ${tgtTokenId}`);
+            return;
+        }
+
+        // Find the range band that contains the current range.
+        const bandIdx = [1, 2, 3].find(i =>
+            rangeInBand(range, String(getCharAttr(charId, `${prefix}weapon_range_${i}`) || '').trim())
+        );
+        if (!bandIdx) {
+            log(`${SCRIPT_NAME}: !cpfire — range ${range} does not fall in any range band`);
+            return;
+        }
+
+        const accuracyStr = String(getCharAttr(charId, `${prefix}weapon_accuracy_${bandIdx}`) || '').trim();
+        const parsed = parseAccuracyBand(accuracyStr);
+        if (!parsed) {
+            log(`${SCRIPT_NAME}: !cpfire — could not parse accuracy band '${accuracyStr}'`);
+            return;
+        }
+
+        const weaponCount = volleySlots.length;
+        const totalDice   = parsed.rof * weaponCount;
+
+        const rolls = [];
+        for (let i = 0; i < totalDice; i++) {
+            rolls.push(randomInteger(6));
+        }
+        const hits = rolls.filter(r => r >= parsed.acc).length;
+
+        // Advance all volley slots to state '2' (fired).
+        volleySlots.forEach(n => {
+            setCharAttr(charId, `${prefix}weapon_target_state_${n}`, '2');
+        });
+        updateTargetDisplay(charId, tgtTokenId, null);
+
+        const srcToken = getObj('graphic', srcTokenId);
+        const charObj  = getObj('character', charId);
+        const shipName = (
+            srcToken
+                ? (srcToken.get('name') || (charObj && charObj.get('name')) || 'Ship')
+                : ((charObj && charObj.get('name')) || 'Ship')
+        ).trim();
+
+        const weaponAbbr    = (getCharAttr(charId, `${prefix}weapon_abbr`)    || 'weapon').trim();
+        const weaponVariant = String(getCharAttr(charId, `${prefix}weapon_variant`) || '').trim();
+        const weaponLabel   = weaponVariant ? `${weaponAbbr}-${weaponVariant}` : weaponAbbr;
+
+        const tgtToken   = getObj('graphic', tgtTokenId);
+        const tgtName    = ((tgtToken && tgtToken.get('name')) || 'Unknown').trim();
+        const tgtCharId  = String((tgtToken && tgtToken.get('represents')) || '').trim();
+        const tgtNameOut = tgtCharId ? `[${tgtName}](https://journal.roll20.net/character/${tgtCharId})` : tgtName;
+
+        sendFiringRoll(shipName, weaponLabel, accuracyStr, range, tgtNameOut, weaponCount, totalDice, rolls, hits);
+    };
+
+    // ---------------------------------------------------------------------------
     // Help output — whispered to the caller (or GM) when !cphelp is used, or
     // when a command is called with missing arguments.  Keep this block updated
     // as new commands are added.
@@ -418,6 +538,12 @@
             '&nbsp;&nbsp;Firing arc: read from <i>weapon_arc_N</i> (e.g. "AB", "JKL") — skipped if blank.',
             '&nbsp;&nbsp;On success, a targeting line is drawn on the map layer under tokens.',
             '&nbsp;&nbsp;On failure a chat message is posted and the targeting slot is cleared.',
+            '<hr>',
+            '<b>!cpfire</b> &lt;charId&gt; &lt;rowId&gt; &lt;hexNum&gt; &lt;srcTokenId&gt;',
+            '&nbsp;&nbsp;Called automatically by the sheet when a targeted weapon is fired.',
+            '&nbsp;&nbsp;Collects all weapons in the same row (same type) that are targeted at the same',
+            '&nbsp;&nbsp;token and fires them as a volley. Determines the active range band, rolls',
+            '&nbsp;&nbsp;ROF &times; weapon count dice, counts hits (&ge; ACC), and posts the result.',
             '<hr>',
             '<b>!cpclearpaths</b> &lt;charId|all&gt;',
             '&nbsp;&nbsp;Clears all drawn targeting lines/labels and resets weapon target states/data.',
@@ -446,6 +572,17 @@
             }
             const [, charId, rowId, hexNum, explicitTokenId] = parts;
             syncTargetDisplayForSlot(charId, rowId, hexNum, explicitTokenId || '');
+            return;
+        }
+
+        if (command === '!cpfire') {
+            if (parts.length < 5) {
+                log(`${SCRIPT_NAME}: !cpfire — expected 4 args, got ${parts.length - 1}`);
+                showHelp(msg);
+                return;
+            }
+            const [, charId, rowId, hexNum, srcTokenId] = parts;
+            handleFire(charId, rowId, parseInt(hexNum, 10), srcTokenId);
             return;
         }
 
@@ -569,7 +706,14 @@
         const posData = { pageId: srcToken.get('pageid'), srcLeft, srcTop, tgtLeft, tgtTop };
         updateTargetDisplay(charId, tgtTokenId, posData);
 
-        sendTargetingRoll(shipName, weaponLabel, hexNum, tgtName, range, arcText);
+        const activeBandIdx = [1, 2, 3].find(i =>
+            rangeInBand(range, String(getCharAttr(charId, `${prefix}weapon_range_${i}`) || '').trim())
+        );
+        const activeAccuracyStr = activeBandIdx
+            ? String(getCharAttr(charId, `${prefix}weapon_accuracy_${activeBandIdx}`) || '').trim()
+            : '';
+
+        sendTargetingRoll(shipName, weaponLabel, hexNum, tgtName, range, activeAccuracyStr, arcText);
     });
 
     on('ready', () => {

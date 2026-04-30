@@ -1137,13 +1137,11 @@ for (let n = 1; n <= 8; n++) {
                 finishRoll(results.rollId);
             });
         } else if (current === '1') {
-            // Targeted — advance to fired (firing logic to be added later)
-            await setAttrsAsync({ [stateAttr]: '2' });
-            if (prevTokenId) {
-                startRoll(`!cptargetsync @{character_id} ${rowId} ${n} ${prevTokenId}`, function(results) {
-                    finishRoll(results.rollId);
-                });
-            }
+            // Targeted — fire the weapon; API resolves the volley and sets states
+            if (!srcTokenId) return;
+            startRoll(`!cpfire @{character_id} ${rowId} ${n} ${srcTokenId}`, function(results) {
+                finishRoll(results.rollId);
+            });
         } else {
             // Fired — reset and clear all target data for this hex
             await setAttrsAsync({
